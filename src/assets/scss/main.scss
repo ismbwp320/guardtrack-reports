@@ -1,0 +1,102 @@
+/*=========================================================================================
+  File Name: main.scss
+  Description: Main scss file. Imports other scss partials from 'vuexy' folder
+  ----------------------------------------------------------------------------------------
+  Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
+  Author: Pixinvent
+  Author URL: http://www.themeforest.net/user/pixinvent
+==========================================================================================*/
+
+@import "vuexy/variables";
+
+@import "vuexy/layout";
+@import "vuexy/typography";
+@import "vuexy/misc";
+@import "vuexy/extraComponents";
+@import "vuexy/themes";
+@import "vuexy/transitions";
+
+@import "vuexy/customClasses";
+
+// Vuesax fixes and enhancments
+@import "vuexy/fixesVuesax";
+
+// Tailwind Fixes
+@import "vuexy/tailwindFix";
+
+// rtl
+@import "vuexy/rtl";
+
+
+//Overriding and custom css
+
+.vs-dialog{
+  max-width: 600px !important;
+}
+header .navbar-fuzzy-search {
+  margin-right: 1rem;
+}
+.addClient{
+  width: 135px !important;
+}
+header.navbar-custom .the-navbar__user-meta{
+  min-width: 140px !important;
+  justify-content: flex-end !important;
+}
+div#main-logo {
+  margin-right: 30px;
+}
+.custom-label input:checked + svg {
+  display: block !important;
+}
+.bg-custom{
+  background-color: #4596fb;
+  color: #fff;
+}
+label.custom-label{
+  margin-bottom: 8px;
+}
+.w-90{
+  width: 10rem;
+}
+.ag-search input{
+  border: none !important;
+  border-radius: 0px !important;
+  border-bottom: 1px solid #4596fb !important;
+}
+
+.status-active span.status-chips{
+  background-color: #28c76f !important;
+  padding: 3px 11px;
+  border-radius: 50px;
+  color: #fff;
+}
+.status-blocked span.status-chips{
+  background-color: rgb(234, 84, 85) !important;
+  padding: 3px 11px;
+  border-radius: 50px;
+  color: #fff;
+}
+.status-deactivated span.status-chips{
+  background-color: rgba(115, 103, 238, 1) !important;
+  padding: 3px 11px;
+  border-radius: 50px;
+  color: #fff;
+}
+.status-pending span.status-chips{
+  background-color: rgb(218, 238, 103) !important;
+  padding: 3px 11px;
+  border-radius: 50px;
+  color: #fff;
+}
+.status-inactive span.status-chips{
+  background-color: rgb(16, 207, 255) !important;
+  padding: 3px 11px;
+  border-radius: 50px;
+  color: #fff;
+}
+.add-client{
+  position: absolute;
+  top: 20px;
+  right: 150px;
+}
