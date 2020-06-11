@@ -1,36 +1,9 @@
-<!-- =========================================================================================
-  File Name: UserList.vue
-  Description: User List page
-  ----------------------------------------------------------------------------------------
-  Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
-  Author: Pixinvent
-  Author URL: http://www.themeforest.net/user/pixinvent
-========================================================================================== -->
-
 <template>
 
   <div id="page-user-list">
+
+    <site-filters  />
     <site-add-new />
-    <vx-card ref="filterCard" title="Filters" class="user-list-filters mb-8" actionButtons @refresh="resetColFilters" @remove="resetColFilters">
-      <div class="vx-row">
-        <div class="vx-col md:w-1/4 sm:w-1/2 w-full">
-          <label class="text-sm opacity-75">Role</label>
-          <v-select :options="roleOptions" :clearable="false" :dir="$vs.rtl ? 'rtl' : 'ltr'" v-model="roleFilter" class="mb-4 md:mb-0" />
-        </div>
-        <div class="vx-col md:w-1/4 sm:w-1/2 w-full">
-          <label class="text-sm opacity-75">Status</label>
-          <v-select :options="statusOptions" :clearable="false" :dir="$vs.rtl ? 'rtl' : 'ltr'" v-model="statusFilter" class="mb-4 md:mb-0" />
-        </div>
-        <div class="vx-col md:w-1/4 sm:w-1/2 w-full">
-          <label class="text-sm opacity-75">Verified</label>
-          <v-select :options="isVerifiedOptions" :clearable="false" :dir="$vs.rtl ? 'rtl' : 'ltr'" v-model="isVerifiedFilter" class="mb-4 sm:mb-0" />
-        </div>
-        <div class="vx-col md:w-1/4 sm:w-1/2 w-full">
-          <label class="text-sm opacity-75">Department</label>
-          <v-select :options="departmentOptions" :clearable="false" :dir="$vs.rtl ? 'rtl' : 'ltr'" v-model="departmentFilter" />
-        </div>
-      </div>
-    </vx-card>
 
     <div class="vx-card p-6">
 
@@ -39,7 +12,7 @@
         <!-- ITEMS PER PAGE -->
         <div class="flex-grow">
           <vs-dropdown vs-trigger-click class="cursor-pointer">
-            <div class="p-4 border border-solid d-theme-border-grey-light rounded-full d-theme-dark-bg cursor-pointer flex items-center justify-between font-medium">
+            <div class="p-4 border pagi-btn border-solid d-theme-border-grey-light rounded-full d-theme-dark-bg cursor-pointer flex items-center justify-between font-medium">
               <span class="mr-2">{{ currentPage * paginationPageSize - (paginationPageSize - 1) }} - {{ usersData.length - currentPage * paginationPageSize > 0 ? currentPage * paginationPageSize : usersData.length }} of {{ usersData.length }}</span>
               <feather-icon icon="ChevronDownIcon" svgClasses="h-4 w-4" />
             </div>
@@ -63,54 +36,79 @@
         </div>
 
         <!-- TABLE ACTION COL-2: SEARCH & EXPORT AS CSV -->
-          <vs-input class="sm:mr-4 mr-0 sm:w-auto w-full sm:order-normal order-3 sm:mt-0 mt-4" v-model="searchQuery" @input="updateSearchQuery" placeholder="Search..." />
+          <vs-input class="sm:mr-4 mr-0 sm:w-auto w-full sm:order-normal order-3 sm:mt-0 mt-4 ag-search" v-model="searchQuery" @input="updateSearchQuery" placeholder="Search..." />
           <!-- <vs-button class="mb-4 md:mb-0" @click="gridApi.exportDataAsCsv()">Export as CSV</vs-button> -->
-
-          <!-- ACTION - DROPDOWN -->
-          <vs-dropdown vs-trigger-click class="cursor-pointer">
-
-            <div class="p-3 shadow-drop rounded-lg d-theme-dark-light-bg cursor-pointer flex items-end justify-center text-lg font-medium w-32">
-              <span class="mr-2 leading-none">Actions</span>
-              <feather-icon icon="ChevronDownIcon" svgClasses="h-4 w-4" />
-            </div>
-
-            <vs-dropdown-menu>
-
-              <vs-dropdown-item>
-                <span class="flex items-center">
-                  <feather-icon icon="TrashIcon" svgClasses="h-4 w-4" class="mr-2" />
-                  <span>Delete</span>
-                </span>
-              </vs-dropdown-item>
-
-              <vs-dropdown-item>
-                <span class="flex items-center">
-                  <feather-icon icon="ArchiveIcon" svgClasses="h-4 w-4" class="mr-2" />
-                  <span>Archive</span>
-                </span>
-              </vs-dropdown-item>
-
-              <vs-dropdown-item>
-                <span class="flex items-center">
-                  <feather-icon icon="FileIcon" svgClasses="h-4 w-4" class="mr-2" />
-                  <span>Print</span>
-                </span>
-              </vs-dropdown-item>
-
-              <vs-dropdown-item>
-                <span class="flex items-center">
-                  <feather-icon icon="SaveIcon" svgClasses="h-4 w-4" class="mr-2" />
-                  <span>CSV</span>
-                </span>
-              </vs-dropdown-item>
-
-            </vs-dropdown-menu>
-          </vs-dropdown>
+          <vs-button  icon="icon-eye" class="hide-show-checkboxs" @click="activePrompt = true" icon-pack="feather" />
+          
       </div>
 
+      <div>
+        
+        <vs-prompt
+            title="Choose Colums"
+            accept-text= "Apply"
+            button-cancel = "border"
+            @cancel="clearFields"
+            @accept="ColumnsShow"
+            @close="clearFields"
+            :active.sync="activePrompt">
+            <div>
+              <div class="flex flex-row bg-gray-200">
+                <div class="py-2 pr-2 w-1/2">
+                  <label class="custom-label flex">
+                  <div class="bg-custom shadow w-6 h-6 p-1 flex justify-center items-center mr-2">
+                    <input type="checkbox" class="hidden" v-model="site_name_field" v-on:change="ColumnsShow($event)" id="site_name">
+                    <svg class="hidden w-4 h-4 text-green-600 pointer-events-none" viewBox="0 0 172 172"><g fill="none" stroke-width="none" stroke-miterlimit="10" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode:normal"><path d="M0 172V0h172v172z"/><path d="M145.433 37.933L64.5 118.8658 33.7337 88.0996l-10.134 10.1341L64.5 139.1341l91.067-91.067z" fill="currentColor" stroke-width="1"/></g></svg>
+                  </div>
+                  <span class="select-none">Site Name</span>
+                  </label>
+                  <label class="custom-label flex">
+                  <div class="bg-custom shadow w-6 h-6 p-1 flex justify-center items-center mr-2">
+                    <input type="checkbox" class="hidden" v-model="sin_field" v-on:change="ColumnsShow($event)" id="sin">
+                    <svg class="hidden w-4 h-4 text-green-600 pointer-events-none" viewBox="0 0 172 172"><g fill="none" stroke-width="none" stroke-miterlimit="10" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode:normal"><path d="M0 172V0h172v172z"/><path d="M145.433 37.933L64.5 118.8658 33.7337 88.0996l-10.134 10.1341L64.5 139.1341l91.067-91.067z" fill="currentColor" stroke-width="1"/></g></svg>
+                  </div>
+                  <span class="select-none">SIN</span>
+                  </label>
+                  <label class="custom-label flex">
+                  <div class="bg-custom shadow w-6 h-6 p-1 flex justify-center items-center mr-2">
+                    <input type="checkbox" class="hidden" v-model="location_field" v-on:change="ColumnsShow($event)" id="location">
+                    <svg class="hidden w-4 h-4 text-green-600 pointer-events-none" viewBox="0 0 172 172"><g fill="none" stroke-width="none" stroke-miterlimit="10" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode:normal"><path d="M0 172V0h172v172z"/><path d="M145.433 37.933L64.5 118.8658 33.7337 88.0996l-10.134 10.1341L64.5 139.1341l91.067-91.067z" fill="currentColor" stroke-width="1"/></g></svg>
+                  </div>
+                  <span class="select-none">Location</span>
+                  </label>
+                </div>
+                <div class="py-2 pr-2 w-1/2">
+                  <label class="custom-label flex">
+                  <div class="bg-custom shadow w-6 h-6 p-1 flex justify-center items-center mr-2">
+                    <input type="checkbox" class="hidden" v-model="status_field" v-on:change="ColumnsShow($event)" id="status">
+                    <svg class="hidden w-4 h-4 text-green-600 pointer-events-none" viewBox="0 0 172 172"><g fill="none" stroke-width="none" stroke-miterlimit="10" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode:normal"><path d="M0 172V0h172v172z"/><path d="M145.433 37.933L64.5 118.8658 33.7337 88.0996l-10.134 10.1341L64.5 139.1341l91.067-91.067z" fill="currentColor" stroke-width="1"/></g></svg>
+                  </div>
+                  <span class="select-none">Status</span>
+                  </label>
+                  <label class="custom-label flex">
+                  <div class="bg-custom shadow w-6 h-6 p-1 flex justify-center items-center mr-2">
+                    <input type="checkbox" class="hidden" v-model="check_calls_field" v-on:change="ColumnsShow($event)" id="check_calls">
+                    <svg class="hidden w-4 h-4 text-green-600 pointer-events-none" viewBox="0 0 172 172"><g fill="none" stroke-width="none" stroke-miterlimit="10" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode:normal"><path d="M0 172V0h172v172z"/><path d="M145.433 37.933L64.5 118.8658 33.7337 88.0996l-10.134 10.1341L64.5 139.1341l91.067-91.067z" fill="currentColor" stroke-width="1"/></g></svg>
+                  </div>
+                  <span class="select-none">Check Calls</span>
+                  </label>
+                  <label class="custom-label flex">
+                  <div class="bg-custom shadow w-6 h-6 p-1 flex justify-center items-center mr-2">
+                    <input type="checkbox" class="hidden" v-model="actions_field" v-on:change="ColumnsShow($event)" id="s_actions">
+                    <svg class="hidden w-4 h-4 text-green-600 pointer-events-none" viewBox="0 0 172 172"><g fill="none" stroke-width="none" stroke-miterlimit="10" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode:normal"><path d="M0 172V0h172v172z"/><path d="M145.433 37.933L64.5 118.8658 33.7337 88.0996l-10.134 10.1341L64.5 139.1341l91.067-91.067z" fill="currentColor" stroke-width="1"/></g></svg>
+                  </div>
+                  <span class="select-none">Action</span>
+                  </label>
+                </div>
 
-      <!-- AgGrid Table -->
-     
+              </div>
+            </div>
+        </vs-prompt>
+
+        
+        
+      <!-- <button v-on:click="exportData" class="vs-component vs-button vs-button-primary vs-button-filled">Export</button> -->
+          </div>
       <ag-grid-vue
         ref="agGridTable"
         :components="components"
@@ -142,84 +140,56 @@
 <script>
 import { AgGridVue } from 'ag-grid-vue'
 import '@/assets/scss/vuexy/extraComponents/agGridStyleOverride.scss'
-import vSelect from 'vue-select'
+
 import SiteAddNew from './SiteAddNew'
+import SiteFilters from './SiteFilters'
 
 // Store Module
 import moduleUserManagement from '@/store/user-management/moduleUserManagement.js'
 
 // Cell Renderer
-// import CellRendererLink from './cell-renderer/CellRendererLink.vue'
-// import CellRendererStatus from './cell-renderer/CellRendererStatus.vue'
-// import CellRendererVerified from './cell-renderer/CellRendererVerified.vue'
-// import CellRendererActions from './cell-renderer/CellRendererActions.vue'
+import CellRendererStatus from './cell-renderer/cellRendererStatus.vue'
+import CellRendererActions from './cell-renderer/CellRendererActions.vue'
+
+
+//
+
 
 
 export default {
   components: {
     AgGridVue,
-    vSelect,
 
     // Cell Renderer
-    // CellRendererLink,
-    // CellRendererStatus,
-    // CellRendererVerified,
-    // CellRendererActions,
-    SiteAddNew
+    CellRendererStatus,
+    CellRendererActions,
+    SiteAddNew,
+    SiteFilters,
   },
   data () {
     
     return {
       activePrompt: false,
-      clientLocal: {
-        name: '',
-        phone: '',
-        mobile: '',
-        city:'',
-        postCode:'',
-        country:'',
-        email: '',
-        desc: ''
+      site_name_field:true,
+      sin_field:true,
+      location_field:true,
+      status_field:true,
+      check_calls_field:true,
+      actions_field:true,
+      Site: {
+        site_name: '',
+        sin: '',
+        location: '',
+        status:'',
+        check_calls:''
       },
-      // Filter Options
-      roleFilter: { label: 'All', value: 'all' },
-      roleOptions: [
-        { label: 'All', value: 'all' },
-        { label: 'Admin', value: 'admin' },
-        { label: 'User', value: 'user' },
-        { label: 'Staff', value: 'staff' }
-      ],
-
-      statusFilter: { label: 'All', value: 'all' },
-      statusOptions: [
-        { label: 'All', value: 'all' },
-        { label: 'Active', value: 'active' },
-        { label: 'Deactivated', value: 'deactivated' },
-        { label: 'Blocked', value: 'blocked' }
-      ],
-
-      isVerifiedFilter: { label: 'All', value: 'all' },
-      isVerifiedOptions: [
-        { label: 'All', value: 'all' },
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ],
-
-      departmentFilter: { label: 'All', value: 'all' },
-      departmentOptions: [
-        { label: 'All', value: 'all' },
-        { label: 'Sales', value: 'sales' },
-        { label: 'Development', value: 'development' },
-        { label: 'Management', value: 'management' }
-      ],
-
       searchQuery: '',
-      hide_show : [],
-      fileteredColumn: [],
 
       // AgGrid
       gridApi: null,
-      gridOptions: {},
+      gridOptions: {
+        rowClass:'animate-edit-icon'
+      },
       defaultColDef: {
         sortable: true,
         resizable: true,
@@ -229,7 +199,6 @@ export default {
         {
           headerName: 'ID',
           field:'id',
-          width: 50,
           filter: true,
           checkboxSelection: true,
           headerCheckboxSelectionFilteredOnly: true,
@@ -237,80 +206,57 @@ export default {
         },
 
         {
-          headerName: 'Name',
-          field: 'name',
+          headerName: 'Site Name',
+          field: 'site_name',
           filter: true,
-          width: 200
+          
         },
         {
-          headerName: 'Email',
-          field: 'email',
+          headerName: 'SIN',
+          field: 'sin',
           filter: true,
-          width: 225
         },
         {
-          headerName: 'Phone',
-          field: 'phone',
+          headerName: 'Location',
+          field: 'location',
           filter: true,
-          width: 225
         },
+       {
+          headerName: 'Status',
+          field: 'status',
+          cellEditor : 'agSelectCellEditor',
+          cellEditorParams : {
+            values: ['active','inactive']
+          },
+          editable: true,
+          filter: true,
+          cellRendererFramework: 'CellRendererStatus'
+        },    
         {
-          headerName: 'Mobile',
-          field: 'mobile',
+          headerName: 'Check Calls',
+          field: 'check_calls',
           filter: true,
-          width: 200
-        },
-        {
-          headerName: 'City/Town',
-          field: 'city',
-          filter: true,
-          width: 225
-        },
-        {
-          headerName: 'Post Code',
-          field: 'postCode',
-          filter: true,
-          width: 150
-        },
-        
-        {
-          headerName: 'Country',
-          field: 'country',
-          filter: true,
-          width: 150
-        },
-    
+        }, 
         {
           headerName: 'Actions',
-          field: 'transactions',
-          width: 150,
+          field: 's_actions',
           cellRendererFramework: 'CellRendererActions'
         }
       ],
 
       // Cell Renderer Components
       components: {
-        CellRendererLink,
         CellRendererStatus,
-        CellRendererVerified,
         CellRendererActions
       }
     }
   },
   watch: {
-    roleFilter (obj) {
-      this.setColumnFilter('role', obj.value)
-    },
+    
     statusFilter (obj) {
       this.setColumnFilter('status', obj.value)
     },
-    isVerifiedFilter (obj) {
-      const val = obj.value === 'all' ? 'all' : obj.value === 'yes' ? 'true' : 'false'
-      this.setColumnFilter('is_verified', val)
-    },
-    departmentFilter (obj) {
-      this.setColumnFilter('department', obj.value)
-    }
+   
   },
   computed: {
     usersData () {
@@ -337,17 +283,14 @@ export default {
   methods: {
     clearFields () {
       Object.assign(this.clientLocal, {
-        name: '',
-        phone: '',
-        mobile: '',
-        city:'',
-        postCode:'',
-        country:'',
-        email: '',
-        desc: ''
+        site_name: '',
+        sin: '',
+        location: '',
+        status:'',
+        check_calls:''
       })
-    },
-    addClient () {
+    }, 
+    addSite () {
       this.$validator.validateAll().then(result => {
         if (result) {
           //this.$store.dispatch('client/addClient', Object.assign({}, this.clientLocal))
@@ -366,13 +309,46 @@ export default {
       filter.setModel(modelObj)
       this.gridApi.onFilterChanged()
     },
-    testt () {
+    ColumnsShow ($e) {
       // this.fileteredColumn = this.columnDefs.filter(item => {
       //   return this.hide_show.includes(item.field)
       // })
+
+      switch($e.target.id) {
+
+        case 'site_name':
+          this.gridOptions.columnApi.setColumnVisible($e.target.id, this.site_name_field ? true: false)
+          this.gridOptions.api.sizeColumnsToFit()
+          break;
+        case  'sin':
+          this.gridOptions.columnApi.setColumnVisible($e.target.id, this.sin_field ? true: false)
+          this.gridOptions.api.sizeColumnsToFit()
+          break
+        case 'status':
+          this.gridOptions.columnApi.setColumnVisible($e.target.id, this.status_field ? true: false)
+          this.gridOptions.api.sizeColumnsToFit()
+          break;
+        case 'location':
+          this.gridOptions.columnApi.setColumnVisible($e.target.id, this.location_field ? true: false)
+          this.gridOptions.api.sizeColumnsToFit()
+          break;  
+        case  'check_calls':
+          this.gridOptions.columnApi.setColumnVisible($e.target.id, this.check_calls_field ? true: false)
+          this.gridOptions.api.sizeColumnsToFit()
+          break
+        case  's_actions':
+          this.gridOptions.columnApi.setColumnVisible($e.target.id, this.actions_field ? true: false)
+          this.gridOptions.api.sizeColumnsToFit()
+          break
+        
+        default:
+          console.log('No matched')
+
+
+      }
       
-      this.gridOptions.columnApi.setColumnsVisible(this.hide_show, false)
-      this.gridOptions.api.sizeColumnsToFit()
+      
+      
     },
     resetColFilters () {
       // Reset Grid Filter
@@ -390,7 +366,7 @@ export default {
   },
   mounted () {
     this.gridApi = this.gridOptions.api
-
+    this.gridOptions.api.sizeColumnsToFit();
     /* =================================================================
       NOTE:
       Header is not aligned properly in RTL version of agGrid table.
@@ -422,5 +398,21 @@ export default {
       transform: translateY(-58%);
     }
   }
+}
+.pagi-btn {
+  border: none !important;
+  border-radius: 0px !important;
+  border-bottom: 1px solid #4596fb !important;
+}
+.animate-edit-icon:hover .edit-animate{
+  margin-right:1rem !important;
+  opacity: 1;
+  transition: all 1s;
+
+}
+.edit-animate{
+  margin-right: -2rem !important;
+  opacity: 0;
+  color: rgb(111, 236, 111);
 }
 </style>

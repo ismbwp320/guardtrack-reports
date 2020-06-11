@@ -81,24 +81,7 @@
                 <vx-breadcrumb class="ml-4 md:block hidden" v-if="$route.meta.breadcrumb" :route="$route" :isRTL="$vs.rtl" />
 
                 <!-- DROPDOWN -->
-                <vs-dropdown vs-trigger-click class="ml-auto md:block hidden cursor-pointer">
-                  <vs-button  icon-pack="feather">Actions</vs-button>
-                  
-
-                  <vs-dropdown-menu class="w-90">
-                    <vs-dropdown-item>
-                      <span>Export</span>
-                      <hr />
-                    </vs-dropdown-item>
-                    <vs-dropdown-item>
-                      <div @click="$router.push('/pages/profile').catch(() => {})" class="flex items-center">
-                        <feather-icon icon="UserIcon" class="inline-block mr-2" svgClasses="w-4 h-4" />
-                        <span>CSV</span>
-                      </div>
-                    </vs-dropdown-item>
-                  </vs-dropdown-menu>
-
-                </vs-dropdown>
+                <export-btn />
 
               </div>
             </transition>
@@ -132,8 +115,9 @@ import TheNavbarVertical   from '@/layouts/components/navbar/TheNavbarVertical.v
 import TheFooter           from '@/layouts/components/TheFooter.vue'
 import themeConfig         from '@/../themeConfig.js'
 import VNavMenu            from '@/layouts/components/vertical-nav-menu/VerticalNavMenu.vue'
+import ExportBtn           from '@/layouts/components/export/exportBtn.vue'
 
-const VxTour = () => import('@/components/VxTour.vue')
+// const VxTour = () => import('@/components/VxTour.vue')
 
 export default {
   components: {
@@ -144,7 +128,8 @@ export default {
     TheNavbarHorizontal,
     TheNavbarVertical,
     VNavMenu,
-    VxTour
+    // VxTour,
+    ExportBtn
   },
   data () {
     return {

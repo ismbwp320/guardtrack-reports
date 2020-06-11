@@ -10,8 +10,8 @@
 <template>
 
   <div id="page-user-list">
-    <site-add-new />
-    <vx-card ref="filterCard" title="Filters" class="user-list-filters mb-8" actionButtons @refresh="resetColFilters" @remove="resetColFilters">
+    <staff-add-new />
+    <!-- <vx-card ref="filterCard" title="Filters" class="user-list-filters mb-8" actionButtons @refresh="resetColFilters" @remove="resetColFilters">
       <div class="vx-row">
         <div class="vx-col md:w-1/4 sm:w-1/2 w-full">
           <label class="text-sm opacity-75">Role</label>
@@ -30,7 +30,7 @@
           <v-select :options="departmentOptions" :clearable="false" :dir="$vs.rtl ? 'rtl' : 'ltr'" v-model="departmentFilter" />
         </div>
       </div>
-    </vx-card>
+    </vx-card> -->
 
     <div class="vx-card p-6">
 
@@ -39,7 +39,7 @@
         <!-- ITEMS PER PAGE -->
         <div class="flex-grow">
           <vs-dropdown vs-trigger-click class="cursor-pointer">
-            <div class="p-4 border border-solid d-theme-border-grey-light rounded-full d-theme-dark-bg cursor-pointer flex items-center justify-between font-medium">
+            <div class="p-4 border pagi-btn  border-solid d-theme-border-grey-light rounded-full d-theme-dark-bg cursor-pointer flex items-center justify-between font-medium">
               <span class="mr-2">{{ currentPage * paginationPageSize - (paginationPageSize - 1) }} - {{ usersData.length - currentPage * paginationPageSize > 0 ? currentPage * paginationPageSize : usersData.length }} of {{ usersData.length }}</span>
               <feather-icon icon="ChevronDownIcon" svgClasses="h-4 w-4" />
             </div>
@@ -63,52 +63,121 @@
         </div>
 
         <!-- TABLE ACTION COL-2: SEARCH & EXPORT AS CSV -->
-          <vs-input class="sm:mr-4 mr-0 sm:w-auto w-full sm:order-normal order-3 sm:mt-0 mt-4" v-model="searchQuery" @input="updateSearchQuery" placeholder="Search..." />
+          <vs-input class="sm:mr-4 mr-0 sm:w-auto w-full sm:order-normal order-3 sm:mt-0 mt-4 ag-search" v-model="searchQuery" @input="updateSearchQuery" placeholder="Search..." />
           <!-- <vs-button class="mb-4 md:mb-0" @click="gridApi.exportDataAsCsv()">Export as CSV</vs-button> -->
 
-          <!-- ACTION - DROPDOWN -->
-          <vs-dropdown vs-trigger-click class="cursor-pointer">
-
-            <div class="p-3 shadow-drop rounded-lg d-theme-dark-light-bg cursor-pointer flex items-end justify-center text-lg font-medium w-32">
-              <span class="mr-2 leading-none">Actions</span>
-              <feather-icon icon="ChevronDownIcon" svgClasses="h-4 w-4" />
-            </div>
-
-            <vs-dropdown-menu>
-
-              <vs-dropdown-item>
-                <span class="flex items-center">
-                  <feather-icon icon="TrashIcon" svgClasses="h-4 w-4" class="mr-2" />
-                  <span>Delete</span>
-                </span>
-              </vs-dropdown-item>
-
-              <vs-dropdown-item>
-                <span class="flex items-center">
-                  <feather-icon icon="ArchiveIcon" svgClasses="h-4 w-4" class="mr-2" />
-                  <span>Archive</span>
-                </span>
-              </vs-dropdown-item>
-
-              <vs-dropdown-item>
-                <span class="flex items-center">
-                  <feather-icon icon="FileIcon" svgClasses="h-4 w-4" class="mr-2" />
-                  <span>Print</span>
-                </span>
-              </vs-dropdown-item>
-
-              <vs-dropdown-item>
-                <span class="flex items-center">
-                  <feather-icon icon="SaveIcon" svgClasses="h-4 w-4" class="mr-2" />
-                  <span>CSV</span>
-                </span>
-              </vs-dropdown-item>
-
-            </vs-dropdown-menu>
-          </vs-dropdown>
+          <vs-button  icon="icon-eye" @click="activePrompt = true" icon-pack="feather" />
       </div>
+      <div>
+        
+        <vs-prompt
+            title="Choose Colums"
+            accept-text= "Apply"
+            button-cancel = "border"
+            @cancel="clearFields"
+            @accept="ColumnsShow"
+            @close="clearFields"
+            :active.sync="activePrompt">
+            <div>
+              <div class="flex flex-row bg-gray-200">
+                <div class="py-2 pr-2 w-1/2">
+                  <label class="custom-label flex">
+                  <div class="bg-custom shadow w-6 h-6 p-1 flex justify-center items-center mr-2">
+                    <input type="checkbox" class="hidden" v-model="toggle_checkboxes.officer_field" v-on:change="ColumnsShow($event)" id="officer">
+                    <svg class="hidden w-4 h-4 text-green-600 pointer-events-none" viewBox="0 0 172 172"><g fill="none" stroke-width="none" stroke-miterlimit="10" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode:normal"><path d="M0 172V0h172v172z"/><path d="M145.433 37.933L64.5 118.8658 33.7337 88.0996l-10.134 10.1341L64.5 139.1341l91.067-91.067z" fill="currentColor" stroke-width="1"/></g></svg>
+                  </div>
+                  <span class="select-none">Officer</span>
+                  </label>
+                  <label class="custom-label flex">
+                  <div class="bg-custom shadow w-6 h-6 p-1 flex justify-center items-center mr-2">
+                    <input type="checkbox" class="hidden" v-model="toggle_checkboxes.pin_field" v-on:change="ColumnsShow($event)" id="pin">
+                    <svg class="hidden w-4 h-4 text-green-600 pointer-events-none" viewBox="0 0 172 172"><g fill="none" stroke-width="none" stroke-miterlimit="10" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode:normal"><path d="M0 172V0h172v172z"/><path d="M145.433 37.933L64.5 118.8658 33.7337 88.0996l-10.134 10.1341L64.5 139.1341l91.067-91.067z" fill="currentColor" stroke-width="1"/></g></svg>
+                  </div>
+                  <span class="select-none">Pin</span>
+                  </label>
+                  <label class="custom-label flex">
+                  <div class="bg-custom shadow w-6 h-6 p-1 flex justify-center items-center mr-2">
+                    <input type="checkbox" class="hidden" v-model="toggle_checkboxes.email_field" v-on:change="ColumnsShow($event)" id="email">
+                    <svg class="hidden w-4 h-4 text-green-600 pointer-events-none" viewBox="0 0 172 172"><g fill="none" stroke-width="none" stroke-miterlimit="10" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode:normal"><path d="M0 172V0h172v172z"/><path d="M145.433 37.933L64.5 118.8658 33.7337 88.0996l-10.134 10.1341L64.5 139.1341l91.067-91.067z" fill="currentColor" stroke-width="1"/></g></svg>
+                  </div>
+                  <span class="select-none">Email</span>
+                  </label>
+                  <label class="custom-label flex">
+                  <div class="bg-custom shadow w-6 h-6 p-1 flex justify-center items-center mr-2">
+                    <input type="checkbox" class="hidden" v-model="toggle_checkboxes.phone_field" v-on:change="ColumnsShow($event)" id="phone">
+                    <svg class="hidden w-4 h-4 text-green-600 pointer-events-none" viewBox="0 0 172 172"><g fill="none" stroke-width="none" stroke-miterlimit="10" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode:normal"><path d="M0 172V0h172v172z"/><path d="M145.433 37.933L64.5 118.8658 33.7337 88.0996l-10.134 10.1341L64.5 139.1341l91.067-91.067z" fill="currentColor" stroke-width="1"/></g></svg>
+                  </div>
+                  <span class="select-none">Phone</span>
+                  </label>
+                  <label class="custom-label flex">
+                  <div class="bg-custom shadow w-6 h-6 p-1 flex justify-center items-center mr-2">
+                    <input type="checkbox" class="hidden" v-model="toggle_checkboxes.position_field" v-on:change="ColumnsShow($event)" id="position">
+                    <svg class="hidden w-4 h-4 text-green-600 pointer-events-none" viewBox="0 0 172 172"><g fill="none" stroke-width="none" stroke-miterlimit="10" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode:normal"><path d="M0 172V0h172v172z"/><path d="M145.433 37.933L64.5 118.8658 33.7337 88.0996l-10.134 10.1341L64.5 139.1341l91.067-91.067z" fill="currentColor" stroke-width="1"/></g></svg>
+                  </div>
+                  <span class="select-none">Position</span>
+                  </label>
+                  <label class="custom-label flex">
+                  <div class="bg-custom shadow w-6 h-6 p-1 flex justify-center items-center mr-2">
+                    <input type="checkbox" class="hidden" v-model="toggle_checkboxes.sia_no_field" v-on:change="ColumnsShow($event)" id="sia_no">
+                    <svg class="hidden w-4 h-4 text-green-600 pointer-events-none" viewBox="0 0 172 172"><g fill="none" stroke-width="none" stroke-miterlimit="10" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode:normal"><path d="M0 172V0h172v172z"/><path d="M145.433 37.933L64.5 118.8658 33.7337 88.0996l-10.134 10.1341L64.5 139.1341l91.067-91.067z" fill="currentColor" stroke-width="1"/></g></svg>
+                  </div>
+                  <span class="select-none">SIA Number</span>
+                  </label>
+                  <label class="custom-label flex">
+                  <div class="bg-custom shadow w-6 h-6 p-1 flex justify-center items-center mr-2">
+                    <input type="checkbox" class="hidden" v-model="toggle_checkboxes.location_field" v-on:change="ColumnsShow($event)" id="location">
+                    <svg class="hidden w-4 h-4 text-green-600 pointer-events-none" viewBox="0 0 172 172"><g fill="none" stroke-width="none" stroke-miterlimit="10" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode:normal"><path d="M0 172V0h172v172z"/><path d="M145.433 37.933L64.5 118.8658 33.7337 88.0996l-10.134 10.1341L64.5 139.1341l91.067-91.067z" fill="currentColor" stroke-width="1"/></g></svg>
+                  </div>
+                  <span class="select-none">location</span>
+                  </label>
+                </div>
+                <div class="py-2 pr-2 w-1/2">
+                  
+                  <label class="custom-label flex">
+                  <div class="bg-custom shadow w-6 h-6 p-1 flex justify-center items-center mr-2">
+                    <input type="checkbox" class="hidden" v-model="toggle_checkboxes.added_date_field" v-on:change="ColumnsShow($event)" id="added_date">
+                    <svg class="hidden w-4 h-4 text-green-600 pointer-events-none" viewBox="0 0 172 172"><g fill="none" stroke-width="none" stroke-miterlimit="10" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode:normal"><path d="M0 172V0h172v172z"/><path d="M145.433 37.933L64.5 118.8658 33.7337 88.0996l-10.134 10.1341L64.5 139.1341l91.067-91.067z" fill="currentColor" stroke-width="1"/></g></svg>
+                  </div>
+                  <span class="select-none">Added Date</span>
+                  </label>
+                  <label class="custom-label flex">
+                  <div class="bg-custom shadow w-6 h-6 p-1 flex justify-center items-center mr-2">
+                    <input type="checkbox" class="hidden" v-model="toggle_checkboxes.contract_start_field" v-on:change="ColumnsShow($event)" id="contract_start_date">
+                    <svg class="hidden w-4 h-4 text-green-600 pointer-events-none" viewBox="0 0 172 172"><g fill="none" stroke-width="none" stroke-miterlimit="10" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode:normal"><path d="M0 172V0h172v172z"/><path d="M145.433 37.933L64.5 118.8658 33.7337 88.0996l-10.134 10.1341L64.5 139.1341l91.067-91.067z" fill="currentColor" stroke-width="1"/></g></svg>
+                  </div>
+                  <span class="select-none">Contract Start Date</span>
+                  </label>
+                  <label class="custom-label flex">
+                  <div class="bg-custom shadow w-6 h-6 p-1 flex justify-center items-center mr-2">
+                    <input type="checkbox" class="hidden" v-model="toggle_checkboxes.pay_rate_field" v-on:change="ColumnsShow($event)" id="pay_rate">
+                    <svg class="hidden w-4 h-4 text-green-600 pointer-events-none" viewBox="0 0 172 172"><g fill="none" stroke-width="none" stroke-miterlimit="10" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode:normal"><path d="M0 172V0h172v172z"/><path d="M145.433 37.933L64.5 118.8658 33.7337 88.0996l-10.134 10.1341L64.5 139.1341l91.067-91.067z" fill="currentColor" stroke-width="1"/></g></svg>
+                  </div>
+                  <span class="select-none">Pay Rate</span>
+                  </label>
+                  <label class="custom-label flex">
+                  <div class="bg-custom shadow w-6 h-6 p-1 flex justify-center items-center mr-2">
+                    <input type="checkbox" class="hidden" v-model="toggle_checkboxes.status_field" v-on:change="ColumnsShow($event)" id="status">
+                    <svg class="hidden w-4 h-4 text-green-600 pointer-events-none" viewBox="0 0 172 172"><g fill="none" stroke-width="none" stroke-miterlimit="10" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode:normal"><path d="M0 172V0h172v172z"/><path d="M145.433 37.933L64.5 118.8658 33.7337 88.0996l-10.134 10.1341L64.5 139.1341l91.067-91.067z" fill="currentColor" stroke-width="1"/></g></svg>
+                  </div>
+                  <span class="select-none">Status</span>
+                  </label>
+                  <label class="custom-label flex">
+                  <div class="bg-custom shadow w-6 h-6 p-1 flex justify-center items-center mr-2">
+                    <input type="checkbox" class="hidden" v-model="toggle_checkboxes.staff_actions_field" v-on:change="ColumnsShow($event)" id="s_actions">
+                    <svg class="hidden w-4 h-4 text-green-600 pointer-events-none" viewBox="0 0 172 172"><g fill="none" stroke-width="none" stroke-miterlimit="10" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode:normal"><path d="M0 172V0h172v172z"/><path d="M145.433 37.933L64.5 118.8658 33.7337 88.0996l-10.134 10.1341L64.5 139.1341l91.067-91.067z" fill="currentColor" stroke-width="1"/></g></svg>
+                  </div>
+                  <span class="select-none">Actions</span>
+                  </label>
+                </div>
 
+              </div>
+            </div>
+        </vs-prompt>
 
+        
+        
+      <!-- <button v-on:click="exportData" class="vs-component vs-button vs-button-primary vs-button-filled">Export</button> -->
+          </div>
       <!-- AgGrid Table -->
      
       <ag-grid-vue
@@ -149,10 +218,10 @@ import StaffAddNew from './StaffAddNew'
 import moduleUserManagement from '@/store/user-management/moduleUserManagement.js'
 
 // Cell Renderer
-// import CellRendererLink from './cell-renderer/CellRendererLink.vue'
-// import CellRendererStatus from './cell-renderer/CellRendererStatus.vue'
-// import CellRendererVerified from './cell-renderer/CellRendererVerified.vue'
-// import CellRendererActions from './cell-renderer/CellRendererActions.vue'
+import CellRendererLink from '../user/user-list/cell-renderer/CellRendererLink.vue'
+import CellRendererStatus from '../user/user-list/cell-renderer/CellRendererStatus.vue'
+import CellRendererVerified from '../user/user-list/cell-renderer/CellRendererVerified.vue'
+import CellRendererActions from '../user/user-list/cell-renderer/CellRendererActions.vue'
 
 
 export default {
@@ -161,15 +230,32 @@ export default {
     vSelect,
 
     // Cell Renderer
-    // CellRendererLink,
-    // CellRendererStatus,
-    // CellRendererVerified,
-    // CellRendererActions,
+    CellRendererLink,
+    CellRendererStatus,
+    CellRendererVerified,
+    CellRendererActions,
     StaffAddNew
   },
   data () {
     
     return {
+
+        toggle_checkboxes:{
+
+          officer_field:true,
+          pin_field:true,
+          email_field:true,
+          phone_field:true,
+          position_field:true,
+          sia_no_field:true,
+          location_field:true,
+          added_date_field:true,
+          contract_start_field:true,
+          pay_rate_field:true,
+          status_field:true,
+          staff_actions_field:true
+          
+        },
       activePrompt: false,
       clientLocal: {
         name: '',
@@ -214,8 +300,6 @@ export default {
       ],
 
       searchQuery: '',
-      hide_show : [],
-      fileteredColumn: [],
 
       // AgGrid
       gridApi: null,
@@ -229,7 +313,6 @@ export default {
         {
           headerName: 'ID',
           field:'id',
-          width: 50,
           filter: true,
           checkboxSelection: true,
           headerCheckboxSelectionFilteredOnly: true,
@@ -237,53 +320,69 @@ export default {
         },
 
         {
-          headerName: 'Name',
-          field: 'name',
+          headerName: 'Officer',
+          field: 'officer',
           filter: true,
-          width: 200
+        },
+        {
+          headerName: 'Pin',
+          field: 'pin',
+          filter: true,
         },
         {
           headerName: 'Email',
           field: 'email',
           filter: true,
-          width: 225
         },
         {
           headerName: 'Phone',
           field: 'phone',
           filter: true,
-          width: 225
         },
         {
-          headerName: 'Mobile',
-          field: 'mobile',
+          headerName: 'Position',
+          field: 'position',
           filter: true,
-          width: 200
         },
         {
-          headerName: 'City/Town',
-          field: 'city',
+          headerName: 'SIA Number',
+          field: 'sia_no',
           filter: true,
-          width: 225
-        },
-        {
-          headerName: 'Post Code',
-          field: 'postCode',
-          filter: true,
-          width: 150
         },
         
         {
-          headerName: 'Country',
-          field: 'country',
+          headerName: 'Location',
+          field: 'location',
           filter: true,
-          width: 150
+  
+        },
+        {
+          headerName: 'Added Date',
+          field: 'added_date',
+          filter: true,
+        },
+        {
+          headerName: 'Contract Start Date',
+          field: 'contract_start_date',
+          filter: true,
+
+        },
+        {
+          headerName: 'Pay Rate',
+          field: 'pay_rate',
+          filter: true,
+
+        },
+        {
+          headerName: 'Status',
+          field: 'status',
+          filter: true,
+
         },
     
         {
           headerName: 'Actions',
-          field: 'transactions',
-          width: 150,
+          field: 's_actions',
           cellRendererFramework: 'CellRendererActions'
         }
       ],
@@ -347,7 +446,62 @@ export default {
         desc: ''
       })
     },
-    addClient () {
+    ColumnsShow ($e) {
+      switch($e.target.id) {
+
+        case 'officer':
+          this.gridOptions.columnApi.setColumnVisible($e.target.id, this.toggle_checkboxes.officer_field ? false:true)
+          this.gridOptions.api.sizeColumnsToFit()
+          break;
+        case  'pin':
+          this.gridOptions.columnApi.setColumnVisible($e.target.id, this.toggle_checkboxes.pin_field ? true:false)
+          this.gridOptions.api.sizeColumnsToFit()
+          break
+        case 'email':
+          this.gridOptions.columnApi.setColumnVisible($e.target.id, this.toggle_checkboxes.email_field? true:false)
+          this.gridOptions.api.sizeColumnsToFit()
+          break;
+        case  'phone':
+          this.gridOptions.columnApi.setColumnVisible($e.target.id, this.toggle_checkboxes.phone_field ? true:false)
+          this.gridOptions.api.sizeColumnsToFit()
+          break
+        case 'position':
+          this.gridOptions.columnApi.setColumnVisible($e.target.id, this.toggle_checkboxes.position_field ? true:false)
+          this.gridOptions.api.sizeColumnsToFit()
+          break;
+        case  'sia_no':
+          this.gridOptions.columnApi.setColumnVisible($e.target.id, this.toggle_checkboxes.sia_no_field ? true:false)
+          this.gridOptions.api.sizeColumnsToFit()
+          break
+        case  'location':
+          this.gridOptions.columnApi.setColumnVisible($e.target.id, this.toggle_checkboxes.location_field? true:false)
+          this.gridOptions.api.sizeColumnsToFit()
+          break  
+        case  'added_date':
+          this.gridOptions.columnApi.setColumnVisible($e.target.id, this.toggle_checkboxes.added_date_field? true:false)
+          this.gridOptions.api.sizeColumnsToFit()
+          break
+        case  'contract_start_date':
+          this.gridOptions.columnApi.setColumnVisible($e.target.id, this.toggle_checkboxes.contract_start_field? true:false)
+          this.gridOptions.api.sizeColumnsToFit()
+          break
+        case  'pay_rate':
+          this.gridOptions.columnApi.setColumnVisible($e.target.id, this.toggle_checkboxes.pay_rate_field? true:false)
+          this.gridOptions.api.sizeColumnsToFit()
+          break
+        case  'status':
+          this.gridOptions.columnApi.setColumnVisible($e.target.id, this.toggle_checkboxes.status_field? true:false)
+          this.gridOptions.api.sizeColumnsToFit()
+          break
+        case  's_actions':
+        this.gridOptions.columnApi.setColumnVisible($e.target.id, this.toggle_checkboxes.staff_actions_field? true:false)
+        this.gridOptions.api.sizeColumnsToFit()
+          break                  
+        default:
+          console.log('No matched')
+      }        
+    },
+    addStaff () {
       this.$validator.validateAll().then(result => {
         if (result) {
           //this.$store.dispatch('client/addClient', Object.assign({}, this.clientLocal))
@@ -422,5 +576,10 @@ export default {
       transform: translateY(-58%);
     }
   }
+}
+.pagi-btn {
+  border: none !important;
+  border-radius: 0px !important;
+  border-bottom: 1px solid #4596fb !important;
 }
 </style>

@@ -10,7 +10,7 @@
 
 <template>
     <div class="pb-2 pt-2 text-right">
-    <vs-button @click="activePrompt = true" class="addClient">Add Site</vs-button>
+    <vs-button @click="activePrompt = true" class="addSite">Add Site</vs-button>
     <vs-prompt
         title="Add Site"
         accept-text= "Save"
@@ -30,7 +30,7 @@
                         </div>
                         <div class="py-2 pr-2 w-1/2">
                            <vs-select label="Client:" v-model="addressType" class="w-full mt-5">
-                              <vs-select-item :key="index" :value="item.value" :text="item.text" v-for="(item,index) in addressTypeOptions" />
+                              <!-- <vs-select-item :key="index" :value="item.value" :text="item.text" v-for="(item,index) in addressTypeOptions" /> -->
                             </vs-select>
                         </div>
                         

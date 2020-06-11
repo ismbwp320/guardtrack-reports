@@ -20,6 +20,8 @@
     <vx-card v-if="user_data">
 
       <div slot="no-body" class="tabs-container px-6 pt-6">
+        
+        <!-- <vs-button @click="$router.push('/apps/client/all').catch(() => {})" id="edit-back-btn" icon-pack="feather" icon="icon-chevrons-left" /> -->
 
         <vs-tabs v-model="activeTab" class="tab-action-btn-fill-conatiner">
           <vs-tab label="Account" icon-pack="feather" icon="icon-user">

@@ -87,7 +87,7 @@
 </template>
 
 <script>
-import VxAutoSuggest from '@/components/vx-auto-suggest/VxAutoSuggest.vue'
+import VxAutoSuggest from '@/components/VxAutoSuggest.vue'
 
 export default {
   components: {

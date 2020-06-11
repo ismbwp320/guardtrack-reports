@@ -1,17 +1,8 @@
-<!-- =========================================================================================
-  File Name: UserEdit.vue
-  Description: User Edit Page
-  ----------------------------------------------------------------------------------------
-  Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
-  Author: Pixinvent
-  Author URL: http://www.themeforest.net/user/pixinvent
-========================================================================================== -->
-
 <template>
   <div id="page-user-edit">
 
     <vs-alert color="danger" title="User Not Found" :active.sync="user_not_found">
-      <span>User record with id: {{ $route.params.userId }} not found. </span>
+      <span>User record with id: {{ $route.params.siteId }} not found. </span>
       <span>
         <span>Check </span><router-link :to="{name:'page-user-list'}" class="text-inherit underline">All Users</router-link>
       </span>
@@ -38,18 +29,14 @@
 </template>
 
 <script>
-import UserEditTabAccount     from './UserEditTabAccount.vue'
-import UserEditTabInformation from './UserEditTabInformation.vue'
-import UserEditTabSocial      from './UserEditTabSocial.vue'
+import SiteEditTabAccount     from './SiteEditTabAccount.vue'
 
 // Store Module
 import moduleUserManagement from '@/store/user-management/moduleUserManagement.js'
 
 export default {
   components: {
-    UserEditTabAccount,
-    UserEditTabInformation,
-    UserEditTabSocial
+   SiteEditTabAccount
   },
   data () {
     return {

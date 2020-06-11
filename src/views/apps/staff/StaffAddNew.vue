@@ -10,13 +10,13 @@
 
 <template>
     <div class="pb-2 pt-2 text-right">
-    <vs-button @click="activePrompt = true" class="addClient">Add Site</vs-button>
+    <vs-button @click="activePrompt = true" class="addStaff">Add</vs-button>
     <vs-prompt
-        title="Add Site"
+        title="Add Staff"
         accept-text= "Save"
         button-cancel = "border"
         @cancel="clearFields"
-        @accept="addClient"
+        @accept="addStaff"
         @close="clearFields"
         :is-valid="validateForm"
         :active.sync="activePrompt">
@@ -25,25 +25,40 @@
                 <div class="vx-row">
                     <div class="vx-col w-full">
                       <div class="flex flex-row bg-gray-200">
-                        <div class="py-2 pr-2 w-1/2">
-                           <vs-input v-validate="'required'" label="Site name:" name="c_name" class="w-full mb-4 mt-5" placeholder="Site name" v-model="clientLocal.name" :color="validateForm ? 'success' : 'danger'" />
+                        <div class="py-2 pr-2 w-1/3">
+                           <vs-input v-validate="'required'" label="First name:" name="first_name" class="w-full mb-4 mt-5" placeholder="First name" v-model="staff.first_name" :color="validateForm ? 'success' : 'danger'" />
                         </div>
                         <div class="py-2 pr-2 w-1/2">
-                           <vs-select label="Client:" v-model="addressType" class="w-full mt-5">
-                              <vs-select-item :key="index" :value="item.value" :text="item.text" v-for="(item,index) in addressTypeOptions" />
-                            </vs-select>
+                           <vs-input v-validate="'required'" label="Last name:" name="last_name" class="w-full mb-4 mt-5" placeholder="Last name" v-model="staff.last_name" :color="validateForm ? 'success' : 'danger'" />
                         </div>
-                        
+                        <div class="py-2 pr-2 w-1/3">
+                           <vs-input v-validate="'required'" label="ID:" name="staff_id" class="w-full mb-4 mt-5" placeholder="Id" v-model="staff.staff_id" :color="validateForm ? 'success' : 'danger'" />
+                        </div>
                       </div>
-                      <vs-textarea rows="5" label="Address" v-model="clientLocal.desc" />
                       <div class="flex flex-row bg-gray-200">
                           <div class="py-2 pr-2 w-1/2">
-                              <vs-input v-validate="'required'" label="Post code:" name="c_post_code" class="w-full mb-4 mt-5" placeholder="Post Code" v-model="clientLocal.postCode" :color="validateForm ? 'success' : 'danger'" />
+                            <vs-select label="Contractor:" v-model="staff.contractor" class="w-full mt-5">
+                              <!-- <vs-select-item :key="index" :value="item.value" :text="item.text" v-for="(item,index) in addressTypeOptions" /> -->
+                            </vs-select>
                           </div>
                           <div class="py-2 pr-2 w-1/2">
-                              <vs-input v-validate="'required'" label="City:" name="c_city" class="w-full mb-4 mt-5" placeholder="City/Town" v-model="clientLocal.city" :color="validateForm ? 'success' : 'danger'" />
+                            <vs-select label="Position:" v-model="staff.position" class="w-full mt-5">
+                              <!-- <vs-select-item :key="index" :value="item.value" :text="item.text" v-for="(item,index) in addressTypeOptions" /> -->
+                            </vs-select>
                           </div>
                       </div>
+                      <div class="flex flex-row bg-gray-200">
+                        <div class="py-2 pr-2 w-1/3">
+                           <vs-input v-validate="'required'" label="Email:" name="staff_email" class="w-full mb-4 mt-5" placeholder="Email" v-model="staff.staff_email" :color="validateForm ? 'success' : 'danger'" />
+                        </div>
+                        <div class="py-2 pr-2 w-1/2">
+                           <vs-input v-validate="'required'" label="Pay Rate:" name="satff_pay_rate" class="w-full mb-4 mt-5" placeholder="Pay rate" v-model="staff.staff_pay_rate" :color="validateForm ? 'success' : 'danger'" />
+                        </div>
+                        <div class="py-2 pr-2 w-1/3">
+                           <vs-input v-validate="'required'" label="SIA number:" name="staff_sia_no" class="w-full mb-4 mt-5" placeholder="SIA number" v-model="staff.staff_sia_no" :color="validateForm ? 'success' : 'danger'" />
+                        </div>
+                      </div>
+                      
                          
                     </div>
                 </div>
@@ -59,37 +74,37 @@ export default {
   data () {
     return {
       activePrompt: false,
-      clientLocal: {
-        name: '',
-        phone: '',
-        mobile: '',
-        city:'',
-        postCode:'',
-        country:'',
-        email: '',
-        desc: ''
+      staff: {
+        first_name: '',
+        last_name: '',
+        staff_id: '',
+        contractor:'',
+        position:'',
+        staff_email:'',
+        staff_pay_rate: '',
+        staff_sia_no: ''
       }
     }
   },
   computed: {
     validateForm () {
-      return !this.errors.any() && this.clientLocal.name !== ''
+      return !this.errors.any() && this.staff.first_name !== ''
     }
   },
   methods: {
     clearFields () {
-      Object.assign(this.clientLocal, {
-        name: '',
-        phone: '',
-        mobile: '',
-        city:'',
-        postCode:'',
-        country:'',
-        email: '',
-        desc: ''
+      Object.assign(this.staff, {
+        first_name: '',
+        last_name: '',
+        staff_id: '',
+        contractor:'',
+        position:'',
+        staff_email:'',
+        staff_pay_rate: '',
+        staff_sia_no: ''
       })
     },
-    addClient () {
+    addStaff () {
       this.$validator.validateAll().then(result => {
         if (result) {
           //this.$store.dispatch('client/addClient', Object.assign({}, this.clientLocal))

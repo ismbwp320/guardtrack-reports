@@ -1,7 +1,7 @@
 <template>
     <div :style="{'direction': $vs.rtl ? 'rtl' : 'ltr'}">
       <feather-icon icon="Edit3Icon" svgClasses="h-5 w-5 mr-4 hover:text-primary cursor-pointer edit-animate" @click="editRecord" />
-      <feather-icon icon="Trash2Icon" svgClasses="h-5 w-5 hover:text-danger cursor-pointer" @click="confirmDeleteRecord" />
+      <!-- <feather-icon icon="Trash2Icon" svgClasses="h-5 w-5 hover:text-danger cursor-pointer" @click="confirmDeleteRecord" /> -->
     </div>
 </template>
 
@@ -10,13 +10,13 @@ export default {
   name: 'CellRendererActions',
   methods: {
     editRecord () {
-      // this.$router.push(`/apps/client/client-edit/${  54}`).catch(() => {})
+      this.$router.push(`/apps/site/site-edit/${  54}`).catch(() => {})
 
       /*
               Below line will be for actual product
               Currently it's commented due to demo purpose - Above url is for demo purpose
       */
-              this.$router.push("/apps/client/client-edit/" + this.params.data.index).catch(() => {})
+              //this.$router.push("/apps/site/site-edit/" + this.params.data.id).catch(() => {})
             
     },
     confirmDeleteRecord () {
@@ -24,20 +24,20 @@ export default {
         type: 'confirm',
         color: 'danger',
         title: 'Confirm Delete',
-        text: `You are about to delete "${this.params.data.username}"`,
+        text: `You are about to delete "${this.params.data.site_name}"`,
         accept: this.deleteRecord,
         acceptText: 'Delete'
       })
     },
-    deleteRecord () {
-      /* Below two lines are just for demo purpose */
-      //this.showDeleteSuccess()
+    // deleteRecord () {
+    //   /* Below two lines are just for demo purpose */
+    //   //this.showDeleteSuccess()
 
-      /* UnComment below lines for enabling true flow if deleting user */
-      this.$store.dispatch("userManagement/removeRecord", this.params.data.index)
-        .then((res)   => { console.log(res)})
-        .catch(err => { console.error(err)       })
-    },
+    //   /* UnComment below lines for enabling true flow if deleting user */
+    //   this.$store.dispatch("userManagement/removeRecord", this.params.data.index)
+    //     .then((res)   => { console.log(res)})
+    //     .catch(err => { console.error(err)       })
+    // },
     showDeleteSuccess () {
       this.$vs.notify({
         color: 'success',

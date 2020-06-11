@@ -3,7 +3,7 @@
     <div class="vx-navbar-wrapper nav-menu-wrapper">
       <vs-navbar class="vx-navbar navbar-custom navbar-skelton" :color="navbarColor">
         <div id="main-logo">
-          <router-link to="/dashboard/analytics">
+          <router-link to="/">
             <Logo /> 
           </router-link>
         </div>
