@@ -76,11 +76,11 @@ export default [
         i18n: 'STAFF'
       },
       {
-        url: null,
-        name: 'CAMPUS',
+        url: '/apps/staff/all',
+        name: 'SUBCONTRACTOR',
         tagColor: 'primary',
         icon: 'ListIcon',
-        i18n: 'CAMPUS'
+        i18n: 'SUBCONTRACTOR'
       }
     ]
   },
@@ -102,13 +102,6 @@ export default [
         tagColor: 'primary',
         icon: 'ListIcon',
         i18n: 'QR'
-      },
-      {
-        url: null,
-        name: 'KEY HOLDING',
-        tagColor: 'primary',
-        icon: 'ListIcon',
-        i18n: 'KEY HOLDING'
       }
     ]
   },
