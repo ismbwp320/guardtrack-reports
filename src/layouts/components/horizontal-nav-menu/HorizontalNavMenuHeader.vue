@@ -83,7 +83,7 @@ export default {
         if (item.submenu) {
           if (this.checkGrpChildrenActive(item)) { active = true }
         } else if (item.url) {
-          if (path === item.url || routeParent === item.slug) { active = true }
+          if (path === item.url || routeParent === item.slug) { active = false }
         }
       })
 
