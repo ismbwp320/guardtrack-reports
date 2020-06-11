@@ -140,28 +140,21 @@ export default [
     ]
   },
   {
-    header: 'REPORTS (Beta)',
-    icon: 'ChevronsRightIcon',
-    i18n: 'REPORTS (Beta)',
-    items: [
-      {
-        url: '/apps/reports/all',
-        name: 'ALL REPORTS',
-        icon: 'MenuIcon',
-        i18n: 'ALL REPORTS'
-      }
-    ]
-  },
-  {
-    header: 'IQAMA',
+    header: 'SIA',
     icon: 'PaperclipIcon',
-    i18n: 'IQAMA',
+    i18n: 'SIA',
     items: [
       {
-        url: '/apps/iqama/check',
-        name: 'IQAMA CHECK',
+        url: '/apps/sia/check',
+        name: 'SIA CHECK',
         icon: 'MenuIcon',
-        i18n: 'IQAMA CHECK'
+        i18n: 'SIA CHECK'
+      },
+      {
+        url: '/apps/sia/check',
+        name: 'SIA REPORT',
+        icon: 'MenuIcon',
+        i18n: 'SIA REPORT'
       }
     ]
   }

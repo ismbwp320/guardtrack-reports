@@ -105,9 +105,9 @@ const router = new Router({
           }
         },
         {
-          path: '/apps/iqama/check',
+          path: '/apps/sia/check',
           name: 'iqama-check',
-          component: () => import('@/views/apps/iqama/IqamaCheck.vue'),
+          component: () => import('@/views/apps/sia/SiaCheck.vue'),
           meta: {
             pageTitle: 'Staff List',
             rule: 'editor'
