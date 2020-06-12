@@ -13,6 +13,8 @@ import mutations from './moduleClientMutations.js'
 import actions from './moduleClientActions.js'
 import getters from './moduleClientGetters.js'
 
+export const strict = false
+
 export default {
   namespaced: true,
   state,

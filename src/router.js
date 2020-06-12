@@ -24,10 +24,9 @@ const router = new Router({
           meta: {
             breadcrumb: [
               { title: 'Home', url: '/' },
-              { title: 'Cliet' },
+              { title: 'Client' },
               { title: 'List' }
             ],
-            pageTitle: 'Client List',
             rule: 'editor'
           }
         },
@@ -41,10 +40,9 @@ const router = new Router({
           meta: {
             breadcrumb: [
               { title: 'Home', url: '/' },
-              { title: 'Cliet' },
+              { title: 'Client' },
               { title: 'List' }
             ],
-            pageTitle: 'Client List',
             rule: 'editor'
           }
         },
@@ -58,7 +56,6 @@ const router = new Router({
               { title: 'Client' },
               { title: 'Edit', active: true }
             ],
-            pageTitle: 'Client Edit',
             rule: 'editor'
           }
         },
@@ -72,7 +69,6 @@ const router = new Router({
               { title: 'Site' },
               { title: 'List', active: true }
             ],
-            pageTitle: 'Site List',
             rule: 'editor'
           }
         },
@@ -86,7 +82,6 @@ const router = new Router({
               { title: 'Client' },
               { title: 'Edit', active: true }
             ],
-            pageTitle: 'Client Edit',
             rule: 'editor'
           }
         },
@@ -100,7 +95,6 @@ const router = new Router({
               { title: 'Staff' },
               { title: 'List', active: true }
             ],
-            pageTitle: 'Staff List',
             rule: 'editor'
           }
         },
@@ -109,7 +103,6 @@ const router = new Router({
           name: 'iqama-check',
           component: () => import('@/views/apps/sia/SiaCheck.vue'),
           meta: {
-            pageTitle: 'Staff List',
             rule: 'editor'
           }
         },
@@ -123,7 +116,6 @@ const router = new Router({
               { title: 'Pages' },
               { title: 'Profile', active: true }
             ],
-            pageTitle: 'Profile',
             rule: 'editor'
           }
         },

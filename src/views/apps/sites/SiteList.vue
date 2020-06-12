@@ -1,11 +1,12 @@
 <template>
 
   <div id="page-user-list">
-
-    <site-filters  />
-    <site-add-new />
-
-    <div class="vx-card p-6">
+          <site-filters  />
+          <site-add-new />
+     <vs-tabs>
+      <vs-tab label="Sites">
+        <div class="con-tab-ejemplo">
+      <div class="vx-card p-6">
 
       <div class="flex flex-wrap items-center">
 
@@ -133,6 +134,15 @@
         v-model="currentPage" />
 
     </div>
+        </div>
+      </vs-tab>
+      <vs-tab label="Types">
+        <div class="con-tab-ejemplo">
+            Types content
+        </div>
+      </vs-tab>  
+    </vs-tabs>
+    
   </div>
 
 </template>

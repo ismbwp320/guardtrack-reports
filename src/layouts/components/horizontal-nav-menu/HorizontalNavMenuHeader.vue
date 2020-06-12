@@ -81,7 +81,7 @@ export default {
 
         // If item is group
         if (item.submenu) {
-          if (this.checkGrpChildrenActive(item)) { active = true }
+          if (this.checkGrpChildrenActive(item)) { active = false }
         } else if (item.url) {
           if (path === item.url || routeParent === item.slug) { active = false }
         }
