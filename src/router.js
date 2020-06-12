@@ -40,7 +40,7 @@ const router = new Router({
           meta: {
             breadcrumb: [
               { title: 'Home', url: '/' },
-              { title: 'Client' },
+              { title: 'ttt' , I18n:'client_b_o'},
               { title: 'List' }
             ],
             rule: 'editor'

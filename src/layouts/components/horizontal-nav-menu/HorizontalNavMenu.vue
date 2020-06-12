@@ -41,6 +41,7 @@
                 :target     = "item.target"
                 :isDisabled = "item.isDisabled"
                 :slug       = "item.slug">
+                  
                   <span class="truncate">{{ $t(item.i18n) || item.name }}</span>
                   <vs-chip :color="item.tagColor" v-if="item.tag">{{ item.tag }}</vs-chip>
               </h-nav-menu-item>
@@ -50,7 +51,7 @@
         </ul>
         <search-bar />
         <notification-drop-down />
-
+        <I18n />
         <profile-drop-down />
       </vs-navbar>
     </div>
@@ -64,6 +65,7 @@ import HNavMenuItem   from './HorizontalNavMenuItem.vue'
 import SearchBar            from '../navbar/components/SearchBar.vue'
 import NotificationDropDown from '../navbar/components/NotificationDropDown.vue'
 import ProfileDropDown      from '../navbar/components/ProfileDropDown.vue'
+import I18n                 from  '../navbar/components/I18n'           
 import Logo from '../Logo.vue'
 
 export default {
@@ -78,7 +80,8 @@ export default {
     NotificationDropDown,
     ProfileDropDown,
     SearchBar,
-    Logo
+    Logo,
+    I18n
   },
   computed: {
     navbarColor () {

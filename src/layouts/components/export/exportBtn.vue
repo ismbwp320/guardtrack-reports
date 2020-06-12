@@ -1,6 +1,6 @@
 <template>
     <vs-dropdown vs-trigger-click class="ml-auto md:block hidden cursor-pointer">
-        <vs-button  icon-pack="feather">Actions</vs-button>
+        <vs-button  icon-pack="feather">{{$t('ActionsBtn')}}</vs-button>
         
 
         <vs-dropdown-menu class="w-90">

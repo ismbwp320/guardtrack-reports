@@ -52,102 +52,102 @@ export default [
   {
     header: 'SCHEDULE',
     icon: 'PackageIcon',
-    i18n: 'SCHEDULE',
+    i18n: 'Schedule',
     items: [
       {
         url: '/apps/email',
         name: 'CALENDAR',
         slug: 'email',
         icon: 'CalendarIcon',
-        i18n: 'CALENDAR'
+        i18n: 'Calendar'
       }
     ]
   },
   {
     header: 'STAFF',
     icon: 'LayersIcon',
-    i18n: 'STAFF',
+    i18n: 'Staff',
     items: [
       {
         url: '/apps/staff/all',
         name: 'STAFF',
         tagColor: 'primary',
         icon: 'ListIcon',
-        i18n: 'STAFF'
+        i18n: 'Staff'
       },
       {
         url: '/apps/staff/all',
-        name: 'SUBCONTRACTOR',
+        name: 'Subcontractor',
         tagColor: 'primary',
         icon: 'ListIcon',
-        i18n: 'SUBCONTRACTOR'
+        i18n: 'Subcontractor'
       }
     ]
   },
   {
     header: 'SITES',
     icon: 'MapIcon',
-    i18n: 'SITES',
+    i18n: 'Sites',
     items: [
       {
         url: '/apps/site/all',
         name: 'SITES',
         tagColor: 'primary',
         icon: 'ListIcon',
-        i18n: 'SITES'
+        i18n: 'Sites'
       },
       {
         url: null,
         name: 'QR',
         tagColor: 'primary',
         icon: 'ListIcon',
-        i18n: 'QR'
+        i18n: 'Qr'
       }
     ]
   },
   {
     header: 'CLIENTS',
     icon: 'UsersIcon',
-    i18n: 'CLIENTS',
+    i18n: 'Clients',
     items: [
       {
         url: '/apps/client/all',
         name: 'CLIENTS',
         tagColor: 'primary',
         icon: 'ListIcon',
-        i18n: 'CLIENTS'
+        i18n: 'Clients'
       }
     ]
   },
   {
     header: 'REPORTS',
     icon: 'FileIcon',
-    i18n: 'REPORTS',
+    i18n: 'Reports',
     items: [
       {
         url: '/apps/reports/all',
-        name: 'ALL REPORTS',
+        name: 'REPORTS',
         icon: 'MenuIcon',
-        i18n: 'ALL REPORTS'
+        i18n: 'Reports'
       }
     ]
   },
   {
     header: 'SIA',
     icon: 'PaperclipIcon',
-    i18n: 'SIA',
+    i18n: 'Sia',
     items: [
       {
         url: '/apps/sia/check',
         name: 'SIA CHECK',
         icon: 'MenuIcon',
-        i18n: 'SIA CHECK'
+        i18n: 'SiaCheck'
       },
       {
         url: '/apps/sia/check',
         name: 'SIA REPORT',
         icon: 'MenuIcon',
-        i18n: 'SIA REPORT'
+        i18n: 'SiaReport'
       }
     ]
   }

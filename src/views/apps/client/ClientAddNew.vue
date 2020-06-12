@@ -10,7 +10,7 @@
 
 <template>
     <div class="pb-2 pt-2 text-right add-client">
-    <vs-button @click="activePrompt = true" class="addClient">Add Client</vs-button>
+    <vs-button @click="activePrompt = true" class="addClient">{{$t('AddClient')}}</vs-button>
     <vs-prompt
         title="Add Client"
         accept-text= "Add Client"

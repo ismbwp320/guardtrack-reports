@@ -126,10 +126,57 @@ export default {
     Support: 'Support',
     Documentation: 'Documentation',
     RaiseSupport: 'Raise Support',
-    Apply: 'Apply',
-    demoText: 'Cake sesame snaps cupcake gingerbread danish I love gingerbread. Apple pie pie jujubes chupa chups muffin halvah lollipop. Chocolate cake oat cake tiramisu marzipan sugar plum. Donut sweet pie oat cake dragée fruitcake cotton candy lemon drops.'
+    ClientName: 'Client name',
+    ClientPhone: 'Phone',
+    ClientMobile: 'Mobile',
+    ClientAddess: 'Address',
+    ClientEmail: 'Email',
+    ClientStatus: 'Status',
+    ClientActions: 'Actions',
+    //Menus
+    Schedule:'SCHEDULE',
+    Calendar:'CALENDAR',
+    Staff:'STAFF',
+    Subcontractor:'SUBCONTRACTOR',
+    Sites:'SITES',
+    Qr:'QR',
+    Clients:'CLIENTS',
+    Reports:'REPORTS',
+    Sia:'SIA',
+    SiaCheck:'SIA CHECK',
+    SiaReport:'SIA REPORT',
+    //Buttons
+    AddClient:'Add Client',
+    ActionsBtn: 'Actions'
+    
   },
   de: {
+
+    //Menus
+    Schedule:'SCHEDULE de',
+    Calendar:'CALENDAR de',
+    Staff:'STAFF de',
+    Subcontractor:'SUBCONTRACTOR de',
+    Sites:'SITES de',
+    Qr:'QR de',
+    Clients:'CLIENTS de',
+    Reports:'REPORTS de',
+    Sia:'SIA de',
+    SiaCheck:'SIA CHECK de',
+    SiaReport:'SIA REPORT de',
+    ClientName: 'Client name de',
+    ClientPhone: 'Phone de',
+    ClientMobile: 'Mobile de',
+    ClientAddress: 'Address de',
+    ClientEmail: 'Email de',
+    ClientStatus: 'Status de',
+    ClientActions: 'Actions de',
+    //Braed
+    client_b_o:'Client',
+    //Buttons
+    AddClient:'Add Client de',
+    ActionsBtn: 'Actions de',
+
     Dashboard: 'Instrumententafel',
     eCommerce: 'eCommerce',
     Apps: 'Apps',
@@ -255,10 +302,10 @@ export default {
     Support: 'Unterstützung',
     Documentation: 'Dokumentation',
     RaiseSupport: 'Unterstützung erheben',
-    demoTitle: 'Kartentitel',
     demoText: 'Kuchen Sesam Schnaps Cupcake Lebkuchen Dänisch Ich liebe Lebkuchen. Apfelkuchen-Torte-Jujuben chupa chups muffin halvah Lutscher. Schokoladenkuchenhaferkuchen Tiramisu-Marzipanzuckerpflaume. Donut süße Kuchen Hafer Kuchen Dragée Obstkuchen Zuckerwatte Zitrone Tropfen.'
   },
   fr: {
+    ClientName: 'Kaadsasdsdrtentitel',
     Dashboard: 'Tableau de bord',
     eCommerce: 'commerce électronique',
     Apps: 'Applications',
@@ -384,10 +431,14 @@ export default {
     Support: 'Soutien',
     Documentation: 'Documentation',
     RaiseSupport: 'Augmenter le soutien',
-    demoTitle: 'Titre de la carte',
-    demoText: 'Le gâteau au sésame s\'enclenche au petit pain au pain d\'épices danois J\'adore le pain d\'épices. Tarte aux pommes et jujubes chupa chups muffin halvah sucette. Tiramisu gâteau au chocolat gâteau d\'avoine tiramisu prune sucre. Donut tarte sucrée gâteau à l\'avoine dragée gouttes de fruits gâteau au citron en barbe à papa.'
+    Apply: 'Apply',
+    Clients:'Clients',
+    Client_name: 'Client name',
+    Clinet_phone: 'Phone',
+    
   },
   pt: {
+    ClientName: 'sdasdl',
     Dashboard: 'painel de controle',
     eCommerce: 'comércio eletrônico',
     Apps: 'APPS',
