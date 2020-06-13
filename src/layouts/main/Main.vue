@@ -115,7 +115,7 @@ import TheNavbarVertical   from '@/layouts/components/navbar/TheNavbarVertical.v
 import TheFooter           from '@/layouts/components/TheFooter.vue'
 import themeConfig         from '@/../themeConfig.js'
 import VNavMenu            from '@/layouts/components/vertical-nav-menu/VerticalNavMenu.vue'
-import ExportBtn           from '@/layouts/components/export/exportBtn.vue'
+//import ExportBtn           from '@/layouts/components/export/exportBtn.vue'
 
 // const VxTour = () => import('@/components/VxTour.vue')
 
@@ -129,7 +129,7 @@ export default {
     TheNavbarVertical,
     VNavMenu,
     // VxTour,
-    ExportBtn
+    //ExportBtn
   },
   data () {
     return {

@@ -100,18 +100,19 @@ label.custom-label{
   top: 20px;
   right: 170px;
 }
-.addStaff{
-  position: absolute;
-  top: 29px;
-  right: 150px;
-}
-.addSite{
-  position: absolute;
-  top: 29px;
-  right: 150px;
-}
+
 #edit-back-btn{
   float: right !important;
 }
 
+.vs-con-textarea h4 {
+  color: rgba(0,0,0,.4);
+}
 
+.ag-search .vs-input-primary .vs-input--input:focus {
+   border: none !important; 
+}
+
+.vs-tabs--content{
+  padding: 15px 0px !important;
+}

@@ -9,7 +9,7 @@
 
 
 <template>
-    <div class="pb-2 pt-2 text-right add-client">
+    <div class="pb-2 pt-2 text-right">
     <vs-button @click="activePrompt = true" class="addClient">Add Client</vs-button>
     <vs-prompt
         title="Add Client"

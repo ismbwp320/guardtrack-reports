@@ -1,6 +1,6 @@
 /*=========================================================================================
-  File Name: moduleTodoActions.js
-  Description: Todo Module Actions
+  File Name: moduleCalendarActions.js
+  Description: Calendar Module Actions
   ----------------------------------------------------------------------------------------
   Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
   Author: Pixinvent
@@ -10,47 +10,40 @@
 import axios from '@/axios.js'
 
 export default {
-  setTodoSearchQuery ({ commit }, query) {
-    commit('SET_TODO_SEARCH_QUERY', query)
-  },
-  fetchTasks ({ commit }, payload) {
+  addContractor({ commit }, data) {
     return new Promise((resolve, reject) => {
-      axios.get('/api/apps/todo/tasks', { params: {filter: payload.filter} })
+      axios.post("/api/data-list/products/", {data})
         .then((response) => {
-          commit('SET_TASKS', response.data)
+          commit('ADD_CLIENT', Object.assign(data, {id: response.data.id}))
           resolve(response)
         })
         .catch((error) => { reject(error) })
     })
   },
-
-  fetchTags ({ commit }) {
+  fetchContractors ({ commit }) {
     return new Promise((resolve, reject) => {
-      axios.get('/api/apps/todo/tags')
+      axios.get('/api/user-management/users')
         .then((response) => {
-          commit('SET_TAGS', response.data)
+          commit('SET_USERS', response.data)
           resolve(response)
         })
         .catch((error) => { reject(error) })
     })
   },
-
-  addTask ({ commit }, task) {
+  fetchCOntractor (context, contractorId) {
     return new Promise((resolve, reject) => {
-      axios.post('/api/apps/todo/tasks/', {task})
+      axios.get(`/api/user-management/users/${contractorId}`)
         .then((response) => {
-          commit('ADD_TASK', Object.assign(task, {id: response.data.id}))
           resolve(response)
         })
         .catch((error) => { reject(error) })
     })
   },
-
-  updateTask ({ commit }, task) {
+  removeRecord ({ commit }, contractorId) {
     return new Promise((resolve, reject) => {
-      axios.post(`/api/apps/todo/task/${task.id}`, {task})
+      axios.delete(`/api/user-management/users/${contractorId}`)
         .then((response) => {
-          commit('UPDATE_TASK', response.data)
+          commit('REMOVE_RECORD', contractorId)
           resolve(response)
         })
         .catch((error) => { reject(error) })

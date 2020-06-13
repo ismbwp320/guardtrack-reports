@@ -10,7 +10,9 @@
 <template>
 
   <div id="page-user-list">
-    <staff-add-new />
+    <div class="flex justify-end">
+      <staff-add-new />
+    </div>
     <vs-tabs v-model="activeTab" class="tab-action-btn-fill-conatiner">
       <vs-tab label="Staff" icon-pack="feather" icon="icon-user">
         <div class="con-tab-ejemplo">
@@ -190,7 +192,7 @@
       </vs-tab>
       <vs-tab label="Position" icon-pack="feather" icon="icon-user">
         <div class="tab-text">
-          Test
+          <PositionList />
         </div>
       </vs-tab>
     </vs-tabs>
@@ -205,6 +207,8 @@ import { AgGridVue } from 'ag-grid-vue'
 import '@/assets/scss/vuexy/extraComponents/agGridStyleOverride.scss'
 import vSelect from 'vue-select'
 import StaffAddNew from './StaffAddNew'
+import PositionList from './position/PositionList.vue'
+import ExportBtn from '../export/exportBtn.vue'
 
 // Store Module
 import moduleUserManagement from '@/store/user-management/moduleUserManagement.js'
@@ -226,7 +230,9 @@ export default {
     CellRendererStatus,
     CellRendererVerified,
     CellRendererActions,
-    StaffAddNew
+    StaffAddNew,
+    PositionList,
+    ExportBtn
   },
   data () {
     
@@ -249,48 +255,18 @@ export default {
           
         },
       activePrompt: false,
-      clientLocal: {
-        name: '',
-        phone: '',
-        mobile: '',
-        city:'',
-        postCode:'',
-        country:'',
+      staffData: {
+        first_name: '',
+        last_name: '',
+        contractor: '',
+        id:'',
+        contractor:'',
+        position:'',
         email: '',
-        desc: ''
+        pay_rate: '',
+        sia_no:''
       },
-      // Filter Options
-      roleFilter: { label: 'All', value: 'all' },
-      roleOptions: [
-        { label: 'All', value: 'all' },
-        { label: 'Admin', value: 'admin' },
-        { label: 'User', value: 'user' },
-        { label: 'Staff', value: 'staff' }
-      ],
-
-      statusFilter: { label: 'All', value: 'all' },
-      statusOptions: [
-        { label: 'All', value: 'all' },
-        { label: 'Active', value: 'active' },
-        { label: 'Deactivated', value: 'deactivated' },
-        { label: 'Blocked', value: 'blocked' }
-      ],
-
-      isVerifiedFilter: { label: 'All', value: 'all' },
-      isVerifiedOptions: [
-        { label: 'All', value: 'all' },
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ],
-
-      departmentFilter: { label: 'All', value: 'all' },
-      departmentOptions: [
-        { label: 'All', value: 'all' },
-        { label: 'Sales', value: 'sales' },
-        { label: 'Development', value: 'development' },
-        { label: 'Management', value: 'management' }
-      ],
-
+      
       searchQuery: '',
 
       // AgGrid
@@ -386,21 +362,6 @@ export default {
         CellRendererVerified,
         CellRendererActions
       }
-    }
-  },
-  watch: {
-    roleFilter (obj) {
-      this.setColumnFilter('role', obj.value)
-    },
-    statusFilter (obj) {
-      this.setColumnFilter('status', obj.value)
-    },
-    isVerifiedFilter (obj) {
-      const val = obj.value === 'all' ? 'all' : obj.value === 'yes' ? 'true' : 'false'
-      this.setColumnFilter('is_verified', val)
-    },
-    departmentFilter (obj) {
-      this.setColumnFilter('department', obj.value)
     }
   },
   computed: {

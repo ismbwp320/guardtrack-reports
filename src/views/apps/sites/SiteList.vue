@@ -3,6 +3,7 @@
   <div id="page-user-list">
           <site-filters  />
           <site-add-new />
+          <!-- <types-add-new /> -->
      <vs-tabs>
       <vs-tab label="Sites">
         <div class="con-tab-ejemplo">
@@ -138,7 +139,7 @@
       </vs-tab>
       <vs-tab label="Types">
         <div class="con-tab-ejemplo">
-            Types content
+            <TypesList />
         </div>
       </vs-tab>  
     </vs-tabs>
@@ -153,7 +154,8 @@ import '@/assets/scss/vuexy/extraComponents/agGridStyleOverride.scss'
 
 import SiteAddNew from './SiteAddNew'
 import SiteFilters from './SiteFilters'
-
+import TypesList from './Types/TypesList.vue'
+import TypesAddNew from './Types/TypesAddNew.vue'
 // Store Module
 import moduleUserManagement from '@/store/user-management/moduleUserManagement.js'
 
@@ -175,6 +177,8 @@ export default {
     CellRendererActions,
     SiteAddNew,
     SiteFilters,
+    TypesList,
+    TypesAddNew
   },
   data () {
     

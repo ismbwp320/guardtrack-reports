@@ -1,6 +1,6 @@
 /*=========================================================================================
-  File Name: moduleecommerce.js
-  Description: ecommerce Module
+  File Name: moduleUserManagement.js
+  Description: Calendar Module
   ----------------------------------------------------------------------------------------
   Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
   Author: Pixinvent
@@ -8,15 +8,17 @@
 ==========================================================================================*/
 
 
-import state from './moduleECommerceState.js'
-import mutations from './moduleECommerceMutations.js'
-import actions from './moduleECommerceActions.js'
-import getters from './moduleECommerceGetters.js'
+import state from './moduleContractorManagementState.js'
+import mutations from './moduleContractorManagementMutations.js'
+import actions from './moduleContractorManagementActions.js'
+import getters from './moduleContractorManagementGetters.js'
 
 export default {
+  isRegistered: false,
   namespaced: true,
   state,
   mutations,
   actions,
   getters
 }
+

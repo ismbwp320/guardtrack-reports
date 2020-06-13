@@ -60,6 +60,14 @@ const router = new Router({
           }
         },
         {
+          path: '/apps/client/client-view/:clientId',
+          name: 'app-user-edit',
+          component: () => import('@/views/apps/user/UserView.vue'),
+          meta: {
+            rule: 'editor'
+          }
+        },
+        {
           path: '/apps/site/all',
           name: 'site-list',
           component: () => import('@/views/apps/sites/SiteList.vue'),
@@ -97,11 +105,31 @@ const router = new Router({
             ],
             rule: 'editor'
           }
+        },{
+          path: '/apps/contractor',
+          name: 'contractor-list',
+          component: () => import('@/views/apps/staff/subcontractor/SubcontractorList.vue'),
+          meta: {
+            breadcrumb: [
+              { title: 'Home', url: '/' },
+              { title: 'Staff' },
+              { title: 'List', active: true }
+            ],
+            rule: 'editor'
+          }
         },
         {
           path: '/apps/sia/check',
-          name: 'iqama-check',
+          name: 'sia-check',
           component: () => import('@/views/apps/sia/SiaCheck.vue'),
+          meta: {
+            rule: 'editor'
+          }
+        },
+        {
+          path: '/apps/sia/reports',
+          name: 'sia-report',
+          component: () => import('@/views/apps/sia/SiaReport.vue'),
           meta: {
             rule: 'editor'
           }

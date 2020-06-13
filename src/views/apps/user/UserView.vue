@@ -11,7 +11,7 @@
   <div id="page-user-view">
 
     <vs-alert color="danger" title="User Not Found" :active.sync="user_not_found">
-      <span>User record with id: {{ $route.params.userId }} not found. </span>
+      <span>User record with id: {{ $route.params.clientId }} not found. </span>
       <span>
         <span>Check </span><router-link :to="{name:'page-user-list'}" class="text-inherit underline">All Users</router-link>
       </span>
@@ -69,7 +69,7 @@
           </div>
           <!-- /Information - Col 2 -->
           <div class="vx-col w-full flex" id="account-manage-buttons">
-            <vs-button icon-pack="feather" icon="icon-edit" class="mr-4" :to="{name: 'app-user-edit', params: { userId: $route.params.userId }}">Edit</vs-button>
+            <vs-button icon-pack="feather" icon="icon-edit" class="mr-4" :to="{name: 'app-user-edit', params: { clientId: $route.params.clientId }}">Edit</vs-button>
             <vs-button type="border" color="danger" icon-pack="feather" icon="icon-trash" @click="confirmDeleteRecord">Delete</vs-button>
           </div>
 
@@ -234,8 +234,8 @@ export default {
       moduleUserManagement.isRegistered = true
     }
 
-    const userId = this.$route.params.userId
-    this.$store.dispatch('userManagement/fetchUser', userId)
+    const clientId = this.$route.params.clienId
+    this.$store.dispatch('userManagement/fetchUser', clientId)
       .then(res => { this.user_data = res.data })
       .catch(err => {
         if (err.response.status === 404) {
