@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import auth from '@/auth/authService'
-
+import ShiftList from '@/views/apps/shift/ShiftList.vue'
 
 Vue.use(Router)
 
@@ -34,13 +34,26 @@ const router = new Router({
         // Main App Routes
         // =============================================================================
         {
+          path: '/apps/shift/listing',
+          name: 'shift-list',
+          component: ShiftList,
+          meta: {
+            breadcrumb: [
+              { title: 'Home', url: '/' },
+              { title: 'Shift' },
+              { title: 'List', active: true }
+            ],
+            rule: 'editor'
+          }
+        },
+        {
           path: '/apps/client/all',
           name: 'client-list',
           component: () => import('@/views/apps/user/user-list/UserList.vue'),
           meta: {
             breadcrumb: [
               { title: 'Home', url: '/' },
-              { title: 'ttt' , I18n:'client_b_o'},
+              { title: 'ttt', I18n:'client_b_o'},
               { title: 'List' }
             ],
             rule: 'editor'
@@ -105,7 +118,7 @@ const router = new Router({
             ],
             rule: 'editor'
           }
-        },{
+        }, {
           path: '/apps/contractor',
           name: 'contractor-list',
           component: () => import('@/views/apps/staff/subcontractor/SubcontractorList.vue'),
@@ -366,8 +379,6 @@ router.afterEach(() => {
     appLoading.style.display = 'none'
   }
 })
-
-
 
 
 export default router

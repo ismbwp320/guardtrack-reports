@@ -434,7 +434,7 @@ export default {
     Apply: 'Apply',
     Clients:'Clients',
     Client_name: 'Client name',
-    Clinet_phone: 'Phone',
+    Clinet_phone: 'Phone'
     
   },
   pt: {

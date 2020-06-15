@@ -7,28 +7,28 @@
 
 <script>
 export default {
-    data() {
+  data () {
     return {
       mood: 'Happy',
-      imgForMood: null,
-    };
+      imgForMood: null
+    }
   },
   methods: {
-    refresh(params) {
-      this.params = params;
-      this.setMood(params);
+    refresh (params) {
+      this.params = params
+      this.setMood(params)
     },
 
-    setMood(params) {
-      this.mood = params.value;
+    setMood (params) {
+      this.mood = params.value
       this.imgForMood =
         this.mood === 'Happy'
           ? '../images/smiley.png'
-          : '../images/smiley-sad.png';
-    },
+          : '../images/smiley-sad.png'
+    }
   },
-  created() {
-    this.setMood(this.params);
-  },
+  created () {
+    this.setMood(this.params)
+  }
 }
 </script>

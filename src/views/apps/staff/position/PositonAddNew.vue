@@ -44,7 +44,7 @@ export default {
     return {
       activePrompt: false,
       positionData: {
-        position: '',
+        position: ''
         
       }
     }
@@ -57,7 +57,7 @@ export default {
   methods: {
     clearFields () {
       Object.assign(this.positionData, {
-        position: '',
+        position: ''
       })
     },
     addPosition () {

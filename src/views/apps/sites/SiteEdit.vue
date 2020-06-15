@@ -36,7 +36,7 @@ import moduleUserManagement from '@/store/user-management/moduleUserManagement.j
 
 export default {
   components: {
-   SiteEditTabAccount
+    SiteEditTabAccount
   },
   data () {
     return {

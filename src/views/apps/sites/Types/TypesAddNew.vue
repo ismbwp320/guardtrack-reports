@@ -61,7 +61,7 @@ export default {
   methods: {
     clearFields () {
       Object.assign(this.positionData, {
-        position: '',
+        position: ''
       })
     },
     addPosition () {

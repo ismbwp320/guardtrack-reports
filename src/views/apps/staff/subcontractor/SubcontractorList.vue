@@ -82,12 +82,11 @@ import moduleUserManagement from '@/store/user-management/moduleUserManagement.j
 // Cell Renderer
 
 
-
 export default {
   components: {
     AgGridVue,
     vSelect,
-    ContractorAddNew,
+    ContractorAddNew
   },
   data () {
     
@@ -115,55 +114,57 @@ export default {
         {
           headerName: 'Subcontractor Name',
           field: 'subcont_name',
-          filter: true,
+          filter: true
         },
         {
           headerName: 'Short Code',
           field: 'short_code',
-          filter: true,
+          filter: true
         },
         {
           headerName: 'Phone',
           field: 'phone',
-          filter: true,
+          filter: true
         },
         {
           headerName: 'Email',
           field: 'email',
-          filter: true,
+          filter: true
         },
         {
           headerName: 'Address',
           field: 'address',
-          filter: true,
+          filter: true
         },
         {
           headerName: 'Pay Rate',
           field: 'pay_rate',
-          filter: true,
+          filter: true
         },
         {
           headerName: 'Status',
           field: 'status',
-          filter: true,
+          filter: true
 
         },
         {
           headerName: 'Actions',
           field: 'actions',
-          filter: true,
+          filter: true
 
         }
-      ],
+      ]
 
      
     }
   },
   computed: {
     usersData () {
-      return [{
-        test:'test'
-      }]
+      return [
+        {
+          test:'test'
+        }
+      ]
     },
     paginationPageSize () {
       if (this.gridApi) return this.gridApi.paginationGetPageSize()
@@ -186,58 +187,58 @@ export default {
   methods: {
     
     ColumnsShow ($e) {
-      switch($e.target.id) {
+      switch ($e.target.id) {
 
-        case 'officer':
-          this.gridOptions.columnApi.setColumnVisible($e.target.id, this.toggle_checkboxes.officer_field ? false:true)
-          this.gridOptions.api.sizeColumnsToFit()
-          break;
-        case  'pin':
-          this.gridOptions.columnApi.setColumnVisible($e.target.id, this.toggle_checkboxes.pin_field ? true:false)
-          this.gridOptions.api.sizeColumnsToFit()
-          break
-        case 'email':
-          this.gridOptions.columnApi.setColumnVisible($e.target.id, this.toggle_checkboxes.email_field? true:false)
-          this.gridOptions.api.sizeColumnsToFit()
-          break;
-        case  'phone':
-          this.gridOptions.columnApi.setColumnVisible($e.target.id, this.toggle_checkboxes.phone_field ? true:false)
-          this.gridOptions.api.sizeColumnsToFit()
-          break
-        case 'position':
-          this.gridOptions.columnApi.setColumnVisible($e.target.id, this.toggle_checkboxes.position_field ? true:false)
-          this.gridOptions.api.sizeColumnsToFit()
-          break;
-        case  'sia_no':
-          this.gridOptions.columnApi.setColumnVisible($e.target.id, this.toggle_checkboxes.sia_no_field ? true:false)
-          this.gridOptions.api.sizeColumnsToFit()
-          break
-        case  'location':
-          this.gridOptions.columnApi.setColumnVisible($e.target.id, this.toggle_checkboxes.location_field? true:false)
-          this.gridOptions.api.sizeColumnsToFit()
-          break  
-        case  'added_date':
-          this.gridOptions.columnApi.setColumnVisible($e.target.id, this.toggle_checkboxes.added_date_field? true:false)
-          this.gridOptions.api.sizeColumnsToFit()
-          break
-        case  'contract_start_date':
-          this.gridOptions.columnApi.setColumnVisible($e.target.id, this.toggle_checkboxes.contract_start_field? true:false)
-          this.gridOptions.api.sizeColumnsToFit()
-          break
-        case  'pay_rate':
-          this.gridOptions.columnApi.setColumnVisible($e.target.id, this.toggle_checkboxes.pay_rate_field? true:false)
-          this.gridOptions.api.sizeColumnsToFit()
-          break
-        case  'status':
-          this.gridOptions.columnApi.setColumnVisible($e.target.id, this.toggle_checkboxes.status_field? true:false)
-          this.gridOptions.api.sizeColumnsToFit()
-          break
-        case  's_actions':
-        this.gridOptions.columnApi.setColumnVisible($e.target.id, this.toggle_checkboxes.staff_actions_field? true:false)
+      case 'officer':
+        this.gridOptions.columnApi.setColumnVisible($e.target.id, !this.toggle_checkboxes.officer_field)
         this.gridOptions.api.sizeColumnsToFit()
-          break                  
-        default:
-          console.log('No matched')
+        break
+      case  'pin':
+        this.gridOptions.columnApi.setColumnVisible($e.target.id, !!this.toggle_checkboxes.pin_field)
+        this.gridOptions.api.sizeColumnsToFit()
+        break
+      case 'email':
+        this.gridOptions.columnApi.setColumnVisible($e.target.id, !!this.toggle_checkboxes.email_field)
+        this.gridOptions.api.sizeColumnsToFit()
+        break
+      case  'phone':
+        this.gridOptions.columnApi.setColumnVisible($e.target.id, !!this.toggle_checkboxes.phone_field)
+        this.gridOptions.api.sizeColumnsToFit()
+        break
+      case 'position':
+        this.gridOptions.columnApi.setColumnVisible($e.target.id, !!this.toggle_checkboxes.position_field)
+        this.gridOptions.api.sizeColumnsToFit()
+        break
+      case  'sia_no':
+        this.gridOptions.columnApi.setColumnVisible($e.target.id, !!this.toggle_checkboxes.sia_no_field)
+        this.gridOptions.api.sizeColumnsToFit()
+        break
+      case  'location':
+        this.gridOptions.columnApi.setColumnVisible($e.target.id, !!this.toggle_checkboxes.location_field)
+        this.gridOptions.api.sizeColumnsToFit()
+        break  
+      case  'added_date':
+        this.gridOptions.columnApi.setColumnVisible($e.target.id, !!this.toggle_checkboxes.added_date_field)
+        this.gridOptions.api.sizeColumnsToFit()
+        break
+      case  'contract_start_date':
+        this.gridOptions.columnApi.setColumnVisible($e.target.id, !!this.toggle_checkboxes.contract_start_field)
+        this.gridOptions.api.sizeColumnsToFit()
+        break
+      case  'pay_rate':
+        this.gridOptions.columnApi.setColumnVisible($e.target.id, !!this.toggle_checkboxes.pay_rate_field)
+        this.gridOptions.api.sizeColumnsToFit()
+        break
+      case  'status':
+        this.gridOptions.columnApi.setColumnVisible($e.target.id, !!this.toggle_checkboxes.status_field)
+        this.gridOptions.api.sizeColumnsToFit()
+        break
+      case  's_actions':
+        this.gridOptions.columnApi.setColumnVisible($e.target.id, !!this.toggle_checkboxes.staff_actions_field)
+        this.gridOptions.api.sizeColumnsToFit()
+        break                  
+      default:
+        console.log('No matched')
       }        
     },
     setColumnFilter (column, val) {

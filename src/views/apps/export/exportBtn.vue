@@ -21,27 +21,27 @@
 
 <script>
 export default {
-    name:'export-btn',
+  name:'export-btn',
 
-    data () {
-        return{
-            expo:true
-        }
-
-    },
-    methods :{
-        exportData() {
-            console.log("Clicked")
-        // let params = {
-        // columnKeys:['c_name','c_phone','c_mobile','c_address','c_email','c_status'],
-        // skipHeader: false,
-        // skipFooters: true,
-        // skipGroups: true,
-        // fileName: "export.csv"
-        // }
-        // this.gridOptions.api.exportDataAsCsv(params)
-     },
+  data () {
+    return {
+      expo:true
     }
+
+  },
+  methods :{
+    exportData () {
+      console.log('Clicked')
+      // let params = {
+      // columnKeys:['c_name','c_phone','c_mobile','c_address','c_email','c_status'],
+      // skipHeader: false,
+      // skipFooters: true,
+      // skipGroups: true,
+      // fileName: "export.csv"
+      // }
+      // this.gridOptions.api.exportDataAsCsv(params)
+    }
+  }
 }
 </script>
 

@@ -56,14 +56,14 @@ export default {
   },
   methods: {
     showHide ($e) {
-      if(this.checkbox_show_password) {
-        let pass = document.getElementById('pass');
-         if (pass.type === "password") {
-            pass.type = "text";
-          } else {
-            pass.type = "password";
-            }
+      if (this.checkbox_show_password) {
+        const pass = document.getElementById('pass')
+        if (pass.type === 'password') {
+          pass.type = 'text'
+        } else {
+          pass.type = 'password'
         }
+      }
     },
     checkLogin () {
       // If user is already logged in notify

@@ -127,7 +127,7 @@ export default {
     TheFooter,
     TheNavbarHorizontal,
     TheNavbarVertical,
-    VNavMenu,
+    VNavMenu
     // VxTour,
     //ExportBtn
   },
