@@ -1,121 +1,150 @@
 <template>
-  <div id="page-user-list">
-    <vs-button @click="onBtnExport" color="primary" type="filled">Export</vs-button>
-    <div id="theme-customizer">
-        <vs-button @click="active=!active" class="customizer-btn" icon="icon-settings" icon-pack="feather" color="primary" type="filled" />
-    <!-- Customizer Content -->
-    <vs-sidebar
-      click-not-close
-      hidden-background
-      position-right
-      v-model="active"
-      class="items-no-padding">
-      <div class="h-full">
+  <div id="shift__listing">
 
-        <div class="customizer-header mt-6 flex items-center justify-between px-6">
-          <div>
-            <h4>SHIFT LIST FILTERS</h4>
-            <small>Customize & Preview in Real Time</small>
+    <div class="pb-2 text-right">
+      <vs-button @click="exportFileHandler" color="primary" type="filled">Export</vs-button>
+    </div>
+
+    <!-- Filter SideBar -->
+    <div id="filter-sidebar">
+      <vs-button
+        @click="active=!active"
+        class="customizer-btn"
+        icon="icon-settings"
+        icon-pack="feather"
+        color="primary"
+        type="filled"
+      />
+
+      <vs-sidebar
+        click-not-close
+        hidden-background
+        position-right
+        v-model="active"
+        class="items-no-padding">
+        <div class="h-full" style="overflow:scroll">
+          <div class="customizer-header mt-6 flex items-center justify-between px-6">
+            <div>
+              <h4>SHIFT LIST FILTERS</h4>
+              <small>Customize Filters and Columns</small>
+            </div>
+            <feather-icon icon="XIcon" @click.stop="active = false" class="cursor-pointer"></feather-icon>
           </div>
-          <feather-icon icon="XIcon" @click.stop="active = false" class="cursor-pointer"></feather-icon>
-        </div>
-
-        <vs-divider class="mb-2" />
-        <component :is="scrollbarTag" class="scroll-area--customizer pt-4 pb-6" :settings="settings">
-          <div class="px-6">
-                <vs-tabs>
-      <vs-tab label="Filters">
-        <div class="con-tab-ejemplo">
-          <vs-collapse>
-            <template v-for="(column, index) in columnDefs">
-              <vs-collapse-item v-if="column.children" :key="index">
-                <div slot="header">
-                  {{column.headerName}}
-                </div>
-                <vs-collapse>
-                  <template v-for="(child, index) in column.children">
-                    <vs-collapse-item  :key="index" v-if="child.headerName">
-                      <div slot="header">
-                        {{child.headerName}}
-                      </div>
-                       <vs-input  @input="filterSearch(child.headerName, filterSearchQuery[child.headerName.replace(/\s+/g, '')])" v-model="filterSearchQuery[child.headerName.replace(/\s+/g, '')]" class="w-full sm:order-normal order-3 mb-4 ag-search" placeholder="Placeholder"/>
-                        <label  class="custom-label flex">
-                          <div class="bg-custom shadow w-6 h-6 p-1 flex justify-center items-center mr-2">
-                            <input type="checkbox" checked class="hidden" v-on:change="selectNothing(child.headerName, filters[child.headerName])">
-                            <svg class="hidden w-4 h-4 text-green-600 pointer-events-none" viewBox="0 0 172 172"><g fill="none" stroke-width="none" stroke-miterlimit="10" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode:normal"><path d="M0 172V0h172v172z"/><path d="M145.433 37.933L64.5 118.8658 33.7337 88.0996l-10.134 10.1341L64.5 139.1341l91.067-91.067z" fill="currentColor" stroke-width="1"/></g></svg>
+          <vs-divider class="mb-2" />
+          <div class="scroll-area--customizer pt-4 pb-6">
+            <div class="px-6">
+              <vs-tabs>
+                <vs-tab label="Filters">
+                  <div class="con-tab-ejemplo">
+                    <vs-collapse class="vs-collapse-sidebar">
+                      <template v-for="(column, index) in columnDefs">
+                        <vs-collapse-item v-if="column.children" :key="index">
+                          <div slot="header">
+                            {{column.headerName}}
                           </div>
-                          <span class="select-none">Select All</span>
-                        </label>
-                      <template v-if="child.headerName">
-                        <div v-for="(item, index) in filters[child.headerName]" :key="index">
-                          <label  class="custom-label flex">
-                            <div class="bg-custom shadow w-6 h-6 p-1 flex justify-center items-center mr-2">
-                              <input type="checkbox" :checked="checkBoxHandler(child.headerName, item)" class="hidden" v-on:change="filterHandler(child.headerName, item)">
-                              <svg class="hidden w-4 h-4 text-green-600 pointer-events-none" viewBox="0 0 172 172"><g fill="none" stroke-width="none" stroke-miterlimit="10" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode:normal"><path d="M0 172V0h172v172z"/><path d="M145.433 37.933L64.5 118.8658 33.7337 88.0996l-10.134 10.1341L64.5 139.1341l91.067-91.067z" fill="currentColor" stroke-width="1"/></g></svg>
-                            </div>
-                            <span class="select-none">{{item}}</span>
-                          </label>
-                        </div>
+                          <vs-collapse>
+                            <template v-for="(child, index) in column.children">
+                              <vs-collapse-item  :key="index" v-if="child.headerName">
+                                <div slot="header">
+                                  {{child.headerName}}
+                                </div>
+                                <vs-input  @input="filterSearch(child.headerName, filterSearchQuery[child.headerName.replace(/\s+/g, '')])" v-model="filterSearchQuery[child.headerName.replace(/\s+/g, '')]" class="w-full sm:order-normal order-3 mb-4 ag-search" placeholder="Placeholder"/>
+                                  <label  class="custom-label flex">
+                                    <div class="bg-custom shadow w-6 h-6 p-1 flex justify-center items-center mr-2">
+                                      <input type="checkbox" checked class="hidden" v-on:change="selectNothing(child.headerName, filters[child.headerName])">
+                                      <svg class="hidden w-4 h-4 text-green-600 pointer-events-none" viewBox="0 0 172 172"><g fill="none" stroke-width="none" stroke-miterlimit="10" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode:normal"><path d="M0 172V0h172v172z"/><path d="M145.433 37.933L64.5 118.8658 33.7337 88.0996l-10.134 10.1341L64.5 139.1341l91.067-91.067z" fill="currentColor" stroke-width="1"/></g></svg>
+                                    </div>
+                                    <span class="select-none">Select All</span>
+                                  </label>
+                                <template v-if="child.headerName">
+                                  <div v-for="(item, index) in filters[child.headerName]" :key="index">
+                                    <label  class="custom-label flex">
+                                      <div class="bg-custom shadow w-6 h-6 p-1 flex justify-center items-center mr-2">
+                                        <input type="checkbox" :checked="checkBoxHandler(child.headerName, item)" class="hidden" v-on:change="filterHandler(child.headerName, item)">
+                                        <svg class="hidden w-4 h-4 text-green-600 pointer-events-none" viewBox="0 0 172 172"><g fill="none" stroke-width="none" stroke-miterlimit="10" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode:normal"><path d="M0 172V0h172v172z"/><path d="M145.433 37.933L64.5 118.8658 33.7337 88.0996l-10.134 10.1341L64.5 139.1341l91.067-91.067z" fill="currentColor" stroke-width="1"/></g></svg>
+                                      </div>
+                                      <span class="select-none">{{item}}</span>
+                                    </label>
+                                  </div>
+                                </template>
+                              </vs-collapse-item>
+                            </template>
+                          </vs-collapse>
+                        </vs-collapse-item>
                       </template>
-                    </vs-collapse-item>
-                  </template>
-                </vs-collapse>
-              </vs-collapse-item>
-            </template>
-            </vs-collapse>
-        </div>
-      </vs-tab>
-      <vs-tab label="Columns">
-        <div class="con-tab-ejemplo">
-          <vs-collapse>
-            <template v-for="(column, index) in columnDefs">
-              <vs-collapse-item v-if="column.children" :key="index">
-                <div slot="header">
-                  {{column.headerName}}
-                </div>
-                <template v-for="(child, index) in column.children">
-                  <label :key="index" class="custom-label flex">
-                    <div class="bg-custom shadow w-6 h-6 p-1 flex justify-center items-center mr-2">
-                      <input type="checkbox" :checked="!child.hide" class="hidden" v-on:change="clickHandler(child.field)">
-                      <svg class="hidden w-4 h-4 text-green-600 pointer-events-none" viewBox="0 0 172 172"><g fill="none" stroke-width="none" stroke-miterlimit="10" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode:normal"><path d="M0 172V0h172v172z"/><path d="M145.433 37.933L64.5 118.8658 33.7337 88.0996l-10.134 10.1341L64.5 139.1341l91.067-91.067z" fill="currentColor" stroke-width="1"/></g></svg>
+                      </vs-collapse>
+                  </div>
+                </vs-tab>
+                <vs-tab label="Columns">
+                  <div class="con-tab-ejemplo">
+                    <vs-collapse class="vs-collapse-sidebar">
+                      <template v-for="(column, index) in columnDefs">
+                        <vs-collapse-item v-if="column.children" :key="index">
+                          <div slot="header">
+                            {{column.headerName}}
+                          </div>
+                          <template v-for="(child, index) in column.children">
+                            <label :key="index" class="custom-label flex">
+                              <div class="bg-custom shadow w-6 h-6 p-1 flex justify-center items-center mr-2">
+                                <input type="checkbox" :checked="!child.hide" class="hidden" v-on:change="clickHandler(child.field)">
+                                <svg class="hidden w-4 h-4 text-green-600 pointer-events-none" viewBox="0 0 172 172"><g fill="none" stroke-width="none" stroke-miterlimit="10" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode:normal"><path d="M0 172V0h172v172z"/><path d="M145.433 37.933L64.5 118.8658 33.7337 88.0996l-10.134 10.1341L64.5 139.1341l91.067-91.067z" fill="currentColor" stroke-width="1"/></g></svg>
+                              </div>
+                              <span draggable="true" v-on:dragstart="onDragStart($event, child.headerName)" class="select-none">{{child.headerName}}</span>
+                            </label>
+                          </template>
+                        </vs-collapse-item>
+                      </template>
+                      </vs-collapse>
+                  </div>
+                  <div class="ag-column-drop__row">
+                    <div class="ag-row-title">
+                      <span class="ag-column-drop-title ag-column-drop-vertical-title">Row Groups</span>
                     </div>
-                    <span draggable="true" v-on:dragstart="onDragStart($event, child.headerName)" class="select-none">{{child.headerName}}</span>
-                  </label>
-                </template>
-              </vs-collapse-item>
-            </template>
-            </vs-collapse>
-        </div>
-            <div style="height:100px">
-                    <div class="drop-col" v-on:dragover="onDragOver($event)" v-on:drop="onDrop($event)">
-                    <span id="eDropTarget" class="drop-target">
-                        =&gt; Drag here to set row groups
-                    </span>
-                    <div id="eJsonDisplay" class="json-display">
+                    <div class="ag-column-drop-content" v-on:dragover="onDragOver($event)" v-on:drop="onDrop($event)">
+                      <div v-if="rowGroups.length">
+                        <div v-for="(row, index) in rowGroups" :key="index">
+                          <div class="row-group-btn" @click="dsRowGroup(row)">
+                            <span>{{row}}</span>
+                            <feather-icon icon="XIcon" class="close-icon cursor-pointer"></feather-icon> 
+                          </div>
+                        </div>
+                      </div>
+                      <span class="emplty-span" v-else>
+                          Drag here to set row groups
+                      </span>
                     </div>
-                </div>
-    </div>
-            <div style="height:100px">
-                    <div class="drop-col" v-on:dragover="onDragOver($event)" v-on:drop="onVlaueDrop($event)">
-                    <span id="eDropTarget" class="drop-target">
-                        =&gt; Drag here to aggregate
-                    </span>
-                    <div id="valueDisplay" class="json-display">
+                  </div>
+                  <div class="ag-column-drop__row">
+                    <div class="ag-row-title">
+                      <span class="ag-column-drop-title ag-column-drop-vertical-title">Values</span>
                     </div>
-                </div>
-    </div>
-      </vs-tab>
-    </vs-tabs>
+                    <div class="ag-column-drop-content" v-on:dragover="onDragOver($event)" v-on:drop="onVlaueDrop($event)">
+                      <div v-if="aggregateValues.length">
+                        <div v-for="(row, index) in aggregateValues" :key="index">
+                          <div class="row-group-btn" @click="dsAggregateValues(row)">
+                            <span>{{row}}</span>
+                            <feather-icon icon="XIcon" class="close-icon cursor-pointer"></feather-icon>  
+                          </div>
+                        </div>
+                      </div>
+                      <span class="emplty-span" v-else>
+                          Drag here to set row groups
+                      </span>
+                    </div>
+                  </div>
+                </vs-tab>
+              </vs-tabs>
+            </div>
           </div>
-        </component>
-      </div>
-    </vs-sidebar>
+        </div>
+      </vs-sidebar>
     </div>
+    <!-- End Filter SideBar -->
+
+    <!-- Shift Listing -->
     <div class="vx-card p-6">
-
       <div class="flex flex-wrap items-center">
-
-        <!-- ITEMS PER PAGE -->
+        <!-- Custom Pagination -->
         <div class="flex-grow">
           <vs-dropdown vs-trigger-click class="cursor-pointer">
             <div class="p-4 border pagi-btn d-theme-border-grey-light d-theme-dark-bg cursor-pointer flex items-center justify-between font-medium">
@@ -123,7 +152,6 @@
               <feather-icon icon="ChevronDownIcon" svgClasses="h-4 w-4" />
             </div>
             <vs-dropdown-menu>
-
               <vs-dropdown-item @click="gridApi.paginationSetPageSize(10)">
                 <span>10</span>
               </vs-dropdown-item>
@@ -139,7 +167,8 @@
             </vs-dropdown-menu>
           </vs-dropdown>
         </div>
-        <!-- TABLE ACTION COL-2: SEARCH & EXPORT AS CSV -->
+        <!-- End Custom Pagination -->
+        <!-- Quick Search -->
           <vs-input class="sm:mr-4 mr-0 sm:w-auto w-full sm:order-normal order-3 sm:mt-0 mt-4 ag-search" v-model="searchQuery" @input="updateSearchQuery" placeholder="Search..." />          
       </div>
 
@@ -160,15 +189,12 @@
         :suppressPaginationPanel="true"
         :sideBar="sideBar">
       </ag-grid-vue>
-
       <vs-pagination
         :total="totalPages"
         :max="7"
         v-model="currentPage" />
-
     </div>
   </div>
-
 </template>
 
 <script>
@@ -190,6 +216,8 @@ export default {
   data () {
     
     return {
+      rowGroups: [],
+      aggregateValues: [],
       days: '',
       active: false,
       shifts: shiftJson,
@@ -309,30 +337,31 @@ export default {
     },
     onDrop (event) {
       event.preventDefault()
-      console.log(event)
       const userAgent = window.navigator.userAgent
       const isIE = userAgent.indexOf('Trident/') >= 0
       const textData = event.dataTransfer.getData(isIE ? 'text' : 'text/plain')
-      const eJsonRow = document.createElement('div')
-      eJsonRow.classList.add('json-row')
-      eJsonRow.innerText = textData
-      const eJsonDisplay = document.querySelector('#eJsonDisplay')
-      eJsonDisplay.appendChild(eJsonRow)
-      this.gridOptions.columnApi.addRowGroupColumns([textData])
+      if (!this.rowGroups.includes(textData)) {
+        this.rowGroups.push(textData)
+        this.gridOptions.columnApi.addRowGroupColumns([textData])
+      }
     },
     onVlaueDrop (event) {
       event.preventDefault()
-      console.log(event)
       const userAgent = window.navigator.userAgent
       const isIE = userAgent.indexOf('Trident/') >= 0
       const textData = event.dataTransfer.getData(isIE ? 'text' : 'text/plain')
-      const eJsonRow = document.createElement('div')
-      eJsonRow.classList.add('json-row')
-      eJsonRow.innerText = textData
-      console.log(textData)
-      const valueDisplay = document.querySelector('#valueDisplay')
-      valueDisplay.appendChild(eJsonRow)
-      this.gridOptions.columnApi.addValueColumns([textData])
+      if (!this.aggregateValues.includes(textData)) {
+        this.aggregateValues.push(textData)
+        this.gridOptions.columnApi.addValueColumns([textData])
+      }
+    },
+    dsRowGroup (row) {
+      this.gridOptions.columnApi.removeRowGroupColumn(row)
+      this.rowGroups = this.rowGroups.filter(value => { return value !== row })
+    },
+    dsAggregateValues (value) {
+      this.gridOptions.columnApi.removeValueColumn(value)
+      this.aggregateValues = this.aggregateValues.filter(row => { return row !== value })
     },
     clickHandler (col) {
       const data = this.gridColumnApi.getColumn(col)
@@ -390,7 +419,7 @@ export default {
     updateSearchQuery () { 
       this.gridApi.setQuickFilter(this.searchQuery)
     },
-    onBtnExport () {
+    exportFileHandler () {
       this.gridApi.exportDataAsCsv()
     }
   },
@@ -433,7 +462,6 @@ export default {
   mounted () {
     this.gridApi = this.gridOptions.api
     this.gridColumnApi = this.gridOptions.columnApi
-    console.log(this.gridColumnApi.getColumn('Pay Rate'))
     for (const key in this.usersData[0]) {
       this.filters[key] = [... new Set(this.usersData.map((v) =>  v[key]))] 
     }
@@ -443,7 +471,50 @@ export default {
 </script>
 
 <style lang="scss">
-#theme-customizer .vs-sidebar {
+.vs-collapse-sidebar {
+  padding: 0;
+  .vs-collapse-item--header{
+    padding: .5rem 0;
+    font-size: 1rem;
+  }
+  .con-content--item{
+    padding: 0 !important;
+  }
+}
+.ag-column-drop__row{
+  border-top: 1px solid #e2e2e2;
+  .ag-row-title{
+    padding: 10px 0;
+    color: rgba(0, 0, 0, 0.87);
+  }
+  .emplty-span{
+    color: rgba(0, 0, 0, 0.38);
+    font-weight: 600;
+  }
+  .ag-column-drop-content {
+    height: 100px;
+    padding-top: 10px;
+    padding-bottom: 20px;
+    box-sizing: border-box;
+    overflow-y: scroll;
+  }
+  .row-group-btn{
+    margin: 5px;
+    color: rgba(0, 0, 0, 0.87);
+    font-size: 13px;
+    background: var(--ag-chip-background-color, #e2e2e2);
+    border-radius: 32px;
+    padding: 5px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .close-icon{
+      height: 16px;
+      width: 16px;
+    }
+  }
+}
+#filter-sidebar .vs-sidebar {
     position: fixed;
     z-index: 52000;
     width: 400px;
