@@ -89,7 +89,9 @@
                                 <input type="checkbox" :checked="!child.hide" class="hidden" v-on:change="clickHandler(child.field)">
                                 <svg class="hidden w-4 h-4 text-green-600 pointer-events-none" viewBox="0 0 172 172"><g fill="none" stroke-width="none" stroke-miterlimit="10" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode:normal"><path d="M0 172V0h172v172z"/><path d="M145.433 37.933L64.5 118.8658 33.7337 88.0996l-10.134 10.1341L64.5 139.1341l91.067-91.067z" fill="currentColor" stroke-width="1"/></g></svg>
                               </div>
-                              <span draggable="true" v-on:dragstart="onDragStart($event, child.headerName)" class="select-none">{{child.headerName}}</span>
+                              <span draggable="true" v-on:dragstart="onDragStart($event, child.headerName)" class="select-none">
+                                <vs-icon icon="android" color="rgb(70, 150, 0)"></vs-icon>
+                                {{child.headerName}}</span>
                             </label>
                           </template>
                         </vs-collapse-item>
@@ -171,7 +173,6 @@
         <!-- Quick Search -->
           <vs-input class="sm:mr-4 mr-0 sm:w-auto w-full sm:order-normal order-3 sm:mt-0 mt-4 ag-search" v-model="searchQuery" @input="updateSearchQuery" placeholder="Search..." />          
       </div>
-
       <!-- AgGrid Table -->
       <ag-grid-vue
         ref="agGridTable"
@@ -181,12 +182,15 @@
         :columnDefs="columnDefs"
         :defaultColDef="defaultColDef"
         :rowData="usersData"
-        rowSelection="multiple"
+        :rowSelection="rowSelection"
+        :rowGroupPanelShow="rowGroupPanelShow"
         colResizeDefault="shift"
         :animateRows="true"
         :pagination="true"
         :paginationPageSize="paginationPageSize"
         :suppressPaginationPanel="true"
+        :frameworkComponents="frameworkComponents"
+        :statusBar="statusBar"
         :sideBar="sideBar">
       </ag-grid-vue>
       <vs-pagination
@@ -205,9 +209,32 @@ import '@ag-grid-community/core/dist/styles/ag-grid.css'
 import '@ag-grid-community/core/dist/styles/ag-theme-material.css'
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 import _ from 'lodash'
+import ClickableStatusBarComponent from './clickableStatusBarComponentVue.js'
+import CountStatusBarComponent from './countStatusBarComponentVue.js'
 
 // Store Module
 import shiftJson from './shifts.json'
+
+const createTile = function createTile (data) {
+  const el = document.createElement('div')
+  el.classList.add('tile')
+  el.innerHTML = `<div class="id">${data} </div>`
+  return el
+}
+
+const addDropZones = function addDropZones (params) {
+  const tileContainer = document.querySelector('.tile-container'),
+    dropZone = {
+      getContainer () {
+        return tileContainer
+      },
+      onDragStop (params) {
+        const tile = createTile(params.node.data)
+        tileContainer.appendChild(tile)
+      }
+    }
+  params.api.addRowDropZone(dropZone)
+}
 export default {
   components: {
     AgGridVue,
@@ -220,15 +247,18 @@ export default {
       aggregateValues: [],
       days: '',
       active: false,
-      shifts: shiftJson,
+      shifts: null,
       sideBar: null,
       statusBar: null,
       modules: AllModules,
       gridApi: null,
       columnApi: null,
+      frameworkComponents: null,
+      rowSelection: null,
       filters: {},
       filterSearchQuery: {},
       searchQuery: '',
+      rowGroupPanelShow: 'always',
       settings: {
         maxScrollbarLength : 60,
         wheelSpeed         : .60
@@ -242,6 +272,7 @@ export default {
         enableCellChangeFlash: true
       },
       defaultColDef: {
+        editable:true,
         sortable: true,
         resizable: true,
         enableRowGroup: true,
@@ -249,14 +280,15 @@ export default {
         enable: true,
         width: 140,
         filter: true,
-        editable:true,
-        floatingFilter: true
+        // floatingFilter: true, for field search and filters
+        flex: 1
       },
       columnDefs:[
         {
           headerName: 'Shift Details',
+          groupId: 'GroupB',
           children: [
-            { headerName: 'Site Name', field: 'Site Name', hide: false  },
+            { headerName: 'Site Name', field: 'Site Name', hide: false, filter: false },
             { headerName: 'Type', field: 'Type', hide: false },
             { headerName: 'Clients', field: 'Clients', hide: false },
             { headerName: 'Subcontractor', field: 'Subcontractor', hide: true },
@@ -322,6 +354,10 @@ export default {
     }
   },
   methods: {
+    onGridReady (params) {
+      addDropZones(params)
+      params.api.sizeColumnsToFit()
+    },
     onDragStart (event, data) {
       const userAgent = window.navigator.userAgent
       const isIE = userAgent.indexOf('Trident/') >= 0
@@ -414,7 +450,6 @@ export default {
         })
       }
       instance.onFilterChanged()
-      console.log(instance.getValueModel())
     },
     updateSearchQuery () { 
       this.gridApi.setQuickFilter(this.searchQuery)
@@ -424,6 +459,9 @@ export default {
     }
   },
   beforeMount () {
+    this.shifts = shiftJson
+    this.rowSelection = 'multiple'
+    // SideBar 
     this.sideBar = {
       toolPanels: [
         'filters',
@@ -437,24 +475,19 @@ export default {
         }
       ]
     }
+    this.frameworkComponents = {
+      countStatusBarComponent: CountStatusBarComponent,
+      clickableStatusBarComponent: ClickableStatusBarComponent
+    }
     this.statusBar = {
       statusPanels: [
-        {
-          statusPanel: 'agTotalRowCountComponent',
-          align: 'left',
-          key: 'totalRowComponent'
-        },
-        {
-          statusPanel: 'agFilteredRowCountComponent',
-          align: 'left'
-        },
-        {
-          statusPanel: 'agSelectedRowCountComponent',
-          align: 'center'
-        },
+        { statusPanel: 'countStatusBarComponent' },
+        { statusPanel: 'clickableStatusBarComponent' },
         {
           statusPanel: 'agAggregationComponent',
-          align: 'right'
+          statusPanelParams: {
+            aggFuncs: ['count', 'sum', 'min', 'max', 'avg']
+          }
         }
       ]
     }
@@ -471,6 +504,9 @@ export default {
 </script>
 
 <style lang="scss">
+.myClass{
+  background: #333;
+}
 .vs-collapse-sidebar {
   padding: 0;
   .vs-collapse-item--header{
