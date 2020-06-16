@@ -36,43 +36,39 @@
               <vs-tabs>
                 <vs-tab label="Filters">
                   <div class="con-tab-ejemplo">
-                    <vs-collapse class="vs-collapse-sidebar">
-                      <template v-for="(column, index) in columnDefs">
-                        <vs-collapse-item v-if="column.children" :key="index">
-                          <div slot="header">
-                            {{column.headerName}}
-                          </div>
-                          <vs-collapse>
-                            <template v-for="(child, index) in column.children">
-                              <vs-collapse-item  :key="index" v-if="child.headerName">
-                                <div slot="header">
-                                  {{child.headerName}}
-                                </div>
-                                <vs-input  @input="filterSearch(child.headerName, filterSearchQuery[child.headerName.replace(/\s+/g, '')])" v-model="filterSearchQuery[child.headerName.replace(/\s+/g, '')]" class="w-full sm:order-normal order-3 mb-4 ag-search" placeholder="Placeholder"/>
+                    <template v-for="(column, index) in columnDefs">
+                      <template v-if="column.children">
+                        <vs-collapse class="vs-collapse-sidebar" :key="index">
+                          <template v-for="(child, index) in column.children">
+                            <vs-collapse-item  :key="index" v-if="child.headerName && child.filter !== false">
+                              <div slot="header">
+                                {{child.headerName}}
+                              </div>
+                              <vs-input  @input="filterSearch(child.headerName, filterSearchQuery[child.headerName.replace(/\s+/g, '')])" v-model="filterSearchQuery[child.headerName.replace(/\s+/g, '')]" class="w-full sm:order-normal order-3 mb-4 ag-search" placeholder="Placeholder"/>
+                                <label  class="custom-label flex">
+                                  <div class="bg-custom shadow w-6 h-6 p-1 flex justify-center items-center mr-2">
+                                    <input type="checkbox" checked class="hidden" v-on:change="selectNothing(child.headerName, filters[child.headerName])">
+                                    <svg class="hidden w-4 h-4 text-green-600 pointer-events-none" viewBox="0 0 172 172"><g fill="none" stroke-width="none" stroke-miterlimit="10" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode:normal"><path d="M0 172V0h172v172z"/><path d="M145.433 37.933L64.5 118.8658 33.7337 88.0996l-10.134 10.1341L64.5 139.1341l91.067-91.067z" fill="currentColor" stroke-width="1"/></g></svg>
+                                  </div>
+                                  <span class="select-none">Select All</span>
+                                </label>
+                              <template v-if="child.headerName">
+                                <div v-for="(item, index) in filters[child.headerName]" :key="index">
                                   <label  class="custom-label flex">
                                     <div class="bg-custom shadow w-6 h-6 p-1 flex justify-center items-center mr-2">
-                                      <input type="checkbox" checked class="hidden" v-on:change="selectNothing(child.headerName, filters[child.headerName])">
+                                      <input type="checkbox" :checked="checkBoxHandler(child.headerName, item)" class="hidden" v-on:change="filterHandler(child.headerName, item)">
                                       <svg class="hidden w-4 h-4 text-green-600 pointer-events-none" viewBox="0 0 172 172"><g fill="none" stroke-width="none" stroke-miterlimit="10" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode:normal"><path d="M0 172V0h172v172z"/><path d="M145.433 37.933L64.5 118.8658 33.7337 88.0996l-10.134 10.1341L64.5 139.1341l91.067-91.067z" fill="currentColor" stroke-width="1"/></g></svg>
                                     </div>
-                                    <span class="select-none">Select All</span>
+                                    <span class="select-none">{{item}}</span>
                                   </label>
-                                <template v-if="child.headerName">
-                                  <div v-for="(item, index) in filters[child.headerName]" :key="index">
-                                    <label  class="custom-label flex">
-                                      <div class="bg-custom shadow w-6 h-6 p-1 flex justify-center items-center mr-2">
-                                        <input type="checkbox" :checked="checkBoxHandler(child.headerName, item)" class="hidden" v-on:change="filterHandler(child.headerName, item)">
-                                        <svg class="hidden w-4 h-4 text-green-600 pointer-events-none" viewBox="0 0 172 172"><g fill="none" stroke-width="none" stroke-miterlimit="10" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode:normal"><path d="M0 172V0h172v172z"/><path d="M145.433 37.933L64.5 118.8658 33.7337 88.0996l-10.134 10.1341L64.5 139.1341l91.067-91.067z" fill="currentColor" stroke-width="1"/></g></svg>
-                                      </div>
-                                      <span class="select-none">{{item}}</span>
-                                    </label>
-                                  </div>
-                                </template>
-                              </vs-collapse-item>
-                            </template>
-                          </vs-collapse>
-                        </vs-collapse-item>
+                                </div>
+                              </template>
+                            </vs-collapse-item>
+                          </template>
+                        </vs-collapse>
                       </template>
-                      </vs-collapse>
+                      <div v-else :key="index"></div>
+                    </template>
                   </div>
                 </vs-tab>
                 <vs-tab label="Columns">
@@ -288,43 +284,43 @@ export default {
           headerName: 'Shift Details',
           groupId: 'GroupB',
           children: [
-            { headerName: 'Site Name', field: 'Site Name', hide: false, filter: false },
+            { headerName: 'Site Name', field: 'Site Name', hide: false },
             { headerName: 'Type', field: 'Type', hide: false },
             { headerName: 'Clients', field: 'Clients', hide: false },
             { headerName: 'Subcontractor', field: 'Subcontractor', hide: true },
             { headerName: 'Officer', field: 'Officer', hide: false },
-            { headerName: 'Phone', field: 'Phone', hide: true },
-            { headerName: 'SIA', field: 'SIA', hide: true },
-            { headerName: 'SIA Expiry', field: 'SIA Expiry', hide: true },
+            { headerName: 'Phone', field: 'Phone', hide: true, filter: false },
+            { headerName: 'SIA', field: 'SIA', hide: true, filter: false },
+            { headerName: 'SIA Expiry', field: 'SIA Expiry', hide: true, filter: false },
             { headerName: 'Date', field: 'Date', hide: false },
-            { headerName: 'Day', field: 'Day', hide: false },
+            { headerName: 'Day', field: 'Day', hide: false, filter: false },
             { headerName: 'Status', field: 'Status', hide: true }
           ]
         },
         {
           headerName: 'Staff Details',
           children: [
-            { headerName: 'Start', field: 'Start' },
-            { headerName: 'End', field: 'End' },
-            { headerName: 'HR', field: 'HR' },
-            { headerName: 'Break', field: 'Break' },
+            { headerName: 'Start', field: 'Start', filter: false },
+            { headerName: 'End', field: 'End', filter: false },
+            { headerName: 'HR', field: 'HR', filter: false },
+            { headerName: 'Break', field: 'Break', filter: false },
             { 
               headerName: 'Pay Rate',
               field: 'Pay Rate',
               enableValue: true
             },
-            { headerName: 'Amount', field: 'Amount', hide: true},
-            { headerName: 'Expense', field: 'Expense', hide: true }
+            { headerName: 'Amount', field: 'Amount', hide: true, filter: false},
+            { headerName: 'Expense', field: 'Expense', hide: true, filter: false }
           ]
         },
         {
           headerName: 'Site Details',
           children: [
-            { headerName: 'Site Start', field: 'Site Start', hide: true },
-            { headerName: 'Site End', field: 'Site End', hide: true },
-            { headerName: 'Site HR', field: 'Site HR', hide: true },
+            { headerName: 'Site Start', field: 'Site Start', hide: true, filter: false },
+            { headerName: 'Site End', field: 'Site End', hide: true, filter: false },
+            { headerName: 'Site HR', field: 'Site HR', hide: true, filter: false },
             { headerName: 'Charge Rate', field: 'Charge Rate', hide: true },
-            { headerName: 'Charge Amount', field: 'Charge Amount', hide: true}
+            { headerName: 'Charge Amount', field: 'Charge Amount', hide: true, filter: false}
           ] 
         }
       ]
@@ -462,19 +458,19 @@ export default {
     this.shifts = shiftJson
     this.rowSelection = 'multiple'
     // SideBar 
-    this.sideBar = {
-      toolPanels: [
-        'filters',
-        {
-          id: 'columns',
-          labelDefault: 'Columns',
-          labelKey: 'columns',
-          iconKey: 'columns',
-          toolPanel: 'agColumnsToolPanel',
-          toolPanelParams: { suppressSyncLayoutWithGrid: true }
-        }
-      ]
-    }
+    // this.sideBar = {
+    //   toolPanels: [
+    //     'filters',
+    //     {
+    //       id: 'columns',
+    //       labelDefault: 'Columns',
+    //       labelKey: 'columns',
+    //       iconKey: 'columns',
+    //       toolPanel: 'agColumnsToolPanel',
+    //       toolPanelParams: { suppressSyncLayoutWithGrid: true }
+    //     }
+    //   ]
+    // }
     this.frameworkComponents = {
       countStatusBarComponent: CountStatusBarComponent,
       clickableStatusBarComponent: ClickableStatusBarComponent
@@ -504,8 +500,9 @@ export default {
 </script>
 
 <style lang="scss">
-.myClass{
-  background: #333;
+.line-vs-tabs{
+  min-width: 63px;
+  top: 37px !important;
 }
 .vs-collapse-sidebar {
   padding: 0;
