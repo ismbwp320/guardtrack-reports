@@ -61,7 +61,7 @@
                                     </div>
                                     <span class="select-none">{{item}}</span>
                                   </label>
-                                  <label :class="{ inactive: index === activeItem}" :key="index" v-else @click="selectItem(index)">
+                                  <label :class="{ inactive: activeItem[item] === false}" :key="index" v-else @click="selectItem(item)">
                                     <vs-button  size="small"  class="my-1 mx-1" @click="filterHandler(child.headerName, item)" color="primary" type="filled">{{item}}</vs-button>
                                   </label>
                                 </template>
@@ -250,7 +250,13 @@ export default {
   data () {
     
     return {
-      activeItem: null,
+      activeItem: {
+        Unapproved: true,
+        Approved: true,
+        Cancelled: true,
+        Highlight: true,
+        Unassign: true
+      },
       rowGroups: [],
       aggregateValues: [],
       days: '',
@@ -488,8 +494,8 @@ export default {
     exportFileHandler () {
       this.gridApi.exportDataAsCsv()
     },
-    selectItem (i) {
-      this.activeItem = i
+    selectItem (key) {
+      this.activeItem[key] = !this.activeItem[key]
     }
   },
   beforeMount () {
