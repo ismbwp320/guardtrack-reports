@@ -44,7 +44,7 @@
                               <div slot="header">
                                 {{child.headerName}}
                               </div>
-                              <vs-input v-if="child.headerName !== 'Status'"  @input="filterSearch(child.headerName, filterSearchQuery[child.headerName.replace(/\s+/g, '')])" v-model="filterSearchQuery[child.headerName.replace(/\s+/g, '')]" class="w-full sm:order-normal order-3 mb-4 ag-search" placeholder="Placeholder"/>
+                              <vs-input v-if="child.headerName !== 'Status'"  @input="filterSearch(child.headerName, filterSearchQuery[child.headerName.replace(/\s+/g, '')])" v-model="filterSearchQuery[child.headerName.replace(/\s+/g, '')]" class="w-full sm:order-normal order-3 mb-4 ag-search" placeholder="Search..."/>
                                 <label  class="custom-label flex" v-if="child.headerName !== 'Status'">
                                   <div class="bg-custom shadow w-6 h-6 p-1 flex justify-center items-center mr-2">
                                     <input type="checkbox" checked class="hidden" v-on:change="selectNothing(child.headerName, filters[child.headerName])">
@@ -595,6 +595,9 @@ export default {
   }
   .con-content--item{
     padding: 0 !important;
+    font-size: .85rem !important;
+    max-height: 200px;
+    overflow-y: scroll;
   }
 }
 .ag-column-drop__row{
