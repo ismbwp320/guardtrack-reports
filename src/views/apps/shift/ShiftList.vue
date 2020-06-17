@@ -44,8 +44,8 @@
                               <div slot="header">
                                 {{child.headerName}}
                               </div>
-                              <vs-input  @input="filterSearch(child.headerName, filterSearchQuery[child.headerName.replace(/\s+/g, '')])" v-model="filterSearchQuery[child.headerName.replace(/\s+/g, '')]" class="w-full sm:order-normal order-3 mb-4 ag-search" placeholder="Placeholder"/>
-                                <label  class="custom-label flex">
+                              <vs-input v-if="child.headerName !== 'Status'"  @input="filterSearch(child.headerName, filterSearchQuery[child.headerName.replace(/\s+/g, '')])" v-model="filterSearchQuery[child.headerName.replace(/\s+/g, '')]" class="w-full sm:order-normal order-3 mb-4 ag-search" placeholder="Placeholder"/>
+                                <label  class="custom-label flex" v-if="child.headerName !== 'Status'">
                                   <div class="bg-custom shadow w-6 h-6 p-1 flex justify-center items-center mr-2">
                                     <input type="checkbox" checked class="hidden" v-on:change="selectNothing(child.headerName, filters[child.headerName])">
                                     <svg class="hidden w-4 h-4 text-green-600 pointer-events-none" viewBox="0 0 172 172"><g fill="none" stroke-width="none" stroke-miterlimit="10" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode:normal"><path d="M0 172V0h172v172z"/><path d="M145.433 37.933L64.5 118.8658 33.7337 88.0996l-10.134 10.1341L64.5 139.1341l91.067-91.067z" fill="currentColor" stroke-width="1"/></g></svg>
@@ -53,15 +53,18 @@
                                   <span class="select-none">Select All</span>
                                 </label>
                               <template v-if="child.headerName">
-                                <div v-for="(item, index) in filters[child.headerName]" :key="index">
-                                  <label  class="custom-label flex">
+                                <template v-for="(item, index) in filters[child.headerName]">
+                                  <label :key="index"  class="custom-label flex" v-if="child.headerName !== 'Status'">
                                     <div class="bg-custom shadow w-6 h-6 p-1 flex justify-center items-center mr-2">
                                       <input type="checkbox" :checked="checkBoxHandler(child.headerName, item)" class="hidden" v-on:change="filterHandler(child.headerName, item)">
                                       <svg class="hidden w-4 h-4 text-green-600 pointer-events-none" viewBox="0 0 172 172"><g fill="none" stroke-width="none" stroke-miterlimit="10" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode:normal"><path d="M0 172V0h172v172z"/><path d="M145.433 37.933L64.5 118.8658 33.7337 88.0996l-10.134 10.1341L64.5 139.1341l91.067-91.067z" fill="currentColor" stroke-width="1"/></g></svg>
                                     </div>
                                     <span class="select-none">{{item}}</span>
                                   </label>
-                                </div>
+                                  <label :class="{ inactive: index === activeItem}" :key="index" v-else @click="selectItem(index)">
+                                    <vs-button  size="small"  class="my-1 mx-1" @click="filterHandler(child.headerName, item)" color="primary" type="filled">{{item}}</vs-button>
+                                  </label>
+                                </template>
                               </template>
                             </vs-collapse-item>
                           </template>
@@ -77,7 +80,13 @@
                       <template v-for="(column, index) in columnDefs">
                         <vs-collapse-item v-if="column.children" :key="index">
                           <div slot="header">
-                            {{column.headerName}}
+                            <label :key="index" class="custom-label flex">
+                              <div class="bg-custom shadow w-6 h-6 p-1 flex justify-center items-center mr-2">
+                                <input type="checkbox" checked class="hidden" v-on:change="colCheckBoxHandler(column.children)">
+                                <svg class="hidden w-4 h-4 text-green-600 pointer-events-none" viewBox="0 0 172 172"><g fill="none" stroke-width="none" stroke-miterlimit="10" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode:normal"><path d="M0 172V0h172v172z"/><path d="M145.433 37.933L64.5 118.8658 33.7337 88.0996l-10.134 10.1341L64.5 139.1341l91.067-91.067z" fill="currentColor" stroke-width="1"/></g></svg>
+                              </div>
+                              <span>{{column.headerName}}</span>
+                            </label> 
                           </div>
                           <template v-for="(child, index) in column.children">
                             <label :key="index" class="custom-label flex">
@@ -187,6 +196,8 @@
         :suppressPaginationPanel="true"
         :frameworkComponents="frameworkComponents"
         :statusBar="statusBar"
+        :masterDetail="true"
+        :detailCellRendererParams="detailCellRendererParams"
         :sideBar="sideBar">
       </ag-grid-vue>
       <vs-pagination
@@ -239,6 +250,7 @@ export default {
   data () {
     
     return {
+      activeItem: null,
       rowGroups: [],
       aggregateValues: [],
       days: '',
@@ -250,6 +262,7 @@ export default {
       gridApi: null,
       columnApi: null,
       frameworkComponents: null,
+      detailCellRendererParams: null,
       rowSelection: null,
       filters: {},
       filterSearchQuery: {},
@@ -261,6 +274,7 @@ export default {
       },
       // AgGrid
       gridOptions: {
+        masterDetail: true,
         enableFillHandle: true,
         enableRangeSelection: true,
         undoRedoCellEditing: true,
@@ -284,8 +298,26 @@ export default {
           headerName: 'Shift Details',
           groupId: 'GroupB',
           children: [
-            { headerName: 'Site Name', field: 'Site Name', hide: false },
-            { headerName: 'Type', field: 'Type', hide: false },
+            { headerName: 'Site Name', field: 'Site Name', hide: false, cellRenderer: 'agGroupCellRenderer' },
+            {
+              headerName: 'Type',
+              field: 'Type',
+              hide: false,
+              cellClassRules: {
+                'red': params => {
+                  return params.value === 'PATROL'
+                },
+                'blue': params => {
+                  return params.value === 'Site_Inspection'
+                },
+                'grey': params => {
+                  return params.value === 'CALL_OUT'
+                }
+              },
+              cellRenderer: params => {
+                return `<div class="circle-b">${params.value}</div>`
+              }
+            },
             { headerName: 'Clients', field: 'Clients', hide: false },
             { headerName: 'Subcontractor', field: 'Subcontractor', hide: true },
             { headerName: 'Officer', field: 'Officer', hide: false },
@@ -399,6 +431,9 @@ export default {
       const data = this.gridColumnApi.getColumn(col)
       this.gridColumnApi.setColumnVisible(col, !data.visible)
     },
+    colCheckBoxHandler (data) {
+      console.log(data)
+    },
     checkBoxHandler (instanceName, child) {
       const instance = this.gridOptions.api.getFilterInstance(instanceName)
       if (instance.getValueModel().availableValues.size > 0) {
@@ -452,11 +487,37 @@ export default {
     },
     exportFileHandler () {
       this.gridApi.exportDataAsCsv()
+    },
+    selectItem (i) {
+      this.activeItem = i
     }
   },
   beforeMount () {
     this.shifts = shiftJson
     this.rowSelection = 'multiple'
+    this.detailCellRendererParams = {
+      detailGridOptions: {
+        columnDefs: [
+          { field: 'callId' },
+          { field: 'direction' },
+          {
+            field: 'number',
+            minWidth: 150
+          },
+          {
+            field: 'duration'
+          },
+          {
+            field: 'switchCode',
+            minWidth: 150
+          }
+        ],
+        defaultColDef: { flex: 1 }
+      },
+      getDetailRowData: params => {
+        params.successCallback(params.data.callRecords)
+      }
+    }
     // SideBar 
     // this.sideBar = {
     //   toolPanels: [
@@ -491,6 +552,10 @@ export default {
   mounted () {
     this.gridApi = this.gridOptions.api
     this.gridColumnApi = this.gridOptions.columnApi
+    // this.gridColumnApi.setColumnsVisible(
+    //   ['Type', 'Clients', 'Officer'],
+    //   false
+    // )
     for (const key in this.usersData[0]) {
       this.filters[key] = [... new Set(this.usersData.map((v) =>  v[key]))] 
     }
@@ -500,6 +565,18 @@ export default {
 </script>
 
 <style lang="scss">
+.inactive .vs-button-primary.vs-button-filled{ background: #444 !important;}
+.ag-cell-value{
+  &.red{
+    background: lightcoral;
+  }
+  &.blue{
+    background: lightgreen;
+  }
+  &.grey{
+    background: lightsalmon;
+  }
+} 
 .line-vs-tabs{
   min-width: 63px;
   top: 37px !important;
