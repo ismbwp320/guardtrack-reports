@@ -1,6 +1,5 @@
 <template>
   <div id="shift__listing">
-
     <div class="pb-2 text-right">
       <vs-button @click="exportFileHandler" color="primary" type="filled">Export</vs-button>
     </div>
@@ -44,7 +43,33 @@
                               <div slot="header">
                                 {{child.headerName}}
                               </div>
-                              <vs-input v-if="child.headerName !== 'Status'"  @input="filterSearch(child.headerName, filterSearchQuery[child.headerName.replace(/\s+/g, '')])" v-model="filterSearchQuery[child.headerName.replace(/\s+/g, '')]" class="w-full sm:order-normal order-3 mb-4 ag-search" placeholder="Search..."/>
+                                <template v-if="child.headerName === 'Date'">
+                                  <div class="d-flex">
+                                    <vs-input type="date" v-model="fromDate" />
+                                    <vs-input type="date" v-model="toDate" />
+                                  </div>
+                                  <vs-button  size="small"  class="my-1 mx-1" @click="inRangeHandler" color="primary" type="filled">Apply</vs-button>
+                                </template>
+                                <template v-else-if="child.headerName === 'Pay Rate'">
+                                  <div class="d-flex">
+                                    <vs-input type="Number" v-model="fromRate" />
+                                    <vs-input type="Number" v-model="toRate" />
+                                  </div>
+                                  <vs-button  size="small"  class="my-1 mx-1" @click="payRateHandler" color="primary" type="filled">Apply</vs-button>
+                                </template>
+                                <template v-else-if="child.headerName === 'Charge Rate'">
+                                  <div class="d-flex">
+                                    <vs-input type="Number" v-model="fromChargeRate" />
+                                    <vs-input type="Number" v-model="toChargeRate" />
+                                  </div>
+                                  <vs-button  size="small"  class="my-1 mx-1" @click="chargeRateHandler" color="primary" type="filled">Apply</vs-button>
+                                </template>
+                              <template v-else>
+                              <vs-input
+                                v-if="child.headerName !== 'Status'"
+                                @input="filterSearch(child.headerName, filterSearchQuery[child.headerName.replace(/\s+/g, '')])"
+                                v-model="filterSearchQuery[child.headerName.replace(/\s+/g, '')]"
+                                class="w-full sm:order-normal order-3 mb-4 ag-search" placeholder="Search..."/>
                                 <label  class="custom-label flex" v-if="child.headerName !== 'Status'">
                                   <div class="bg-custom shadow w-6 h-6 p-1 flex justify-center items-center mr-2">
                                     <input type="checkbox" checked class="hidden" v-on:change="selectNothing(child.headerName, filters[child.headerName])">
@@ -52,17 +77,16 @@
                                   </div>
                                   <span class="select-none">Select All</span>
                                 </label>
-                              <template v-if="child.headerName">
                                 <template v-for="(item, index) in filters[child.headerName]">
-                                  <label :key="index"  class="custom-label flex" v-if="child.headerName !== 'Status'">
+                                  <label v-if="child.headerName === 'Status'" :class="{ inactive: activeItem[item] === false}" :key="index" @click="selectItem(item)">
+                                    <vs-button  size="small"  class="my-1 mx-1" @click="filterHandler(child.headerName, item)" color="primary" type="filled">{{item}}</vs-button>
+                                  </label>
+                                  <label :key="index"  class="custom-label flex" v-else>
                                     <div class="bg-custom shadow w-6 h-6 p-1 flex justify-center items-center mr-2">
                                       <input type="checkbox" :checked="checkBoxHandler(child.headerName, item)" class="hidden" v-on:change="filterHandler(child.headerName, item)">
                                       <svg class="hidden w-4 h-4 text-green-600 pointer-events-none" viewBox="0 0 172 172"><g fill="none" stroke-width="none" stroke-miterlimit="10" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode:normal"><path d="M0 172V0h172v172z"/><path d="M145.433 37.933L64.5 118.8658 33.7337 88.0996l-10.134 10.1341L64.5 139.1341l91.067-91.067z" fill="currentColor" stroke-width="1"/></g></svg>
                                     </div>
                                     <span class="select-none">{{item}}</span>
-                                  </label>
-                                  <label :class="{ inactive: activeItem[item] === false}" :key="index" v-else @click="selectItem(item)">
-                                    <vs-button  size="small"  class="my-1 mx-1" @click="filterHandler(child.headerName, item)" color="primary" type="filled">{{item}}</vs-button>
                                   </label>
                                 </template>
                               </template>
@@ -198,7 +222,8 @@
         :allowContextMenuWithControlKey="true"
         :getContextMenuItems="getContextMenuItems"
         :statusBar="statusBar"
-        :masterDetail="true"
+        :isExternalFilterPresent="isExternalFilterPresent"
+        :doesExternalFilterPass="doesExternalFilterPass"
         :detailCellRendererParams="detailCellRendererParams"
         :sideBar="sideBar">
       </ag-grid-vue>
@@ -221,30 +246,11 @@ import _ from 'lodash'
 import ClickableStatusBarComponent from './clickableStatusBarComponentVue.js'
 import CountStatusBarComponent from './countStatusBarComponentVue.js'
 import CustomPinnedRowRenderer from './customPinnedRowRendererVue.js'
+import moment from 'moment'
 
 // Store Module
 import shiftJson from './shifts.json'
 
-const createTile = function createTile (data) {
-  const el = document.createElement('div')
-  el.classList.add('tile')
-  el.innerHTML = `<div class="id">${data} </div>`
-  return el
-}
-
-const addDropZones = function addDropZones (params) {
-  const tileContainer = document.querySelector('.tile-container'),
-    dropZone = {
-      getContainer () {
-        return tileContainer
-      },
-      onDragStop (params) {
-        const tile = createTile(params.node.data)
-        tileContainer.appendChild(tile)
-      }
-    }
-  params.api.addRowDropZone(dropZone)
-}
 export default {
   components: {
     AgGridVue,
@@ -253,6 +259,13 @@ export default {
   data () {
     
     return {
+      fromDate: '',
+      toDate: '',
+      fromRate: '',
+      toRate: '',
+      fromChargeRate: '',
+      toChargeRate: '',
+      ageType: 'everyone',
       activeItem: {
         Unapproved: true,
         Approved: true,
@@ -338,7 +351,11 @@ export default {
             { headerName: 'Phone', field: 'Phone', hide: true, filter: false },
             { headerName: 'SIA', field: 'SIA', hide: true, filter: false },
             { headerName: 'SIA Expiry', field: 'SIA Expiry', hide: true, filter: false },
-            { headerName: 'Date', field: 'Date', hide: false },
+            {
+              headerName: 'Date',
+              field: 'Date',
+              hide: false
+            },
             { headerName: 'Day', field: 'Day', hide: false, filter: false },
             { headerName: 'Status', field: 'Status', hide: true }
           ]
@@ -396,9 +413,39 @@ export default {
     }
   },
   methods: {
-    onGridReady (params) {
-      addDropZones(params)
-      params.api.sizeColumnsToFit()
+    inRangeHandler () {
+      this.externalFilterChanged('dateRangeFilter')
+    },
+    payRateHandler () {
+      this.externalFilterChanged('payRateRange')
+    },
+    chargeRateHandler () {
+      this.externalFilterChanged('chargeRateRange')
+    },
+    externalFilterChanged (newValue) {
+      this.ageType = newValue
+      this.gridApi.onFilterChanged()
+    },
+    isExternalFilterPresent () {
+      return this.ageType !== 'everyone'
+    },
+    doesExternalFilterPass (node) {
+      switch (this.ageType) {
+      case 'chargeRateRange':
+        return node.data['Charge Rate'] >= this.fromChargeRate && node.data['Charge Rate'] <= this.toChargeRate
+      case 'payRateRange':
+        return node.data['Pay Rate'] >= this.fromRate && node.data['Pay Rate'] <= this.toRate
+      case 'dateRangeFilter':
+        return node.data.Date >= moment(this.fromDate, 'YYYY-MM-DD').format('DD/MM/YYYY') && node.data.Date <= moment(this.toDate, 'YYYY-MM-DD').format('DD/MM/YYYY')
+      default:
+        return true
+      }
+    },
+    asDate (dateAsString) {
+      const splitFields = dateAsString.split('/')
+      return new Date(splitFields[2], splitFields[1], splitFields[0])
+    },
+    onGridReady () {
     },
     onDragStart (event, data) {
       const userAgent = window.navigator.userAgent
@@ -586,6 +633,7 @@ export default {
   mounted () {
     this.gridApi = this.gridOptions.api
     this.gridColumnApi = this.gridOptions.columnApi
+    // this.externalFilterChanged('between25and50')
     for (const key in this.usersData[0]) {
       this.filters[key] = [... new Set(this.usersData.map((v) =>  v[key]))] 
     }
@@ -595,6 +643,13 @@ export default {
 </script>
 
 <style lang="scss">
+.d-flex{
+  display: flex;
+  padding: 0 5px;
+  .vs-component + .vs-component{
+    margin-left: 5px;
+  }
+}
 .inactive .vs-button-primary.vs-button-filled{ background: #444 !important;}
 .ag-cell-value{
   &.red{
@@ -660,7 +715,7 @@ export default {
 #filter-sidebar .vs-sidebar {
     position: fixed;
     z-index: 52000;
-    width: 400px;
+    width: 450px;
     max-width: 90vw;
     -webkit-box-shadow: 0 15px 30px 0 rgba(0, 0, 0, 0.11), 0 5px 15px 0 rgba(0, 0, 0, 0.08);
 }
