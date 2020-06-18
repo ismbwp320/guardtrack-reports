@@ -320,6 +320,7 @@ export default {
         {
           headerName: 'Shift Details',
           groupId: 'GroupB',
+          // suppressColumnsToolPanel: true, 
           children: [
             { headerName: 'Site Name', field: 'Site Name', hide: false },
             {
@@ -411,6 +412,11 @@ export default {
     }
   },
   methods: {
+    // searchColumns () {
+    //   const aaa = this.columnDefs.map((element) => {
+    //     return {...element, children: element.children.filter((children) => children.headerName.includes('Ty'))}
+    //   })
+    // },
     activeHandler () {
       this.active = !this.active
     },
