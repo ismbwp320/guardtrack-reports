@@ -195,6 +195,8 @@
         :paginationPageSize="paginationPageSize"
         :suppressPaginationPanel="true"
         :frameworkComponents="frameworkComponents"
+        :allowContextMenuWithControlKey="true"
+        :getContextMenuItems="getContextMenuItems"
         :statusBar="statusBar"
         :masterDetail="true"
         :detailCellRendererParams="detailCellRendererParams"
@@ -218,6 +220,7 @@ import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 import _ from 'lodash'
 import ClickableStatusBarComponent from './clickableStatusBarComponentVue.js'
 import CountStatusBarComponent from './countStatusBarComponentVue.js'
+import CustomPinnedRowRenderer from './customPinnedRowRendererVue.js'
 
 // Store Module
 import shiftJson from './shifts.json'
@@ -324,7 +327,12 @@ export default {
                 return `<div class="circle-b">${params.value}</div>`
               }
             },
-            { headerName: 'Clients', field: 'Clients', hide: false },
+            {
+              headerName: 'Clients',
+              field: 'Clients',
+              hide: false,
+              pinnedRowCellRenderer: 'customPinnedRowRenderer'
+            },
             { headerName: 'Subcontractor', field: 'Subcontractor', hide: true },
             { headerName: 'Officer', field: 'Officer', hide: false },
             { headerName: 'Phone', field: 'Phone', hide: true, filter: false },
@@ -496,6 +504,25 @@ export default {
     },
     selectItem (key) {
       this.activeItem[key] = !this.activeItem[key]
+    },
+    getContextMenuItems (params) {
+      const result = [
+        {
+          name: 'Pin Row',
+          subMenu: [
+            {
+              name: 'Pin Top',
+              action: () => {
+                this.gridApi.setPinnedTopRowData([params.node.data])
+              }
+            }
+          ]
+        },
+        'separator',
+        'copy',
+        'separator'
+      ]
+      return result
     }
   },
   beforeMount () {
@@ -540,7 +567,8 @@ export default {
     // }
     this.frameworkComponents = {
       countStatusBarComponent: CountStatusBarComponent,
-      clickableStatusBarComponent: ClickableStatusBarComponent
+      clickableStatusBarComponent: ClickableStatusBarComponent,
+      customPinnedRowRenderer: CustomPinnedRowRenderer
     }
     this.statusBar = {
       statusPanels: [
@@ -558,10 +586,6 @@ export default {
   mounted () {
     this.gridApi = this.gridOptions.api
     this.gridColumnApi = this.gridOptions.columnApi
-    // this.gridColumnApi.setColumnsVisible(
-    //   ['Type', 'Clients', 'Officer'],
-    //   false
-    // )
     for (const key in this.usersData[0]) {
       this.filters[key] = [... new Set(this.usersData.map((v) =>  v[key]))] 
     }
