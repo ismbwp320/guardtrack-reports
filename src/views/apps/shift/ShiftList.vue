@@ -7,7 +7,7 @@
     <!-- Filter SideBar -->
     <div id="filter-sidebar">
       <vs-button
-        @click="active=!active"
+        @click="activeHandler"
         class="customizer-btn"
         icon="icon-settings"
         icon-pack="feather"
@@ -48,21 +48,21 @@
                                     <vs-input type="date" v-model="fromDate" />
                                     <vs-input type="date" v-model="toDate" />
                                   </div>
-                                  <vs-button  size="small"  class="my-1 mx-1" @click="inRangeHandler" color="primary" type="filled">Apply</vs-button>
+                                  <vs-button  size="small"  class="my-3 mx-1" @click="inRangeHandler" color="primary" type="filled">Apply</vs-button>
                                 </template>
                                 <template v-else-if="child.headerName === 'Pay Rate'">
                                   <div class="d-flex">
                                     <vs-input type="Number" v-model="fromRate" />
                                     <vs-input type="Number" v-model="toRate" />
                                   </div>
-                                  <vs-button  size="small"  class="my-1 mx-1" @click="payRateHandler" color="primary" type="filled">Apply</vs-button>
+                                  <vs-button  size="small"  class="my-3 mx-1" @click="payRateHandler" color="primary" type="filled">Apply</vs-button>
                                 </template>
                                 <template v-else-if="child.headerName === 'Charge Rate'">
                                   <div class="d-flex">
                                     <vs-input type="Number" v-model="fromChargeRate" />
                                     <vs-input type="Number" v-model="toChargeRate" />
                                   </div>
-                                  <vs-button  size="small"  class="my-1 mx-1" @click="chargeRateHandler" color="primary" type="filled">Apply</vs-button>
+                                  <vs-button  size="small"  class="my-3 mx-1" @click="chargeRateHandler" color="primary" type="filled">Apply</vs-button>
                                 </template>
                               <template v-else>
                               <vs-input
@@ -83,7 +83,7 @@
                                   </label>
                                   <label :key="index"  class="custom-label flex" v-else>
                                     <div class="bg-custom shadow w-6 h-6 p-1 flex justify-center items-center mr-2">
-                                      <input type="checkbox" :checked="checkBoxHandler(child.headerName, item)" class="hidden" v-on:change="filterHandler(child.headerName, item)">
+                                      <input type="checkbox" :class="child.headerName.replace(/\s+/g, '')" :checked="checkBoxHandler(child.headerName, item)" class="hidden" v-on:change="filterHandler(child.headerName, item)">
                                       <svg class="hidden w-4 h-4 text-green-600 pointer-events-none" viewBox="0 0 172 172"><g fill="none" stroke-width="none" stroke-miterlimit="10" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode:normal"><path d="M0 172V0h172v172z"/><path d="M145.433 37.933L64.5 118.8658 33.7337 88.0996l-10.134 10.1341L64.5 139.1341l91.067-91.067z" fill="currentColor" stroke-width="1"/></g></svg>
                                     </div>
                                     <span class="select-none">{{item}}</span>
@@ -259,6 +259,7 @@ export default {
   data () {
     
     return {
+      clearDisable: true,
       fromDate: '',
       toDate: '',
       fromRate: '',
@@ -320,7 +321,7 @@ export default {
           headerName: 'Shift Details',
           groupId: 'GroupB',
           children: [
-            { headerName: 'Site Name', field: 'Site Name', hide: false, cellRenderer: 'agGroupCellRenderer' },
+            { headerName: 'Site Name', field: 'Site Name', hide: false },
             {
               headerName: 'Type',
               field: 'Type',
@@ -335,9 +336,6 @@ export default {
                 'grey': params => {
                   return params.value === 'CALL_OUT'
                 }
-              },
-              cellRenderer: params => {
-                return `<div class="circle-b">${params.value}</div>`
               }
             },
             {
@@ -413,6 +411,9 @@ export default {
     }
   },
   methods: {
+    activeHandler () {
+      this.active = !this.active
+    },
     inRangeHandler () {
       this.externalFilterChanged('dateRangeFilter')
     },
@@ -493,9 +494,9 @@ export default {
       this.gridColumnApi.setColumnVisible(col, !data.visible)
     },
     colCheckBoxHandler (data) {
-      console.log(data)
     },
     checkBoxHandler (instanceName, child) {
+      // console.log(instanceName, child)
       const instance = this.gridOptions.api.getFilterInstance(instanceName)
       if (instance.getValueModel().availableValues.size > 0) {
         const item = instance.getValueModel().availableValues
@@ -527,19 +528,26 @@ export default {
     selectNothing (instanceName, child) {
       const instance = this.gridOptions.api.getFilterInstance(instanceName)
       const getModelValues = instance.getValueModel()
+      const checkboxes = document.getElementsByClassName(instanceName.replace(/\s+/g, ''))
       if (_.isEqual(getModelValues.availableValues, getModelValues.selectedValues)) {
         instance.setModel({
           type: 'set',
           values: []
         })
+        
         for (const item in child) {
-          this.checkBoxHandler(instanceName, item)
+          checkboxes[item].checked = false
+          // console.log(instanceName, child[item])
+          // this.filterHandler(instanceName, child[item])
         }
       } else {
         instance.setModel({
           type: 'set',
           values: [...child]
         })
+        for (const item in child) {
+          checkboxes[item].checked = true
+        }
       }
       instance.onFilterChanged()
     },
@@ -552,8 +560,23 @@ export default {
     selectItem (key) {
       this.activeItem[key] = !this.activeItem[key]
     },
+    contextFilterHandler (params, filter) {
+      const instance = this.gridOptions.api.getFilterInstance(filter)
+      instance.setModel({
+        type: 'set',
+        values: [params.node.data[filter]]
+      })
+      instance.onFilterChanged()
+      this.clearDisable = false
+    },
     getContextMenuItems (params) {
       const result = [
+        {
+          name: 'View',
+          action: () => {
+            console.log(params.node.data)
+          }
+        },
         {
           name: 'Pin Row',
           subMenu: [
@@ -562,12 +585,53 @@ export default {
               action: () => {
                 this.gridApi.setPinnedTopRowData([params.node.data])
               }
+            },
+            {
+              name: 'Pin Bottom',
+              action: () => {
+                this.gridApi.setPinnedBottomRowData([params.node.data])
+              }
+            }
+          ]
+        },
+        {
+          name: 'Filters',
+          subMenu: [
+            {
+              name: 'Clients',
+              action: () => {
+                this.contextFilterHandler(params, 'Clients')
+              }
+            },
+            {
+              name: 'Sites',
+              action: () => {
+                this.contextFilterHandler(params, 'Site Name')
+              }
+            },
+            {
+              name: 'Officer',
+              action: () => {
+                this.contextFilterHandler(params, 'Officer')
+              }
+            },
+            {
+              name: 'Clear',
+              disabled: this.clearDisable,
+              action: () => {
+                this.gridOptions.api.setFilterModel(null)
+                this.gridOptions.api.onFilterChanged()
+                this.clearDisable = true
+              }
             }
           ]
         },
         'separator',
         'copy',
-        'separator'
+        'separator',
+        'paste',
+        'separator',
+        'export'
       ]
       return result
     }
@@ -575,29 +639,6 @@ export default {
   beforeMount () {
     this.shifts = shiftJson
     this.rowSelection = 'multiple'
-    this.detailCellRendererParams = {
-      detailGridOptions: {
-        columnDefs: [
-          { field: 'callId' },
-          { field: 'direction' },
-          {
-            field: 'number',
-            minWidth: 150
-          },
-          {
-            field: 'duration'
-          },
-          {
-            field: 'switchCode',
-            minWidth: 150
-          }
-        ],
-        defaultColDef: { flex: 1 }
-      },
-      getDetailRowData: params => {
-        params.successCallback(params.data.callRecords)
-      }
-    }
     // SideBar 
     // this.sideBar = {
     //   toolPanels: [
@@ -633,10 +674,14 @@ export default {
   mounted () {
     this.gridApi = this.gridOptions.api
     this.gridColumnApi = this.gridOptions.columnApi
-    // this.externalFilterChanged('between25and50')
     for (const key in this.usersData[0]) {
       this.filters[key] = [... new Set(this.usersData.map((v) =>  v[key]))] 
     }
+   
+  },
+  created () {
+    // this.gridApi = this.gridOptions.api
+    // this.gridColumnApi = this.gridOptions.columnApi
   }
 }
 
@@ -646,6 +691,10 @@ export default {
 .d-flex{
   display: flex;
   padding: 0 5px;
+  +.small{
+    height: 30px;
+    font-size: .8rem;
+  }
   .vs-component + .vs-component{
     margin-left: 5px;
   }
@@ -676,6 +725,7 @@ export default {
     padding: 0 !important;
     font-size: .85rem !important;
     max-height: 200px;
+    min-height: 100px;
     overflow-y: scroll;
   }
 }
