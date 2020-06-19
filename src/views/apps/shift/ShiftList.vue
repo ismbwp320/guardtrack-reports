@@ -318,7 +318,16 @@ export default {
         enableRangeSelection: true,
         undoRedoCellEditing: true,
         undoRedoCellEditingLimit: 20,
-        enableCellChangeFlash: true
+        enableCellChangeFlash: true,
+        onSelectionChanged: (event) => {
+          let rowData = []
+          event.api.getSelectedNodes().forEach(node => {
+            rowData = [...rowData, node.data]
+          })
+          // _.sumBy(objects, function(o) { return o.value; });
+          console.log( 'Charge Rate', _.sumBy(rowData, (o) => { return o['Charge Rate'] }))
+          console.log('Charge Amount', _.sumBy(rowData, (o) => { return o['Charge Amount'] }))
+        }
       },
       defaultColDef: {
         editable:true,
@@ -338,7 +347,7 @@ export default {
           groupId: 'GroupB',
           // suppressColumnsToolPanel: true, 
           children: [
-            { headerName: 'Site Name', field: 'Site Name', hide: false },
+            { headerName: 'Site Name', field: 'Site Name', hide: false, headerCheckboxSelection: true, checkboxSelection: true },
             {
               headerName: 'Type',
               field: 'Type',
@@ -727,7 +736,7 @@ export default {
   mounted () {
     this.gridApi = this.gridOptions.api
     this.gridColumnApi = this.gridOptions.columnApi
-
+    console.log(this.gridApi.getSelectedNodes())
     // const show = []
     // const data = this.columnDefs.map((element) => {
     //   if (element.headerName.includes('Type')) {
@@ -754,6 +763,12 @@ export default {
 </script>
 
 <style lang="scss">
+.ag-theme-material .ag-floating-top{
+  border-bottom-color: #ff4081 !important;
+}
+.ag-theme-material .ag-floating-bottom{
+  border-top-color: #ff4081 !important;
+}
 .d-flex{
   display: flex;
   padding: 0 5px;
