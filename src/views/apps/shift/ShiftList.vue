@@ -34,8 +34,9 @@
             <div class="px-6">
               <vs-tabs>
                 <vs-tab label="Filters">
+                  <input v-model="searchModel" />
                   <div class="con-tab-ejemplo">
-                    <template v-for="(column, index) in columnDefs">
+                    <template v-for="(column, index) in filterColumns">
                       <template v-if="column.children">
                         <vs-collapse class="vs-collapse-sidebar" :key="index">
                           <template v-for="(child, index) in column.children">
@@ -171,7 +172,15 @@
       </vs-sidebar>
     </div>
     <!-- End Filter SideBar -->
-
+    <vs-prompt
+        title="View Shift"
+        button-cancel = "border"
+        button-accept = "hidden"
+        :active.sync="activePrompt">
+        <div>
+          {{shiftModel}}
+        </div>
+    </vs-prompt>
     <!-- Shift Listing -->
     <div class="vx-card p-6">
       <div class="flex flex-wrap items-center">
@@ -183,17 +192,17 @@
               <feather-icon icon="ChevronDownIcon" svgClasses="h-4 w-4" />
             </div>
             <vs-dropdown-menu>
-              <vs-dropdown-item @click="gridApi.paginationSetPageSize(10)">
-                <span>10</span>
+              <vs-dropdown-item @click="gridApi.paginationSetPageSize(100)">
+                <span>100</span>
               </vs-dropdown-item>
-              <vs-dropdown-item @click="gridApi.paginationSetPageSize(20)">
-                <span>20</span>
+              <vs-dropdown-item @click="gridApi.paginationSetPageSize(250)">
+                <span>250</span>
               </vs-dropdown-item>
-              <vs-dropdown-item @click="gridApi.paginationSetPageSize(25)">
-                <span>25</span>
+              <vs-dropdown-item @click="gridApi.paginationSetPageSize(500)">
+                <span>500</span>
               </vs-dropdown-item>
-              <vs-dropdown-item @click="gridApi.paginationSetPageSize(30)">
-                <span>30</span>
+              <vs-dropdown-item @click="gridApi.paginationSetPageSize(1000)">
+                <span>1000</span>
               </vs-dropdown-item>
             </vs-dropdown-menu>
           </vs-dropdown>
@@ -259,6 +268,13 @@ export default {
   data () {
     
     return {
+      shiftModel: {},
+      activePrompt: false,
+      pinTop: [],
+      pinBottom: [],
+      searchModel: '',
+      filterColumns: '',
+      sidebarColumns: '',
       clearDisable: true,
       fromDate: '',
       toDate: '',
@@ -328,15 +344,18 @@ export default {
               field: 'Type',
               hide: false,
               cellClassRules: {
-                'red': params => {
+                'progress': params => {
                   return params.value === 'PATROL'
                 },
-                'blue': params => {
+                'complete': params => {
                   return params.value === 'Site_Inspection'
                 },
-                'grey': params => {
+                'incomplete': params => {
                   return params.value === 'CALL_OUT'
                 }
+              },
+              cellRenderer : params => {
+                return `<div class="pos-relative">${params.value}<div>`
               }
             },
             {
@@ -392,9 +411,15 @@ export default {
     usersData () {
       return this.shifts
     },
+    searchColumns (value) {
+      const filterValues = this.columnDefs.map((element) => {
+        return {...element, children: element.children.filter((children) => children.headerName.includes(value))}
+      })
+      return value ? filterValues : this.columnDefs
+    },
     paginationPageSize () {
       if (this.gridApi) return this.gridApi.paginationGetPageSize()
-      else return 10
+      else return 100
     },
     totalPages () {
       if (this.gridApi) return this.gridApi.paginationGetTotalPages()
@@ -411,12 +436,20 @@ export default {
       }
     }
   },
+  watch: {
+    searchModel: {
+      handler (value) {
+        if (!value) {
+          this.filterColumns = this.columnDefs
+        }
+        this.filterColumns = this.columnDefs.map((element) => {
+          return {...element, children: element.children.filter((children) => children.headerName.includes(value))}
+        })
+      },
+      immediate: true
+    }
+  },
   methods: {
-    // searchColumns () {
-    //   const aaa = this.columnDefs.map((element) => {
-    //     return {...element, children: element.children.filter((children) => children.headerName.includes('Ty'))}
-    //   })
-    // },
     activeHandler () {
       this.active = !this.active
     },
@@ -580,6 +613,8 @@ export default {
         {
           name: 'View',
           action: () => {
+            this.activePrompt = true
+            this.shiftModel = params.node.data
             console.log(params.node.data)
           }
         },
@@ -589,13 +624,25 @@ export default {
             {
               name: 'Pin Top',
               action: () => {
-                this.gridApi.setPinnedTopRowData([params.node.data])
+                this.pinTop.push(params.node.data)
+                this.gridApi.setPinnedTopRowData(this.pinTop)
               }
             },
             {
               name: 'Pin Bottom',
               action: () => {
-                this.gridApi.setPinnedBottomRowData([params.node.data])
+                this.pinBottom.push(params.node.data)
+                this.gridApi.setPinnedBottomRowData(this.pinBottom)
+              }
+            },
+            {
+              name: 'Clear Pin',
+              disabled: !(this.pinBottom.length || this.pinTop.length),
+              action: () => {
+                this.pinTop = []
+                this.pinBottom = []
+                this.gridApi.setPinnedTopRowData([])
+                this.gridApi.setPinnedBottomRowData([])
               }
             }
           ]
@@ -680,14 +727,27 @@ export default {
   mounted () {
     this.gridApi = this.gridOptions.api
     this.gridColumnApi = this.gridOptions.columnApi
+
+    // const show = []
+    // const data = this.columnDefs.map((element) => {
+    //   if (element.headerName.includes('Type')) {
+    //     show.push({ ...element })
+    //   } else {
+    //     const arr = element.children.filter((children) => children.headerName.includes('Type'))
+    //     if (arr.length) {
+    //       show.push({...element, children: element.children.filter((children) => children.headerName.includes('Type'))})
+    //     }
+    //   }
+      
+    //   return show
+    // })
+    
     for (const key in this.usersData[0]) {
       this.filters[key] = [... new Set(this.usersData.map((v) =>  v[key]))] 
     }
    
   },
   created () {
-    // this.gridApi = this.gridOptions.api
-    // this.gridColumnApi = this.gridOptions.columnApi
   }
 }
 
@@ -795,5 +855,28 @@ export default {
   border: none !important;
   border-radius: 0px !important;
   border-bottom: 1px solid #4596fb !important;
+}
+.pos-relative{
+  position: relative;
+  &::after{
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    display: block;
+    border-radius: 50%;
+    top: 18px;
+    right: auto !important;
+    left: -16px !important;
+  }
+}
+.progress > span .pos-relative::after{
+  background: chocolate !important;
+}
+.complete > span .pos-relative::after{
+  background: chartreuse !important;
+}
+.incomplete > span .pos-relative::after{
+  background: lightcoral !important;
 }
 </style>
