@@ -709,19 +709,19 @@ export default {
     this.shifts = shiftJson
     this.rowSelection = 'multiple'
     // SideBar 
-    // this.sideBar = {
-    //   toolPanels: [
-    //     'filters',
-    //     {
-    //       id: 'columns',
-    //       labelDefault: 'Columns',
-    //       labelKey: 'columns',
-    //       iconKey: 'columns',
-    //       toolPanel: 'agColumnsToolPanel',
-    //       toolPanelParams: { suppressSyncLayoutWithGrid: true }
-    //     }
-    //   ]
-    // }
+    this.sideBar = {
+      toolPanels: [
+        'filters',
+        {
+          id: 'columns',
+          labelDefault: 'Columns',
+          labelKey: 'columns',
+          iconKey: 'columns',
+          toolPanel: 'agColumnsToolPanel',
+          toolPanelParams: { suppressSyncLayoutWithGrid: true }
+        }
+      ]
+    }
     this.frameworkComponents = {
       
       clickableStatusBarComponent: ClickableStatusBarComponent,
@@ -746,7 +746,8 @@ export default {
   mounted () {
     this.gridApi = this.gridOptions.api
     this.gridColumnApi = this.gridOptions.columnApi
-    
+    this.columnDefs.push({ field:'SOME RANDOM', headerName: 'SOME RANDOM'})
+    this.gridApi.setColumnDefs(this.columnDefs)
     // const show = []
     // const data = this.columnDefs.map((element) => {
     //   if (element.headerName.includes('Type')) {
