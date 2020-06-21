@@ -34,7 +34,7 @@
             <div class="px-6">
               <vs-tabs>
                 <vs-tab label="Filters">
-                  <input v-model="searchModel" />
+                  <vs-input class="input-block" v-model="searchModel" />
                   <div class="con-tab-ejemplo">
                     <template v-for="(column, index) in filterColumns">
                       <template v-if="column.children">
@@ -454,6 +454,7 @@ export default {
   methods: {
     onSelectionChanged () {
       let rowData = []
+      console.log(this.gridApi.getSelectedNodes())
       this.gridApi.getSelectedNodes().forEach(node => {
         rowData = [...rowData, node.data]
       })
@@ -772,6 +773,10 @@ export default {
 </script>
 
 <style lang="scss">
+.input-block{
+  margin: 12px 0;
+  &.vs-con-input-label{ width: 100%; }
+}
 .ag-theme-material .ag-floating-top{
   border-bottom-color: #ff4081 !important;
 }
