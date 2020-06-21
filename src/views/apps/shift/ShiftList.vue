@@ -216,6 +216,7 @@
         ref="agGridTable"
         :modules="modules"
         :gridOptions="gridOptions"
+        @grid-ready="onGridReady"
         class="ag-theme-material w-100 my-4 ag-grid-table"
         :columnDefs="columnDefs"
         :defaultColDef="defaultColDef"
@@ -231,6 +232,7 @@
         :allowContextMenuWithControlKey="true"
         :getContextMenuItems="getContextMenuItems"
         :statusBar="statusBar"
+        @selection-changed="onSelectionChanged"
         :isExternalFilterPresent="isExternalFilterPresent"
         :doesExternalFilterPass="doesExternalFilterPass"
         :detailCellRendererParams="detailCellRendererParams"
@@ -318,16 +320,7 @@ export default {
         enableRangeSelection: true,
         undoRedoCellEditing: true,
         undoRedoCellEditingLimit: 20,
-        enableCellChangeFlash: true,
-        onSelectionChanged: (event) => {
-          let rowData = []
-          event.api.getSelectedNodes().forEach(node => {
-            rowData = [...rowData, node.data]
-          })
-          // _.sumBy(objects, function(o) { return o.value; });
-          console.log( 'Charge Rate', _.sumBy(rowData, (o) => { return o['Charge Rate'] }))
-          console.log('Charge Amount', _.sumBy(rowData, (o) => { return o['Charge Amount'] }))
-        }
+        enableCellChangeFlash: true
       },
       defaultColDef: {
         editable:true,
@@ -459,6 +452,18 @@ export default {
     }
   },
   methods: {
+    onSelectionChanged () {
+      let rowData = []
+      this.gridApi.getSelectedNodes().forEach(node => {
+        rowData = [...rowData, node.data]
+      })
+      const data = {
+        chargeRate: _.sumBy(rowData, (o) => { return o['Charge Rate'] }),
+        chargeAmount: _.sumBy(rowData, (o) => { return Number(o['Charge Amount']) })
+      }
+      const componentInstance = this.gridApi.getStatusPanel('statusBarCompKey').component
+      componentInstance.setChargeValue(data)
+    },
     activeHandler () {
       this.active = !this.active
     },
@@ -493,8 +498,6 @@ export default {
     asDate (dateAsString) {
       const splitFields = dateAsString.split('/')
       return new Date(splitFields[2], splitFields[1], splitFields[0])
-    },
-    onGridReady () {
     },
     onDragStart (event, data) {
       const userAgent = window.navigator.userAgent
@@ -542,9 +545,9 @@ export default {
       this.gridColumnApi.setColumnVisible(col, !data.visible)
     },
     colCheckBoxHandler (data) {
+      console.log(data)
     },
     checkBoxHandler (instanceName, child) {
-      // console.log(instanceName, child)
       const instance = this.gridOptions.api.getFilterInstance(instanceName)
       if (instance.getValueModel().availableValues.size > 0) {
         const item = instance.getValueModel().availableValues
@@ -696,6 +699,9 @@ export default {
         'export'
       ]
       return result
+    },
+    onGridReady (params) {
+      params.api.sizeColumnsToFit()
     }
   },
   beforeMount () {
@@ -716,14 +722,17 @@ export default {
     //   ]
     // }
     this.frameworkComponents = {
-      countStatusBarComponent: CountStatusBarComponent,
+      
       clickableStatusBarComponent: ClickableStatusBarComponent,
+      countStatusBarComponent: CountStatusBarComponent,
       customPinnedRowRenderer: CustomPinnedRowRenderer
     }
     this.statusBar = {
       statusPanels: [
-        { statusPanel: 'countStatusBarComponent' },
-        { statusPanel: 'clickableStatusBarComponent' },
+        { statusPanel: 'clickableStatusBarComponent', 
+          key: 'statusBarCompKey',
+          align: 'right'
+        },
         {
           statusPanel: 'agAggregationComponent',
           statusPanelParams: {
@@ -736,7 +745,7 @@ export default {
   mounted () {
     this.gridApi = this.gridOptions.api
     this.gridColumnApi = this.gridOptions.columnApi
-    console.log(this.gridApi.getSelectedNodes())
+    
     // const show = []
     // const data = this.columnDefs.map((element) => {
     //   if (element.headerName.includes('Type')) {

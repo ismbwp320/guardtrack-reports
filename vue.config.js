@@ -9,6 +9,7 @@
 
 
 module.exports = {
+  runtimeCompiler: true,
   publicPath: '/',
   transpileDependencies: [
     'vue-echarts',

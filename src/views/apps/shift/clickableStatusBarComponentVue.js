@@ -1,21 +1,25 @@
 import Vue from 'vue'
-
 export default Vue.extend({
   template: `
-            <div class="ag-status-name-value">
-                <span>Status Bar Component&nbsp; 
-                    <input type="button" v-on:click="onClick" value="Click Me"/>
-                </span>
+            <div class="ag-status-name-value" v-if="object.chargeRate > 0">
+                <span> <strong>Charge Rate :</strong> {{object.chargeRate}}</span>
+                <span class="ml-3"> <strong>Charge Amount :</strong> {{object.chargeAmount}}</span>
             </div>
     `,
   data () {
-    return {}
+    return {
+      object: {
+        chargeRate: 0,
+        chargeAmount: 0
+      }
+    }
   },
   beforeMount () {},
-  mounted () {},
+  mounted () {
+  },
   methods: {
-    onClick () {
-      alert(`Selected Row Count: ${this.params.api.getSelectedRows().length}`)
+    setChargeValue (value) {
+      this.object = value
     }
   }
 })
