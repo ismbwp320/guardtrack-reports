@@ -636,15 +636,33 @@ export default {
           subMenu: [
             {
               name: 'Pin Top',
+              checked: _.some(this.pinTop, params.node.data), 
               action: () => {
-                this.pinTop.push(params.node.data)
+                if (!_.some(this.pinTop, params.node.data)) {
+                  if (_.some(this.pinBottom, params.node.data)) {
+                    this.pinBottom = this.pinBottom.filter(row => {
+                      return row !== params.node.data
+                    })
+                    this.gridApi.setPinnedBottomRowData(this.pinBottom)
+                  }
+                  this.pinTop.push(params.node.data)
+                }
                 this.gridApi.setPinnedTopRowData(this.pinTop)
               }
             },
             {
               name: 'Pin Bottom',
+              checked: _.some(this.pinBottom, params.node.data),
               action: () => {
-                this.pinBottom.push(params.node.data)
+                if (!_.some(this.pinBottom, params.node.data)) {
+                  if (_.some(this.pinTop, params.node.data)) {
+                    this.pinTop = this.pinTop.filter(row => {
+                      return row !== params.node.data
+                    })
+                    this.gridApi.setPinnedTopRowData(this.pinTop)
+                  }
+                  this.pinBottom.push(params.node.data)  
+                }
                 this.gridApi.setPinnedBottomRowData(this.pinBottom)
               }
             },
@@ -709,19 +727,19 @@ export default {
     this.shifts = shiftJson
     this.rowSelection = 'multiple'
     // SideBar 
-    this.sideBar = {
-      toolPanels: [
-        'filters',
-        {
-          id: 'columns',
-          labelDefault: 'Columns',
-          labelKey: 'columns',
-          iconKey: 'columns',
-          toolPanel: 'agColumnsToolPanel',
-          toolPanelParams: { suppressSyncLayoutWithGrid: true }
-        }
-      ]
-    }
+    // this.sideBar = {
+    //   toolPanels: [
+    //     'filters',
+    //     {
+    //       id: 'columns',
+    //       labelDefault: 'Columns',
+    //       labelKey: 'columns',
+    //       iconKey: 'columns',
+    //       toolPanel: 'agColumnsToolPanel',
+    //       toolPanelParams: { suppressSyncLayoutWithGrid: true }
+    //     }
+    //   ]
+    // }
     this.frameworkComponents = {
       
       clickableStatusBarComponent: ClickableStatusBarComponent,
