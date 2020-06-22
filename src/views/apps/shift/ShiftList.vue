@@ -107,7 +107,7 @@
                           <div slot="header">
                             <label :key="index" class="custom-label flex">
                               <div class="bg-custom shadow w-6 h-6 p-1 flex justify-center items-center mr-2">
-                                <input type="checkbox" checked class="hidden" v-on:change="colCheckBoxHandler(column.children)">
+                                <input type="checkbox" :checked="column.active" class="hidden" v-on:change="colCheckBoxHandler(column.children, column.active, column.groupId)">
                                 <svg class="hidden w-4 h-4 text-green-600 pointer-events-none" viewBox="0 0 172 172"><g fill="none" stroke-width="none" stroke-miterlimit="10" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode:normal"><path d="M0 172V0h172v172z"/><path d="M145.433 37.933L64.5 118.8658 33.7337 88.0996l-10.134 10.1341L64.5 139.1341l91.067-91.067z" fill="currentColor" stroke-width="1"/></g></svg>
                               </div>
                               <span>{{column.headerName}}</span>
@@ -116,7 +116,7 @@
                           <template v-for="(child, index) in column.children">
                             <label :key="index" class="custom-label flex">
                               <div class="bg-custom shadow w-6 h-6 p-1 flex justify-center items-center mr-2">
-                                <input type="checkbox" :checked="!child.hide" class="hidden" v-on:change="clickHandler(child.field)">
+                                <input type="checkbox" :checked="!child.hide" class="hidden" v-on:change="clickHandler(child.field, column.groupId)">
                                 <svg class="hidden w-4 h-4 text-green-600 pointer-events-none" viewBox="0 0 172 172"><g fill="none" stroke-width="none" stroke-miterlimit="10" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode:normal"><path d="M0 172V0h172v172z"/><path d="M145.433 37.933L64.5 118.8658 33.7337 88.0996l-10.134 10.1341L64.5 139.1341l91.067-91.067z" fill="currentColor" stroke-width="1"/></g></svg>
                               </div>
                               <span draggable="true" v-on:dragstart="onDragStart($event, child.headerName)" class="select-none">
@@ -208,6 +208,10 @@
           </vs-dropdown>
         </div>
         <!-- End Custom Pagination -->
+        <!-- Custom Column Add To Ag-grid -->
+         <vs-input class="sm:mr-4 mr-0 sm:w-auto w-full sm:order-normal order-3 sm:mt-0 mt-4 ag-search" v-model="columnName" placeholder="Column Name" /> 
+        <vs-button @click="addColumnHandler" class="sm:mr-4" color="primary" type="filled">Add</vs-button>
+        <!-- /Custom Column Add To Ag-grid -->
         <!-- Quick Search -->
           <vs-input class="sm:mr-4 mr-0 sm:w-auto w-full sm:order-normal order-3 sm:mt-0 mt-4 ag-search" v-model="searchQuery" @input="updateSearchQuery" placeholder="Search..." />          
       </div>
@@ -256,7 +260,6 @@ import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 import _ from 'lodash'
 import ClickableStatusBarComponent from './clickableStatusBarComponentVue.js'
 import CountStatusBarComponent from './countStatusBarComponentVue.js'
-import CustomPinnedRowRenderer from './customPinnedRowRendererVue.js'
 import moment from 'moment'
 
 // Store Module
@@ -270,6 +273,7 @@ export default {
   data () {
     
     return {
+      columnName: '',
       shiftModel: {},
       activePrompt: false,
       pinTop: [],
@@ -320,7 +324,10 @@ export default {
         enableRangeSelection: true,
         undoRedoCellEditing: true,
         undoRedoCellEditingLimit: 20,
-        enableCellChangeFlash: true
+        enableCellChangeFlash: true,
+        columnRowGroupChanged (event) {
+          console.log(event)
+        }
       },
       defaultColDef: {
         editable:true,
@@ -337,8 +344,8 @@ export default {
       columnDefs:[
         {
           headerName: 'Shift Details',
-          groupId: 'GroupB',
-          // suppressColumnsToolPanel: true, 
+          groupId: 0,
+          active: false,
           children: [
             { headerName: 'Site Name', field: 'Site Name', hide: false, headerCheckboxSelection: true, checkboxSelection: true },
             {
@@ -363,8 +370,7 @@ export default {
             {
               headerName: 'Clients',
               field: 'Clients',
-              hide: false,
-              pinnedRowCellRenderer: 'customPinnedRowRenderer'
+              hide: false
             },
             { headerName: 'Subcontractor', field: 'Subcontractor', hide: true },
             { headerName: 'Officer', field: 'Officer', hide: false },
@@ -382,6 +388,8 @@ export default {
         },
         {
           headerName: 'Staff Details',
+          groupId: 1,
+          active: false,
           children: [
             { headerName: 'Start', field: 'Start', filter: false },
             { headerName: 'End', field: 'End', filter: false },
@@ -398,6 +406,8 @@ export default {
         },
         {
           headerName: 'Site Details',
+          groupId: 2,
+          active: false,
           children: [
             { headerName: 'Site Start', field: 'Site Start', hide: true, filter: false },
             { headerName: 'Site End', field: 'Site End', hide: true, filter: false },
@@ -452,13 +462,23 @@ export default {
     }
   },
   methods: {
+    addColumnHandler () {
+      let manualCol = { field: this.columnName, headerName: this.columnName}
+      if (!_.some(this.columnDefs, manualCol)) {
+        this.columnDefs.push(manualCol)
+        this.gridApi.setColumnDefs(this.columnDefs)
+        this.columnDefs = ''
+      }
+      manualCol = {}
+    },
     onSelectionChanged () {
       let rowData = []
-      console.log(this.gridApi.getSelectedNodes())
       this.gridApi.getSelectedNodes().forEach(node => {
         rowData = [...rowData, node.data]
       })
       const data = {
+        payHrs: _.sumBy(rowData, (o) => { return o['HR'] }),
+        siteHrs: _.sumBy(rowData, (o) => { return o['Site HR'] }),
         chargeRate: _.sumBy(rowData, (o) => { return o['Charge Rate'] }),
         chargeAmount: _.sumBy(rowData, (o) => { return Number(o['Charge Amount']) })
       }
@@ -541,12 +561,34 @@ export default {
       this.gridOptions.columnApi.removeValueColumn(value)
       this.aggregateValues = this.aggregateValues.filter(row => { return row !== value })
     },
-    clickHandler (col) {
+    clickHandler (col, groupId) {
       const data = this.gridColumnApi.getColumn(col)
       this.gridColumnApi.setColumnVisible(col, !data.visible)
+      this.columnDefs[groupId].children = this.columnDefs[groupId].children.map(obj => {
+        return obj.field === col ? { ...obj, hide: !data.hide } : obj
+      })
+
+      if (data.originalParent.children.length === data.parent.displayedChildren.length) {
+        this.columnDefs[groupId].active = true
+      } else {
+        this.columnDefs[groupId].active = false
+      }
     },
-    colCheckBoxHandler (data) {
-      console.log(data)
+    colCheckBoxHandler (data, active, groupId) {
+      
+      this.columnDefs[groupId].active = !active
+      if (this.columnDefs[groupId].active) {
+        data.forEach(node => {
+          this.gridColumnApi.setColumnVisible(node.field, true)
+          node.hide = false
+          
+        }) 
+      } else {
+        data.forEach(node => {
+          this.gridColumnApi.setColumnVisible(node.field, false)
+          node.hide = true
+        }) 
+      }
     },
     checkBoxHandler (instanceName, child) {
       const instance = this.gridOptions.api.getFilterInstance(instanceName)
@@ -743,8 +785,7 @@ export default {
     this.frameworkComponents = {
       
       clickableStatusBarComponent: ClickableStatusBarComponent,
-      countStatusBarComponent: CountStatusBarComponent,
-      customPinnedRowRenderer: CustomPinnedRowRenderer
+      countStatusBarComponent: CountStatusBarComponent
     }
     this.statusBar = {
       statusPanels: [
@@ -764,8 +805,7 @@ export default {
   mounted () {
     this.gridApi = this.gridOptions.api
     this.gridColumnApi = this.gridOptions.columnApi
-    this.columnDefs.push({ field:'SOME RANDOM', headerName: 'SOME RANDOM'})
-    this.gridApi.setColumnDefs(this.columnDefs)
+    console.log(this.gridColumnApi.getRowGroupColumns())
     // const show = []
     // const data = this.columnDefs.map((element) => {
     //   if (element.headerName.includes('Type')) {
