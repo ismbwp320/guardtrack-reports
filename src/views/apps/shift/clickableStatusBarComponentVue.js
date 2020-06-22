@@ -4,7 +4,7 @@ export default Vue.extend({
             <div class="ag-status-name-value" v-if="object.chargeRate > 0">
               <div>
                 <span>  <strong>Charge Amount :</strong> {{object.chargeAmount.toFixed(2)}}</span>
-                <span class="ml-3"><strong>Charge Rate :</strong> {{object.chargeRate.toFixed(2)}} </span>
+                <span class="ml-3"><strong>Pay Amount :</strong> {{object.chargeRate.toFixed(2)}} </span>
                 <span class="ml-3"><strong>Differnece :</strong> {{(object.chargeAmount - object.chargeRate).toFixed(2)}} </span>
               </div>
               <div>

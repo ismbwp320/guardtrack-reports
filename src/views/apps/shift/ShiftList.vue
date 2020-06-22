@@ -467,7 +467,6 @@ export default {
       if (!_.some(this.columnDefs, manualCol)) {
         this.columnDefs.push(manualCol)
         this.gridApi.setColumnDefs(this.columnDefs)
-        this.columnDefs = ''
       }
       manualCol = {}
     },
