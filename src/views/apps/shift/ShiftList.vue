@@ -17,6 +17,7 @@
 
       <vs-sidebar
         click-not-close
+        parent=".parentx"
         hidden-background
         position-right
         v-model="active"
@@ -34,7 +35,7 @@
             <div class="px-6">
               <vs-tabs>
                 <vs-tab label="Filters">
-                  <vs-input class="input-block" v-model="searchModel" />
+                  <vs-input class="input-block" v-model="searchModel" placeholder="Search..." />
                   <div class="con-tab-ejemplo">
                     <template v-for="(column, index) in filterColumns">
                       <template v-if="column.children">
@@ -56,22 +57,35 @@
                                     <vs-input type="Number" v-model="fromRate" />
                                     <vs-input type="Number" v-model="toRate" />
                                   </div>
-                                  <vs-button  size="small"  class="my-3 mx-1" @click="payRateHandler" color="primary" type="filled">Apply</vs-button>
+                                  <vs-button  size="small"  class="my-3 mx-1" @click="payRateHandler" color="primary" type="filled">Apply</vs-button>                    
+                                  <label v-for="(item, index) in filters[child.headerName]" :key="index"  class="custom-label flex">
+                                    <div class="bg-custom shadow w-6 h-6 p-1 flex justify-center items-center mr-2">
+                                      <input type="checkbox" :class="child.headerName.replace(/\s+/g, '')" :checked="checkBoxHandler(child.headerName, item)" class="hidden" v-on:change="filterHandler(child.headerName, item)">
+                                      <svg class="hidden w-4 h-4 text-green-600 pointer-events-none" viewBox="0 0 172 172"><g fill="none" stroke-width="none" stroke-miterlimit="10" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode:normal"><path d="M0 172V0h172v172z"/><path d="M145.433 37.933L64.5 118.8658 33.7337 88.0996l-10.134 10.1341L64.5 139.1341l91.067-91.067z" fill="currentColor" stroke-width="1"/></g></svg>
+                                    </div>
+                                    <span class="select-none">{{item}}</span>
+                                  </label>
                                 </template>
-                                <template v-else-if="child.headerName === 'Charge Rate'">
+                                <template v-else-if="child.headerName === 'Status'">
+                                  <div class="btn-group">
+                                    <template v-for="(item, index) in filters[child.headerName]">
+                                        <vs-button  size="small" :key="index" :class="{ inactive: activeItem[item] === false}" class="my-1" @click="filterHandler(child.headerName, item)"><span @click="selectItem(item)">{{item}}</span></vs-button>
+                                    </template>
+                                  </div>
+                                </template>
+                              <template v-else>
+                                <template v-if="child.headerName === 'Charge Rate'">
                                   <div class="d-flex">
                                     <vs-input type="Number" v-model="fromChargeRate" />
                                     <vs-input type="Number" v-model="toChargeRate" />
                                   </div>
-                                  <vs-button  size="small"  class="my-3 mx-1" @click="chargeRateHandler" color="primary" type="filled">Apply</vs-button>
+                                  <vs-button  size="small"  class="my-3 mx-1" @click="chargeRateHandler" color="primary" type="filled">Apply</vs-button>                                  
                                 </template>
-                              <template v-else>
                               <vs-input
-                                v-if="child.headerName !== 'Status'"
                                 @input="filterSearch(child.headerName, filterSearchQuery[child.headerName.replace(/\s+/g, '')])"
                                 v-model="filterSearchQuery[child.headerName.replace(/\s+/g, '')]"
                                 class="w-full sm:order-normal order-3 mb-4 ag-search" placeholder="Search..."/>
-                                <label  class="custom-label flex" v-if="child.headerName !== 'Status'">
+                                <label  class="custom-label flex">
                                   <div class="bg-custom shadow w-6 h-6 p-1 flex justify-center items-center mr-2">
                                     <input type="checkbox" checked class="hidden" v-on:change="selectNothing(child.headerName, filters[child.headerName])">
                                     <svg class="hidden w-4 h-4 text-green-600 pointer-events-none" viewBox="0 0 172 172"><g fill="none" stroke-width="none" stroke-miterlimit="10" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode:normal"><path d="M0 172V0h172v172z"/><path d="M145.433 37.933L64.5 118.8658 33.7337 88.0996l-10.134 10.1341L64.5 139.1341l91.067-91.067z" fill="currentColor" stroke-width="1"/></g></svg>
@@ -79,10 +93,7 @@
                                   <span class="select-none">Select All</span>
                                 </label>
                                 <template v-for="(item, index) in filters[child.headerName]">
-                                  <label v-if="child.headerName === 'Status'" :class="{ inactive: activeItem[item] === false}" :key="index" @click="selectItem(item)">
-                                    <vs-button  size="small"  class="my-1 mx-1" @click="filterHandler(child.headerName, item)" color="primary" type="filled">{{item}}</vs-button>
-                                  </label>
-                                  <label :key="index"  class="custom-label flex" v-else>
+                                  <label :key="index"  class="custom-label flex">
                                     <div class="bg-custom shadow w-6 h-6 p-1 flex justify-center items-center mr-2">
                                       <input type="checkbox" :class="child.headerName.replace(/\s+/g, '')" :checked="checkBoxHandler(child.headerName, item)" class="hidden" v-on:change="filterHandler(child.headerName, item)">
                                       <svg class="hidden w-4 h-4 text-green-600 pointer-events-none" viewBox="0 0 172 172"><g fill="none" stroke-width="none" stroke-miterlimit="10" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode:normal"><path d="M0 172V0h172v172z"/><path d="M145.433 37.933L64.5 118.8658 33.7337 88.0996l-10.134 10.1341L64.5 139.1341l91.067-91.067z" fill="currentColor" stroke-width="1"/></g></svg>
@@ -119,8 +130,8 @@
                                 <input type="checkbox" :checked="!child.hide" class="hidden" v-on:change="clickHandler(child.field, column.groupId)">
                                 <svg class="hidden w-4 h-4 text-green-600 pointer-events-none" viewBox="0 0 172 172"><g fill="none" stroke-width="none" stroke-miterlimit="10" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode:normal"><path d="M0 172V0h172v172z"/><path d="M145.433 37.933L64.5 118.8658 33.7337 88.0996l-10.134 10.1341L64.5 139.1341l91.067-91.067z" fill="currentColor" stroke-width="1"/></g></svg>
                               </div>
-                              <span draggable="true" v-on:dragstart="onDragStart($event, child.headerName)" class="select-none">
-                                <vs-icon icon="android" color="rgb(70, 150, 0)"></vs-icon>
+                              <span draggable="true" v-on:dragstart="onDragStart($event, child.headerName)" class="cursor-pointer select-none">
+                                <vs-icon icon="icon-grid" icon-pack="feather"></vs-icon>
                                 {{child.headerName}}</span>
                             </label>
                           </template>
@@ -163,6 +174,43 @@
                           Drag here to set row groups
                       </span>
                     </div>
+                  </div>
+                </vs-tab>
+                <vs-tab label="Custom Columns">
+                  <div class="con-tab-ejemplo">
+                    <div class="vs-list"  v-if="customColumns.length > 0">
+                      <div class="vs-list--header vs-header-list-success">
+                        <div class="list-titles">
+                          <div class="vs-list--title">Custom Columns</div>
+                        </div>
+                      </div>
+                      <div class="vs-list--item" v-for="(column, index) in customColumns" :key="index">
+                        <div class="list-titles">
+                          <vs-input v-if="column.edit" class="input-block" v-model="customColumnsEdit[index]" placeholder="Column Name" />
+                          <div v-else class="vs-list--title">{{column.field}}</div>
+                        </div>
+                        <div class="vs-list--slot">
+                          <div class="d-flex">
+                            <vs-button v-if="column.edit" @click="updateCustomColumn(column, index)" class="mx-1" size="small" icon="icon-check" icon-pack="feather"/>
+                            <vs-button v-else @click="editCustomColumn(index)" class="mx-1" size="small" icon="icon-edit-2" icon-pack="feather"/>
+                            <vs-button @click="removeCustomColumnsHandler(column)" size="small" icon="icon-trash-2" icon-pack="feather"/>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Custom Column Add To Ag-grid -->
+                    <vx-card title="Custom Field">
+                      <div>
+                        <vs-input class="input-block" v-model="columnName" placeholder="Column Name" />
+                      </div>
+                      <template slot="footer">
+                        <div class="flex justify-between">
+                          <div></div>
+                          <vs-button size="medium" @click="addColumnHandler" color="primary" type="filled">Add Custom Column</vs-button>
+                        </div>
+                      </template>
+                    </vx-card> 
+                    <!-- /Custom Column Add To Ag-grid -->
                   </div>
                 </vs-tab>
               </vs-tabs>
@@ -208,10 +256,6 @@
           </vs-dropdown>
         </div>
         <!-- End Custom Pagination -->
-        <!-- Custom Column Add To Ag-grid -->
-         <vs-input class="sm:mr-4 mr-0 sm:w-auto w-full sm:order-normal order-3 sm:mt-0 mt-4 ag-search" v-model="columnName" placeholder="Column Name" /> 
-        <vs-button @click="addColumnHandler" class="sm:mr-4" color="primary" type="filled">Add</vs-button>
-        <!-- /Custom Column Add To Ag-grid -->
         <!-- Quick Search -->
           <vs-input class="sm:mr-4 mr-0 sm:w-auto w-full sm:order-normal order-3 sm:mt-0 mt-4 ag-search" v-model="searchQuery" @input="updateSearchQuery" placeholder="Search..." />          
       </div>
@@ -273,6 +317,8 @@ export default {
   data () {
     
     return {
+      customColumns: [],
+      customColumnsEdit: {},
       columnName: '',
       shiftModel: {},
       activePrompt: false,
@@ -282,6 +328,12 @@ export default {
       filterColumns: '',
       sidebarColumns: '',
       clearDisable: true,
+      contextFilters: {
+        clients: false,
+        officer: false,
+        sites: false,
+        date: false
+      },
       fromDate: '',
       toDate: '',
       fromRate: '',
@@ -342,12 +394,18 @@ export default {
         flex: 1
       },
       columnDefs:[
+        { headerName: '', field: '', hide: false, width: 50, headerCheckboxSelection: true, checkboxSelection: true },
         {
           headerName: 'Shift Details',
           groupId: 0,
           active: false,
           children: [
-            { headerName: 'Site Name', field: 'Site Name', hide: false, headerCheckboxSelection: true, checkboxSelection: true },
+            {
+              headerName: 'Date',
+              field: 'Date',
+              hide: false
+            },
+            { headerName: 'Site Name', field: 'Site Name', hide: false, width: 200 },
             {
               headerName: 'Type',
               field: 'Type',
@@ -377,11 +435,6 @@ export default {
             { headerName: 'Phone', field: 'Phone', hide: true, filter: false },
             { headerName: 'SIA', field: 'SIA', hide: true, filter: false },
             { headerName: 'SIA Expiry', field: 'SIA Expiry', hide: true, filter: false },
-            {
-              headerName: 'Date',
-              field: 'Date',
-              hide: false
-            },
             { headerName: 'Day', field: 'Day', hide: false, filter: false },
             { headerName: 'Status', field: 'Status', hide: true }
           ]
@@ -459,16 +512,52 @@ export default {
         })
       },
       immediate: true
+    },
+    active: {
+      handler (value) {
+        if (value) {
+          document.querySelector('.layout--main').classList.add('d-flex-reverse')
+        } else {
+          document.querySelector('.layout--main').classList.remove('d-flex-reverse')
+        }
+      }
     }
   },
   methods: {
     addColumnHandler () {
-      let manualCol = { field: this.columnName, headerName: this.columnName}
+      const manualCol = { field: this.columnName, headerName: this.columnName, edit: false}
       if (!_.some(this.columnDefs, manualCol)) {
         this.columnDefs.push(manualCol)
+        this.customColumns.push(manualCol)
         this.gridApi.setColumnDefs(this.columnDefs)
       }
-      manualCol = {}
+      this.columnName = ''
+    },
+    editCustomColumn (index) {
+      this.customColumns[index].edit = true
+      this.customColumnsEdit[index] = this.customColumns[index].field
+    },
+    updateCustomColumn (column, index) {
+      this.customColumns[index] = {
+        ...this.customColumns[index],
+        field: this.customColumnsEdit[index],
+        headerName: this.customColumnsEdit[index],
+        edit: false 
+      }
+      this.columnDefs = this.columnDefs.map(obj => {
+        return obj.headerName === column.headerName ? { ...obj, field: this.customColumnsEdit[index], headerName: this.customColumnsEdit[index] } : obj
+      })
+      this.gridApi.setColumnDefs(this.columnDefs)
+      console.log(column, index)
+    },
+    removeCustomColumnsHandler (column) {
+      this.columnDefs = this.columnDefs.filter(obj => {
+        return obj !== column
+      })
+      this.customColumns = this.customColumns.filter(obj => {
+        return obj !== column
+      })
+      this.gridApi.setColumnDefs(this.columnDefs)
     },
     onSelectionChanged () {
       let rowData = []
@@ -486,6 +575,10 @@ export default {
     },
     activeHandler () {
       this.active = !this.active
+      document.querySelector('.layout--main').classList.add('d-flex-reverse')
+    // var element = document.getElementById("myDIV");
+    // element.classList.add("mystyle");
+      // d-flex-reverse
     },
     inRangeHandler () {
       this.externalFilterChanged('dateRangeFilter')
@@ -669,7 +762,6 @@ export default {
           action: () => {
             this.activePrompt = true
             this.shiftModel = params.node.data
-            console.log(params.node.data)
           }
         },
         {
@@ -724,20 +816,34 @@ export default {
           subMenu: [
             {
               name: 'Clients',
+              checked: this.contextFilters.clients,
               action: () => {
                 this.contextFilterHandler(params, 'Clients')
+                this.contextFilters.clients = true
               }
             },
             {
               name: 'Sites',
+              checked: this.contextFilters.sites,
               action: () => {
                 this.contextFilterHandler(params, 'Site Name')
+                this.contextFilters.sites = true
               }
             },
             {
               name: 'Officer',
+              checked: this.contextFilters.officer,
               action: () => {
                 this.contextFilterHandler(params, 'Officer')
+                this.contextFilters.officer = true
+              }
+            },
+            {
+              name: 'Date',
+              checked: this.contextFilters.date,
+              action: () => {
+                this.contextFilterHandler(params, 'Date')
+                this.contextFilters.date = true
               }
             },
             {
@@ -747,6 +853,12 @@ export default {
                 this.gridOptions.api.setFilterModel(null)
                 this.gridOptions.api.onFilterChanged()
                 this.clearDisable = true
+                this.contextFilters = {
+                  clients: false,
+                  sites: false,
+                  officer: false,
+                  date: false
+                }
               }
             }
           ]
@@ -804,7 +916,6 @@ export default {
   mounted () {
     this.gridApi = this.gridOptions.api
     this.gridColumnApi = this.gridOptions.columnApi
-    console.log(this.gridColumnApi.getRowGroupColumns())
     // const show = []
     // const data = this.columnDefs.map((element) => {
     //   if (element.headerName.includes('Type')) {
@@ -831,6 +942,28 @@ export default {
 </script>
 
 <style lang="scss">
+#shift__listing{
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+@import url(//db.onlinewebfonts.com/c/150ed9b2a009a71d2d819b5561167302?family=Segoe+UI+Symbol);
+
+.d-flex-reverse{
+  margin-right: 450px;
+}
+.ag-status-bar-right{
+  width: 100%;
+}
+.vx-card .vx-card__collapsible-content .vx-card__body{
+  padding-bottom: 0 !important;
+  padding-top: 0 !important;
+}
+.vx-card .vx-card__title h4{
+  font-size: 14px;
+}
+.vs-sidebar.vs-sidebar-parent{
+  position: fixed !important;
+  max-width: 450px !important;
+}
 .input-block{
   margin: 12px 0;
   &.vs-con-input-label{ width: 100%; }
@@ -852,7 +985,7 @@ export default {
     margin-left: 5px;
   }
 }
-.inactive .vs-button-primary.vs-button-filled{ background: #444 !important;}
+.inactive.vs-button-primary.vs-button-filled{ background: #444 !important;}
 .ag-cell-value{
   &.red{
     background: lightcoral;
@@ -872,25 +1005,32 @@ export default {
   padding: 0;
   .vs-collapse-item--header{
     padding: .5rem 0;
-    font-size: 1rem;
+    font-size: 1.1rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
   .con-content--item{
     padding: 0 !important;
-    font-size: .85rem !important;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1rem !important;
     max-height: 200px;
     min-height: 100px;
     overflow-y: scroll;
+    .btn-group button{
+      padding: 1rem .8rem !important;
+    }
   }
 }
 .ag-column-drop__row{
   border-top: 1px solid #e2e2e2;
   .ag-row-title{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     padding: 10px 0;
     color: rgba(0, 0, 0, 0.87);
   }
   .emplty-span{
     color: rgba(0, 0, 0, 0.38);
     font-weight: 600;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
   .ag-column-drop-content {
     height: 100px;
@@ -902,7 +1042,8 @@ export default {
   .row-group-btn{
     margin: 5px;
     color: rgba(0, 0, 0, 0.87);
-    font-size: 13px;
+    font-size: 15px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: var(--ag-chip-background-color, #e2e2e2);
     border-radius: 32px;
     padding: 5px 15px;

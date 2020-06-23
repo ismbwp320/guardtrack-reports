@@ -1,7 +1,7 @@
 import Vue from 'vue'
 export default Vue.extend({
   template: `
-            <div class="ag-status-name-value" v-if="object.chargeRate > 0">
+            <div class="d-flex ag-status-name-value" style="justify-content:space-between;width: 100%;" v-if="object.chargeRate > 0">
               <div>
                 <span>  <strong>Charge Amount :</strong> {{object.chargeAmount.toFixed(2)}}</span>
                 <span class="ml-3"><strong>Pay Amount :</strong> {{object.chargeRate.toFixed(2)}} </span>
