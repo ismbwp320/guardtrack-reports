@@ -273,6 +273,8 @@
         :rowGroupPanelShow="rowGroupPanelShow"
         :pivotPanelShow="pivotPanelShow"
         colResizeDefault="shift"
+        :rowDragManaged="true"
+        :suppressMoveWhenRowDragging="true"
         :animateRows="true"
         :pagination="true"
         :paginationPageSize="paginationPageSize"
@@ -281,6 +283,8 @@
         :allowContextMenuWithControlKey="true"
         :getContextMenuItems="getContextMenuItems"
         :statusBar="statusBar"
+        :overlayLoadingTemplate="overlayLoadingTemplate"
+        :overlayNoRowsTemplate="overlayNoRowsTemplate"        
         @selection-changed="onSelectionChanged"
         @column-row-group-changed="onColumnRowGroupChanged"
         :isExternalFilterPresent="isExternalFilterPresent"
@@ -319,6 +323,8 @@ export default {
   data () {
     
     return {
+      overlayLoadingTemplate: null,
+      overlayNoRowsTemplate: null,
       customColumns: [],
       customColumnsEdit: {},
       columnName: '',
@@ -399,12 +405,13 @@ export default {
           groupId: 0,
           active: false,
           children: [
-            { headerName: 'No', field: 'No', hide: false, width: 50, headerCheckboxSelection: true, checkboxSelection: true },
             {
               headerName: 'Date',
               field: 'Date',
               hide: false,
-              columnGroupShow: 'open'
+              headerCheckboxSelection: true,
+              checkboxSelection: true,
+              width: 110
             },
             // rowGroupIndex: 1
             { headerName: 'Site Name', field: 'Site Name', hide: false, width: 200 },
@@ -431,14 +438,15 @@ export default {
             {
               headerName: 'Clients',
               field: 'Clients',
-              hide: false
+              hide: false,
+              columnGroupShow: 'open'
             },
             { headerName: 'Subcontractor', field: 'Subcontractor', hide: true },
             { headerName: 'Officer', field: 'Officer', hide: false },
             { headerName: 'Phone', field: 'Phone', hide: true, filter: false },
             { headerName: 'SIA', field: 'SIA', hide: true, filter: false },
             { headerName: 'SIA Expiry', field: 'SIA Expiry', hide: true, filter: false },
-            { headerName: 'Day', field: 'Day', hide: false, filter: false },
+            { headerName: 'Day', field: 'Day', hide: false, filter: false, width: 100 },
             { headerName: 'Status', field: 'Status', hide: true }
           ]
         },
@@ -447,15 +455,17 @@ export default {
           groupId: 1,
           active: false,
           children: [
-            { headerName: 'Start', field: 'Start', filter: false, editable:true },
-            { headerName: 'End', field: 'End', filter: false, editable:true },
-            { headerName: 'HR', field: 'HR', filter: false },
+            { headerName: 'Start', field: 'Start', filter: false, editable:true, width: 60},
+            { headerName: 'End', field: 'End', filter: false, editable:true, width: 60 },
+            { headerName: 'HR', field: 'HR', filter: false, width: 50 },
             { headerName: 'Break', field: 'Break', filter: false, hide: true },
             { 
               headerName: 'Pay Rate',
               field: 'Pay Rate',
               enableValue: true,
-              editable:true
+              editable:true,
+              cellClass: ['bg-shift-col'],
+              width: 80
             },
             { headerName: 'Amount', field: 'Amount', hide: true, filter: false},
             { headerName: 'Expense', field: 'Expense', hide: true, filter: false }
@@ -466,10 +476,10 @@ export default {
           groupId: 2,
           active: false,
           children: [
-            { headerName: 'Site Start', field: 'Site Start', hide: true, filter: false },
-            { headerName: 'Site End', field: 'Site End', hide: true, filter: false },
-            { headerName: 'Site HR', field: 'Site HR', hide: true, filter: false },
-            { headerName: 'Charge Rate', field: 'Charge Rate', hide: true },
+            { headerName: 'Site Start', field: 'Site Start', hide: true, filter: false, width: 120 },
+            { headerName: 'Site End', field: 'Site End', hide: true, filter: false, width: 120 },
+            { headerName: 'Site HR', field: 'Site HR', hide: true, filter: false, width: 120 },
+            { headerName: 'Charge Rate', field: 'Charge Rate', hide: true, cellClass: ['bg-shift-success'], width: 120 },
             { headerName: 'Charge Amount', field: 'Charge Amount', hide: true, filter: false}
           ] 
         }
@@ -581,11 +591,11 @@ export default {
       if (event.columns.length > 0) {
         // this.rowGroups.push(textData)
         console.log(event.columns)
-        this.gridColumnApi.setColumnVisible('No', false)
+        // this.gridColumnApi.setColumnVisible('No', false)
         console.log(this.columnDefs[0])
         // this.columnDefs[0].hide = true
       } else {
-        this.gridColumnApi.setColumnVisible('No', true)
+        // this.gridColumnApi.setColumnVisible('No', true)
       }
       console.log(event)
     },
@@ -798,6 +808,9 @@ export default {
                   this.pinTop.push(params.node.data)
                 }
                 this.gridApi.setPinnedTopRowData(this.pinTop)
+                this.shifts = this.shifts.filter(row => {
+                  return row !== params.node.data
+                })
               }
             },
             {
@@ -811,15 +824,19 @@ export default {
                     })
                     this.gridApi.setPinnedTopRowData(this.pinTop)
                   }
-                  this.pinBottom.push(params.node.data)  
+                  this.pinBottom.push(params.node.data) 
                 }
                 this.gridApi.setPinnedBottomRowData(this.pinBottom)
+                this.shifts = this.shifts.filter(row => {
+                  return row !== params.node.data
+                })
               }
             },
             {
               name: 'Clear Pin',
               disabled: !(this.pinBottom.length || this.pinTop.length),
               action: () => {
+                this.shifts = shiftJson
                 this.pinTop = []
                 this.pinBottom = []
                 this.gridApi.setPinnedTopRowData([])
@@ -894,6 +911,10 @@ export default {
     }
   },
   beforeMount () {
+    this.overlayLoadingTemplate =
+      '<span class="ag-overlay-loading-center">Please wait while your rows are loading</span>'
+    this.overlayNoRowsTemplate =
+      '<span style="padding: 10px; border: 2px solid #444; background: lightgoldenrodyellow;">This is a custom \'no rows\' overlay</span>'
     this.shifts = shiftJson
     this.rowSelection = 'multiple'
     // SideBar 
@@ -933,6 +954,7 @@ export default {
   mounted () {
     this.gridApi = this.gridOptions.api
     this.gridColumnApi = this.gridOptions.columnApi
+    // this.gridApi.showLoadingOverlay()
     // const show = []
     // const data = this.columnDefs.map((element) => {
     //   if (element.headerName.includes('Type')) {
@@ -959,6 +981,12 @@ export default {
 </script>
 
 <style lang="scss">
+.bg-shift-col {
+  background: #f8d7da;
+}
+.bg-shift-success{
+  background: #d4edda;
+}
 #shift__listing{
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
@@ -990,6 +1018,13 @@ export default {
 }
 .ag-theme-alpine .ag-floating-bottom{
   border-top-color: #ff4081 !important;
+}
+.ag-theme-alpine .ag-header-cell-resize::after{
+  left: calc(50% - 3px);
+  width: 3px;
+  height: 50%;
+  top: calc(50% - 25%);
+  background: #d7d7d7 !important;
 }
 .d-flex{
   display: flex;
