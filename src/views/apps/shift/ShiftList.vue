@@ -265,12 +265,13 @@
         :modules="modules"
         :gridOptions="gridOptions"
         @grid-ready="onGridReady"
-        class="ag-theme-material w-100 my-4 ag-grid-table"
+        class="ag-theme-alpine w-100 my-4 ag-grid-table"
         :columnDefs="columnDefs"
         :defaultColDef="defaultColDef"
         :rowData="usersData"
         :rowSelection="rowSelection"
         :rowGroupPanelShow="rowGroupPanelShow"
+        :pivotPanelShow="pivotPanelShow"
         colResizeDefault="shift"
         :animateRows="true"
         :pagination="true"
@@ -281,6 +282,7 @@
         :getContextMenuItems="getContextMenuItems"
         :statusBar="statusBar"
         @selection-changed="onSelectionChanged"
+        @column-row-group-changed="onColumnRowGroupChanged"
         :isExternalFilterPresent="isExternalFilterPresent"
         :doesExternalFilterPass="doesExternalFilterPass"
         :detailCellRendererParams="detailCellRendererParams"
@@ -299,7 +301,7 @@ import { AgGridVue } from '@ag-grid-community/vue'
 import { AllModules } from '@ag-grid-enterprise/all-modules'
 import '@/assets/scss/vuexy/extraComponents/agGridStyleOverride.scss'
 import '@ag-grid-community/core/dist/styles/ag-grid.css'
-import '@ag-grid-community/core/dist/styles/ag-theme-material.css'
+import '@ag-grid-community/core/dist/styles/ag-theme-alpine.css'
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 import _ from 'lodash'
 import ClickableStatusBarComponent from './clickableStatusBarComponentVue.js'
@@ -365,6 +367,7 @@ export default {
       filterSearchQuery: {},
       searchQuery: '',
       rowGroupPanelShow: 'always',
+      pivotPanelShow: 'always',
       settings: {
         maxScrollbarLength : 60,
         wheelSpeed         : .60
@@ -376,13 +379,10 @@ export default {
         enableRangeSelection: true,
         undoRedoCellEditing: true,
         undoRedoCellEditingLimit: 20,
-        enableCellChangeFlash: true,
-        columnRowGroupChanged (event) {
-          console.log(event)
-        }
+        enableCellChangeFlash: true
+
       },
       defaultColDef: {
-        editable:true,
         sortable: true,
         resizable: true,
         enableRowGroup: true,
@@ -394,22 +394,25 @@ export default {
         flex: 1
       },
       columnDefs:[
-        { headerName: '', field: '', hide: false, width: 50, headerCheckboxSelection: true, checkboxSelection: true },
         {
           headerName: 'Shift Details',
           groupId: 0,
           active: false,
           children: [
+            { headerName: 'No', field: 'No', hide: false, width: 50, headerCheckboxSelection: true, checkboxSelection: true },
             {
               headerName: 'Date',
               field: 'Date',
-              hide: false
+              hide: false,
+              columnGroupShow: 'open'
             },
+            // rowGroupIndex: 1
             { headerName: 'Site Name', field: 'Site Name', hide: false, width: 200 },
             {
               headerName: 'Type',
               field: 'Type',
               hide: false,
+              columnGroupShow: 'open',
               cellClassRules: {
                 'progress': params => {
                   return params.value === 'PATROL'
@@ -422,7 +425,7 @@ export default {
                 }
               },
               cellRenderer : params => {
-                return `<div class="pos-relative">${params.value}<div>`
+                return params.value ? `<div class="pos-relative">${params.value}<div>` : ''
               }
             },
             {
@@ -444,14 +447,15 @@ export default {
           groupId: 1,
           active: false,
           children: [
-            { headerName: 'Start', field: 'Start', filter: false },
-            { headerName: 'End', field: 'End', filter: false },
+            { headerName: 'Start', field: 'Start', filter: false, editable:true },
+            { headerName: 'End', field: 'End', filter: false, editable:true },
             { headerName: 'HR', field: 'HR', filter: false },
-            { headerName: 'Break', field: 'Break', filter: false },
+            { headerName: 'Break', field: 'Break', filter: false, hide: true },
             { 
               headerName: 'Pay Rate',
               field: 'Pay Rate',
-              enableValue: true
+              enableValue: true,
+              editable:true
             },
             { headerName: 'Amount', field: 'Amount', hide: true, filter: false},
             { headerName: 'Expense', field: 'Expense', hide: true, filter: false }
@@ -573,6 +577,18 @@ export default {
       const componentInstance = this.gridApi.getStatusPanel('statusBarCompKey').component
       componentInstance.setChargeValue(data)
     },
+    onColumnRowGroupChanged (event) {
+      if (event.columns.length > 0) {
+        // this.rowGroups.push(textData)
+        console.log(event.columns)
+        this.gridColumnApi.setColumnVisible('No', false)
+        console.log(this.columnDefs[0])
+        // this.columnDefs[0].hide = true
+      } else {
+        this.gridColumnApi.setColumnVisible('No', true)
+      }
+      console.log(event)
+    },
     activeHandler () {
       this.active = !this.active
       document.querySelector('.layout--main').classList.add('d-flex-reverse')
@@ -656,10 +672,11 @@ export default {
     clickHandler (col, groupId) {
       const data = this.gridColumnApi.getColumn(col)
       this.gridColumnApi.setColumnVisible(col, !data.visible)
-      this.columnDefs[groupId].children = this.columnDefs[groupId].children.map(obj => {
-        return obj.field === col ? { ...obj, hide: !data.hide } : obj
-      })
-
+      if (this.columnDefs[groupId].children) {
+        this.columnDefs[groupId].children = this.columnDefs[groupId].children.map(obj => {
+          return obj.field === col ? { ...obj, hide: !data.hide } : obj
+        })
+      }
       if (data.originalParent.children.length === data.parent.displayedChildren.length) {
         this.columnDefs[groupId].active = true
       } else {
@@ -968,10 +985,10 @@ export default {
   margin: 12px 0;
   &.vs-con-input-label{ width: 100%; }
 }
-.ag-theme-material .ag-floating-top{
+.ag-theme-alpine .ag-floating-top{
   border-bottom-color: #ff4081 !important;
 }
-.ag-theme-material .ag-floating-bottom{
+.ag-theme-alpine .ag-floating-bottom{
   border-top-color: #ff4081 !important;
 }
 .d-flex{
