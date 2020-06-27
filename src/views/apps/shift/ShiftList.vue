@@ -47,8 +47,21 @@
                               </div>
                                 <template v-if="child.headerName === 'Date'">
                                   <div class="d-flex">
-                                    <vs-input type="date" v-model="fromDate" />
-                                    <vs-input type="date" v-model="toDate" />
+                                      <select class="form-control" v-model="selectDateOption" v-on:change="selectDateRange">
+                                      <option value="today">Today</option>
+                                      <option value="yesterday">Yesterday</option>
+                                      <option value="week">This Week</option>
+                                      <option value="week_to_date">This Week-to-Date</option>
+                                      <option value="last_week">Last Week</option>
+                                      <option value="last_week_to_date">Last Week-to-Date</option>
+                                      <option value="month">This Month</option>
+                                      <option value="month_to_date">This Month-to-Date</option>
+                                      <option value="last_month">Last Month</option>
+                                      <option value="last_month_to_date">Last Month-to-Date</option>
+                                      
+                                    </select>
+                                    <vs-input disable type="date" v-model="dtFrom" />
+                                    <vs-input disable type="date" v-model="dtTo" />
                                   </div>
                                   <vs-button  size="small"  class="my-3 mx-1" @click="inRangeHandler" color="primary" type="filled">Apply</vs-button>
                                 </template>
@@ -87,7 +100,7 @@
                                 class="w-full sm:order-normal order-3 mb-4 ag-search" placeholder="Search..."/>
                                 <label  class="custom-label flex">
                                   <div class="bg-custom shadow w-6 h-6 p-1 flex justify-center items-center mr-2">
-                                    <input type="checkbox" checked class="hidden" v-on:change="selectNothing(child.headerName, filters[child.headerName])">
+                                    <input type="checkbox" :checked="child.filterAll" class="hidden" v-on:change="selectNothing(child.headerName, filters[child.headerName])">
                                     <svg class="hidden w-4 h-4 text-green-600 pointer-events-none" viewBox="0 0 172 172"><g fill="none" stroke-width="none" stroke-miterlimit="10" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode:normal"><path d="M0 172V0h172v172z"/><path d="M145.433 37.933L64.5 118.8658 33.7337 88.0996l-10.134 10.1341L64.5 139.1341l91.067-91.067z" fill="currentColor" stroke-width="1"/></g></svg>
                                   </div>
                                   <span class="select-none">Select All</span>
@@ -95,7 +108,7 @@
                                 <template v-for="(item, index) in filters[child.headerName]">
                                   <label :key="index"  class="custom-label flex">
                                     <div class="bg-custom shadow w-6 h-6 p-1 flex justify-center items-center mr-2">
-                                      <input type="checkbox" :class="child.headerName.replace(/\s+/g, '')" :checked="checkBoxHandler(child.headerName, item)" class="hidden" v-on:change="filterHandler(child.headerName, item)">
+                                      <input type="checkbox" :class="child.headerName.replace(/\s+/g, '')" :checked="checkBoxHandler(child.headerName, item)" class="hidden" v-on:change="filterHandler(child.headerName, item, column.headerName)">
                                       <svg class="hidden w-4 h-4 text-green-600 pointer-events-none" viewBox="0 0 172 172"><g fill="none" stroke-width="none" stroke-miterlimit="10" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode:normal"><path d="M0 172V0h172v172z"/><path d="M145.433 37.933L64.5 118.8658 33.7337 88.0996l-10.134 10.1341L64.5 139.1341l91.067-91.067z" fill="currentColor" stroke-width="1"/></g></svg>
                                     </div>
                                     <span class="select-none">{{item}}</span>
@@ -323,6 +336,9 @@ export default {
   data () {
     
     return {
+      selectDateOption: 'month',
+      dtFrom: '',
+      dtTo: '',
       overlayLoadingTemplate: null,
       overlayNoRowsTemplate: null,
       customColumns: [],
@@ -411,14 +427,16 @@ export default {
               hide: false,
               headerCheckboxSelection: true,
               checkboxSelection: true,
-              width: 110
+              width: 110,
+              filterAll: true
             },
             // rowGroupIndex: 1
-            { headerName: 'Site Name', field: 'Site Name', hide: false, width: 200 },
+            { headerName: 'Site Name', field: 'Site Name', hide: false, width: 200, filterAll: true },
             {
               headerName: 'Type',
               field: 'Type',
               hide: false,
+              filterAll: true,
               columnGroupShow: 'open',
               cellClassRules: {
                 'progress': params => {
@@ -439,15 +457,27 @@ export default {
               headerName: 'Clients',
               field: 'Clients',
               hide: false,
-              columnGroupShow: 'open'
+              columnGroupShow: 'open',
+              filterAll: true
             },
-            { headerName: 'Subcontractor', field: 'Subcontractor', hide: true },
-            { headerName: 'Officer', field: 'Officer', hide: false },
-            { headerName: 'Phone', field: 'Phone', hide: true, filter: false },
-            { headerName: 'SIA', field: 'SIA', hide: true, filter: false },
-            { headerName: 'SIA Expiry', field: 'SIA Expiry', hide: true, filter: false },
-            { headerName: 'Day', field: 'Day', hide: false, filter: false, width: 100 },
-            { headerName: 'Status', field: 'Status', hide: true }
+            { headerName: 'Subcontractor', field: 'Subcontractor', hide: true, filterAll: true },
+            {
+              headerName: 'Officer',
+              field: 'Officer',
+              hide: false,
+              filterAll: true,
+              editable: true,
+              cellEditor: 'agRichSelectCellEditor',
+              cellEditorParams: {
+                cellHeight: 50,
+                values: ['ADNAN ZAKAULLAH', 'Syed Omair', 'ABDUL RAZZAQ', 'Masroor Khan']
+              }
+            },
+            { headerName: 'Phone', field: 'Phone', hide: true, filter: false, filterAll: true },
+            { headerName: 'SIA', field: 'SIA', hide: true, filter: false, filterAll: true },
+            { headerName: 'SIA Expiry', field: 'SIA Expiry', hide: true, filter: false, filterAll: true },
+            { headerName: 'Day', field: 'Day', hide: false, filter: false, width: 100, filterAll: true },
+            { headerName: 'Status', field: 'Status', hide: true, filterAll: true }
           ]
         },
         {
@@ -455,20 +485,21 @@ export default {
           groupId: 1,
           active: false,
           children: [
-            { headerName: 'Start', field: 'Start', filter: false, editable:true, width: 60},
-            { headerName: 'End', field: 'End', filter: false, editable:true, width: 60 },
-            { headerName: 'HR', field: 'HR', filter: false, width: 50 },
-            { headerName: 'Break', field: 'Break', filter: false, hide: true },
+            { headerName: 'Start', field: 'Start', filter: false, editable:true, width: 60, filterAll: true},
+            { headerName: 'End', field: 'End', filter: false, editable:true, width: 60, filterAll: true },
+            { headerName: 'HR', field: 'HR', filter: false, width: 50, filterAll: true },
+            { headerName: 'Break', field: 'Break', filter: false, hide: true, filterAll: true },
             { 
               headerName: 'Pay Rate',
               field: 'Pay Rate',
               enableValue: true,
               editable:true,
               cellClass: ['bg-shift-col'],
-              width: 80
+              width: 80,
+              filterAll: true
             },
-            { headerName: 'Amount', field: 'Amount', hide: true, filter: false},
-            { headerName: 'Expense', field: 'Expense', hide: true, filter: false }
+            { headerName: 'Amount', field: 'Amount', hide: true, filter: false, filterAll: true},
+            { headerName: 'Expense', field: 'Expense', hide: true, filter: false, filterAll: true }
           ]
         },
         {
@@ -476,11 +507,11 @@ export default {
           groupId: 2,
           active: false,
           children: [
-            { headerName: 'Site Start', field: 'Site Start', hide: true, filter: false, width: 120 },
-            { headerName: 'Site End', field: 'Site End', hide: true, filter: false, width: 120 },
-            { headerName: 'Site HR', field: 'Site HR', hide: true, filter: false, width: 120 },
-            { headerName: 'Charge Rate', field: 'Charge Rate', hide: true, cellClass: ['bg-shift-success'], width: 120 },
-            { headerName: 'Charge Amount', field: 'Charge Amount', hide: true, filter: false}
+            { headerName: 'Site Start', field: 'Site Start', hide: true, filter: false, width: 120, filterAll: true },
+            { headerName: 'Site End', field: 'Site End', hide: true, filter: false, width: 120, filterAll: true },
+            { headerName: 'Site HR', field: 'Site HR', hide: true, filter: false, width: 120, filterAll: true },
+            { headerName: 'Charge Rate', field: 'Charge Rate', hide: true, cellClass: ['bg-shift-success'], width: 120, filterAll: true },
+            { headerName: 'Charge Amount', field: 'Charge Amount', hide: true, filter: false, filterAll: true}
           ] 
         }
       ]
@@ -538,6 +569,53 @@ export default {
     }
   },
   methods: {
+    onCellValueChanged (params) {
+      const colId = params.column.getId()
+      if (colId === 'Officer') {
+
+        // const selectedCountry = params.data.Officer
+        console.log(params.data)
+      }
+    },
+    selectDateRange () {
+      const dateFormat = 'yyyy-MM-DD'
+      const dtOption = this.selectDateOption
+      if (dtOption === 'today') {
+        this.dtFrom = moment().format(dateFormat)
+        this.dtTo = moment().format(dateFormat)
+      } else if (dtOption === 'yesterday') { 
+        this.dtFrom = moment().add(-1, 'days').format(dateFormat)
+        this.dtTo = this.dtFrom
+      } else if (dtOption === 'week') {
+        
+        this.dtFrom = moment().startOf('isoWeek').format(dateFormat)
+        this.dtTo = moment().endOf('isoWeek').format(dateFormat)
+        console.log(this.dtFrom)
+      } else if (dtOption === 'week_to_date') {
+        this.dtFrom = moment().startOf('isoWeek').format(dateFormat)
+        this.dtTo = moment().format(dateFormat)
+      } else if (dtOption === 'last_week') {
+        this.dtFrom = moment().subtract(1, 'weeks').startOf('isoWeek').format(dateFormat)
+        this.dtTo = moment().subtract(1, 'weeks').endOf('isoWeek').format(dateFormat)
+      } else if (dtOption === 'last_week_to_date') {
+        this.dtFrom = moment().subtract(1, 'weeks').startOf('isoWeek').format(dateFormat)
+        this.dtTo = moment().format(dateFormat)
+      } else if (dtOption === 'month') { 
+        this.dtFrom = moment().startOf('month').format(dateFormat)
+        this.dtTo = moment().endOf('month').format(dateFormat)
+      } else if (dtOption === 'month_to_date') {
+        this.dtFrom = moment().subtract(1, 'weeks').startOf('month').format(dateFormat)
+        this.dtTo = moment().format(dateFormat)
+      } else if (dtOption === 'last_month') {
+        this.dtFrom = moment().subtract(1, 'month').startOf('month').format(dateFormat)
+        this.dtTo = moment().subtract(1, 'month').endOf('month').format(dateFormat)
+      } else if (dtOption === 'last_month_to_date') {
+        this.dtFrom = ''
+        this.dtTo = ''
+        // this.dtFrom = moment().subtract(1, 'month').startOf('month').format(dateFormat)
+        // this.dtTo = moment().format(dateFormat)
+      }
+    },
     addColumnHandler () {
       const manualCol = { field: this.columnName, headerName: this.columnName, edit: false}
       if (!_.some(this.columnDefs, manualCol)) {
@@ -717,13 +795,27 @@ export default {
       }
       return false
     },
-    filterHandler (filter, value) {
+    filterHandler (filter, value, parent) {
+      
+      const index = this.columnDefs.map(e => e.headerName).indexOf(parent)
+      console.log(this.columnDefs[index])
       let result = []
       let getArray = []
       const FilterComponent = this.gridOptions.api.getFilterInstance(filter)
+      console.log(FilterComponent)
       if (FilterComponent.appliedModel === null) {
         getArray = FilterComponent.getValues()
         result = getArray.filter(query => query !== value)
+        // const data = this.columnDefs.map((element) => {
+        //   element.children = element.children.map(obj => {
+        //     return obj.field === filter ? { ...obj, filterAll: false } : obj
+        //   })          
+        // })
+        // console.log(data)
+        // this.columnDefs[groupId].children = this.columnDefs[groupId].children.map(obj => {
+        //   return obj.field === col ? { ...obj, hide: !data.hide } : obj
+        // })
+      
       } else {
         getArray = FilterComponent.appliedModel.values
         result = getArray.includes(value) ? getArray.filter(query => query !== value) : [...getArray, value]
