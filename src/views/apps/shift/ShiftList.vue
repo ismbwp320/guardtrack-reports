@@ -327,7 +327,7 @@ import moment from 'moment'
 
 // Store Module
 import shiftJson from './shifts.json'
-
+const officersList = ['ADNAN ZAKAULLAH', 'Syed Omair', 'ABDUL RAZZAQ', 'Masroor Khan']
 export default {
   components: {
     AgGridVue,
@@ -470,7 +470,7 @@ export default {
               cellEditor: 'agRichSelectCellEditor',
               cellEditorParams: {
                 cellHeight: 50,
-                values: ['ADNAN ZAKAULLAH', 'Syed Omair', 'ABDUL RAZZAQ', 'Masroor Khan']
+                values: officersList
               }
             },
             { headerName: 'Phone', field: 'Phone', hide: true, filter: false, filterAll: true },
