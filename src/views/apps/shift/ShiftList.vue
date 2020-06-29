@@ -46,8 +46,9 @@
                                 {{child.headerName}}
                               </div>
                                 <template v-if="child.headerName === 'Date'">
-                                  <div class="d-flex">
-                                      <select class="form-control" v-model="selectDateOption" v-on:change="selectDateRange">
+                                  <div>
+                                    <div class="d-flex">
+                                    <select class="form-control vs-input--input" style="height:36px; margin-bottom:10px" v-model="selectDateOption" v-on:change="selectDateRange">
                                       <option value="today">Today</option>
                                       <option value="yesterday">Yesterday</option>
                                       <option value="week">This Week</option>
@@ -58,17 +59,20 @@
                                       <option value="month_to_date">This Month-to-Date</option>
                                       <option value="last_month">Last Month</option>
                                       <option value="last_month_to_date">Last Month-to-Date</option>
-                                      
+                                      <option value="custom">Custom</option>
                                     </select>
-                                    <vs-input disable type="date" v-model="dtFrom" />
-                                    <vs-input disable type="date" v-model="dtTo" />
+                                    </div>
+                                    <div class="d-flex">
+                                      <vs-input disable type="date" v-model="dtFrom" />
+                                      <vs-input disable type="date" v-model="dtTo" />
+                                    </div>
                                   </div>
                                   <vs-button  size="small"  class="my-3 mx-1" @click="inRangeHandler" color="primary" type="filled">Apply</vs-button>
                                 </template>
                                 <template v-else-if="child.headerName === 'Pay Rate'">
                                   <div class="d-flex">
-                                    <vs-input type="Number" v-model="fromRate" />
-                                    <vs-input type="Number" v-model="toRate" />
+                                    <vs-input type="Number" v-model="fromRate" required />
+                                    <vs-input type="Number" v-model="toRate" required />
                                   </div>
                                   <vs-button  size="small"  class="my-3 mx-1" @click="payRateHandler" color="primary" type="filled">Apply</vs-button>                    
                                   <label v-for="(item, index) in filters[child.headerName]" :key="index"  class="custom-label flex">
@@ -336,7 +340,7 @@ export default {
   data () {
     
     return {
-      selectDateOption: 'month',
+      selectDateOption: 'custom',
       dtFrom: '',
       dtTo: '',
       overlayLoadingTemplate: null,
@@ -610,10 +614,11 @@ export default {
         this.dtFrom = moment().subtract(1, 'month').startOf('month').format(dateFormat)
         this.dtTo = moment().subtract(1, 'month').endOf('month').format(dateFormat)
       } else if (dtOption === 'last_month_to_date') {
+        this.dtFrom = moment().subtract(1, 'month').startOf('month').format(dateFormat)
+        this.dtTo = moment().format(dateFormat)
+      } else if (dtOption === 'custom') {
         this.dtFrom = ''
         this.dtTo = ''
-        // this.dtFrom = moment().subtract(1, 'month').startOf('month').format(dateFormat)
-        // this.dtTo = moment().format(dateFormat)
       }
     },
     addColumnHandler () {
@@ -707,7 +712,7 @@ export default {
       case 'payRateRange':
         return node.data['Pay Rate'] >= this.fromRate && node.data['Pay Rate'] <= this.toRate
       case 'dateRangeFilter':
-        return node.data.Date >= moment(this.fromDate, 'YYYY-MM-DD').format('DD/MM/YYYY') && node.data.Date <= moment(this.toDate, 'YYYY-MM-DD').format('DD/MM/YYYY')
+        return node.data.Date >= moment(this.dtFrom, 'YYYY-MM-DD').format('DD/MM/YYYY') && node.data.Date <= moment(this.dtTo, 'YYYY-MM-DD').format('DD/MM/YYYY')
       default:
         return true
       }
@@ -796,13 +801,15 @@ export default {
       return false
     },
     filterHandler (filter, value, parent) {
-      
       const index = this.columnDefs.map(e => e.headerName).indexOf(parent)
-      console.log(this.columnDefs[index])
+      const child = this.columnDefs[index].children.map(e => e.headerName).indexOf(filter)
+      console.log(this.columnDefs[index].children[child])
+      // if (this.columnDefs[index].appliedModel === null) {
+      //   console.log('all Values Selected')
+      // }
       let result = []
       let getArray = []
       const FilterComponent = this.gridOptions.api.getFilterInstance(filter)
-      console.log(FilterComponent)
       if (FilterComponent.appliedModel === null) {
         getArray = FilterComponent.getValues()
         result = getArray.filter(query => query !== value)
@@ -825,6 +832,11 @@ export default {
         values: result
       })
       FilterComponent.onFilterChanged()
+      if (FilterComponent.appliedModelValues === null) {
+        this.columnDefs[index].children[child].filterAll = true
+      } else {
+        this.columnDefs[index].children[child].filterAll = false
+      }
     },
     filterSearch (filter, query) {
       const data = [... new Set(this.usersData.map((v) =>  { if (v[filter].includes(query)) return v[filter] }))]
@@ -1157,7 +1169,7 @@ export default {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 1rem !important;
     max-height: 200px;
-    min-height: 100px;
+    min-height: 150px;
     overflow-y: scroll;
     .btn-group button{
       padding: 1rem .8rem !important;
