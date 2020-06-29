@@ -73,13 +73,13 @@ export default {
         postCode:'',
         country:'',
         email: '',
-        desc: '',
+        desc: ''
       })
     },
     addClient () {
       this.$validator.validateAll().then(result => {
         if (result) {
-            console.log(this.clientLocal);
+          console.log(this.clientLocal)
           //this.$store.dispatch('client/addClient', Object.assign({}, this.clientLocal))
           this.clearFields()
         }

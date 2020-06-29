@@ -34,7 +34,6 @@
 
         <vs-input class="w-full mt-4" label="Mobile" v-model="data_local.c_mobile" type="text" v-validate="'required|email'" name="mobile" />
         <span class="text-danger text-sm"  v-show="errors.has('email')">{{ errors.first('email') }}</span>
-
         
 
       </div>
@@ -42,11 +41,8 @@
       <vs-textarea class="w-full mt-4" label="Notes" v-model="data_local.c_mobile" type="text" v-validate="'required|email'" name="mobile" />
         
 
-        
-
       </div>
     </div>
-
   
 
     <!-- Save & Reset Button -->
@@ -114,7 +110,7 @@ export default {
   },
   methods: {
     capitalize (str) {
-      return 1;
+      return 1
       // str.slice(0, 1).toUpperCase() + str.slice(1, str.length)
     },
     save_changes () {

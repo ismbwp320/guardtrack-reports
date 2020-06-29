@@ -35,7 +35,6 @@
             <feather-icon icon="CheckSquareIcon" svgClasses="w-4 h-4" />
             <span class="ml-2">Tasks</span>
           </li>
-
          
 
           <li

@@ -38,7 +38,6 @@
         </div>
 
         <vs-divider class="mb-0" />
-
         
 
           <div class="px-6 mt-5">
@@ -77,7 +76,7 @@ export default {
         { label: 'Active', value: 'active' },
         { label: 'Inactive', value: 'inactive' },
         { label: 'Blocked', value: 'blocked' }
-      ],
+      ]
     }
   },
 

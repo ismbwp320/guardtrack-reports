@@ -13,7 +13,7 @@ export default {
     state.users = users
   },
   ADD_CLIENT (state, client) {
-    state.users.push(client);
+    state.users.push(client)
   },
   REMOVE_RECORD (state, itemId) {
     const userIndex = state.users.findIndex((u) => u.id === itemId)

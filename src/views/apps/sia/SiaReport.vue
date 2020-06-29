@@ -100,7 +100,6 @@
               </div>
             </div>
         </vs-prompt>
-
         
         
       <!-- <button v-on:click="exportData" class="vs-component vs-button vs-button-primary vs-button-filled">Export</button> -->
@@ -148,14 +147,13 @@ import CellRendererActions from  './renderer/CellRendererActions.vue'
 //
 
 
-
 export default {
   components: {
     AgGridVue,
 
     // Cell Renderer
     CellRendererStatus,
-    CellRendererActions,
+    CellRendererActions
   },
   data () {
     
@@ -199,30 +197,30 @@ export default {
         {
           headerName: 'First Name',
           field: 'first_name',
-          filter: true,
+          filter: true
           
         },
         {
           headerName: 'Surname',
           field: 'surname',
-          filter: true,
+          filter: true
         },
         {
           headerName: 'Licence Number',
           field: 'licence_no',
-          filter: true,
+          filter: true
         },
         {
           headerName: 'Expiry Date',
           field: 'expiry_date',
-          filter: true,
+          filter: true
         },
-       {
+        {
           headerName: 'Status',
           field: 'status',
           cellEditor : 'agSelectCellEditor',
           cellEditorParams : {
-            values: ['active','inactive']
+            values: ['active', 'inactive']
           },
           editable: true,
           filter: true,
@@ -231,7 +229,7 @@ export default {
         {
           headerName: 'Date & Time',
           field: 'date_time',
-          filter: true,
+          filter: true
         },   
         {
           headerName: 'Actions',
@@ -251,7 +249,7 @@ export default {
     
     statusFilter (obj) {
       this.setColumnFilter('status', obj.value)
-    },
+    }
    
   },
   computed: {
@@ -310,39 +308,38 @@ export default {
       //   return this.hide_show.includes(item.field)
       // })
 
-      switch($e.target.id) {
+      switch ($e.target.id) {
 
-        case 'site_name':
-          this.gridOptions.columnApi.setColumnVisible($e.target.id, this.site_name_field ? true: false)
-          this.gridOptions.api.sizeColumnsToFit()
-          break;
-        case  'sin':
-          this.gridOptions.columnApi.setColumnVisible($e.target.id, this.sin_field ? true: false)
-          this.gridOptions.api.sizeColumnsToFit()
-          break
-        case 'status':
-          this.gridOptions.columnApi.setColumnVisible($e.target.id, this.status_field ? true: false)
-          this.gridOptions.api.sizeColumnsToFit()
-          break;
-        case 'location':
-          this.gridOptions.columnApi.setColumnVisible($e.target.id, this.location_field ? true: false)
-          this.gridOptions.api.sizeColumnsToFit()
-          break;  
-        case  'check_calls':
-          this.gridOptions.columnApi.setColumnVisible($e.target.id, this.check_calls_field ? true: false)
-          this.gridOptions.api.sizeColumnsToFit()
-          break
-        case  's_actions':
-          this.gridOptions.columnApi.setColumnVisible($e.target.id, this.actions_field ? true: false)
-          this.gridOptions.api.sizeColumnsToFit()
-          break
+      case 'site_name':
+        this.gridOptions.columnApi.setColumnVisible($e.target.id, !!this.site_name_field)
+        this.gridOptions.api.sizeColumnsToFit()
+        break
+      case  'sin':
+        this.gridOptions.columnApi.setColumnVisible($e.target.id, !!this.sin_field)
+        this.gridOptions.api.sizeColumnsToFit()
+        break
+      case 'status':
+        this.gridOptions.columnApi.setColumnVisible($e.target.id, !!this.status_field)
+        this.gridOptions.api.sizeColumnsToFit()
+        break
+      case 'location':
+        this.gridOptions.columnApi.setColumnVisible($e.target.id, !!this.location_field)
+        this.gridOptions.api.sizeColumnsToFit()
+        break  
+      case  'check_calls':
+        this.gridOptions.columnApi.setColumnVisible($e.target.id, !!this.check_calls_field)
+        this.gridOptions.api.sizeColumnsToFit()
+        break
+      case  's_actions':
+        this.gridOptions.columnApi.setColumnVisible($e.target.id, !!this.actions_field)
+        this.gridOptions.api.sizeColumnsToFit()
+        break
         
-        default:
-          console.log('No matched')
+      default:
+        console.log('No matched')
 
 
       }
-      
       
       
     },
@@ -362,7 +359,7 @@ export default {
   },
   mounted () {
     this.gridApi = this.gridOptions.api
-    this.gridOptions.api.sizeColumnsToFit();
+    this.gridOptions.api.sizeColumnsToFit()
     /* =================================================================
       NOTE:
       Header is not aligned properly in RTL version of agGrid table.

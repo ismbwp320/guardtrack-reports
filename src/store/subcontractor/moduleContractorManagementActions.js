@@ -10,9 +10,9 @@
 import axios from '@/axios.js'
 
 export default {
-  addContractor({ commit }, data) {
+  addContractor ({ commit }, data) {
     return new Promise((resolve, reject) => {
-      axios.post("/api/data-list/products/", {data})
+      axios.post('/api/data-list/products/', {data})
         .then((response) => {
           commit('ADD_CLIENT', Object.assign(data, {id: response.data.id}))
           resolve(response)

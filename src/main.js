@@ -117,9 +117,11 @@ require('./assets/css/iconfont.css')
 Vue.config.productionTip = false
 
 new Vue({
+  render: h => h(App),
   router,
   store,
   i18n,
   acl,
-  render: h => h(App)
+  components: { App }
+  
 }).$mount('#app')

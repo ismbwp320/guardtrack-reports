@@ -16,7 +16,7 @@ export default {
               Below line will be for actual product
               Currently it's commented due to demo purpose - Above url is for demo purpose
       */
-              this.$router.push("/apps/client/client-edit/" + this.params.data.index).catch(() => {})
+      this.$router.push(`/apps/client/client-edit/${  this.params.data.index}`).catch(() => {})
             
     },
     confirmDeleteRecord () {
@@ -34,8 +34,8 @@ export default {
       //this.showDeleteSuccess()
 
       /* UnComment below lines for enabling true flow if deleting user */
-      this.$store.dispatch("userManagement/removeRecord", this.params.data.index)
-        .then((res)   => { console.log(res)})
+      this.$store.dispatch('userManagement/removeRecord', this.params.data.index)
+        .then((res)   => { console.log(res) })
         .catch(err => { console.error(err)       })
     },
     showDeleteSuccess () {

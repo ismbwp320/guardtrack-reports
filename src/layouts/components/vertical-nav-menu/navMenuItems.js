@@ -31,7 +31,15 @@ export default [
         slug: 'email',
         icon: 'CalendarIcon',
         i18n: 'Calendar'
+      },
+      {
+        url: '/apps/shift/listing',
+        name: 'Shift List',
+        slug: 'listing',
+        icon: 'CalendarIcon',
+        i18n: 'Shift List'
       }
+
     ]
   },
   {

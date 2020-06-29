@@ -149,7 +149,7 @@ export default {
     showShadowBottom    : false
   }),
   computed: {
-     console: () => console,
+    console: () => console,
     isGroupActive () {
       return (item) => {
         const path        = this.$route.fullPath

@@ -122,7 +122,6 @@
               </div>
             </div>
         </vs-prompt>
-
         
         
       <!-- <button v-on:click="exportData" class="vs-component vs-button vs-button-primary vs-button-filled">Export</button> -->
@@ -175,7 +174,6 @@ import CellRendererActions from './cell-renderer/CellRendererActions.vue'
 //
 
 
-
 export default {
   components: {
     AgGridVue,
@@ -186,7 +184,7 @@ export default {
     CellRendererVerified,
     CellRendererActions,
     ClientAddNew,
-    UserFilter,
+    UserFilter
   },
   data () {
     
@@ -218,7 +216,6 @@ export default {
         { label: 'Inactive', value: 'inactive' },
         { label: 'Blocked', value: 'blocked' }
       ],
-
     
 
       searchQuery: '',
@@ -256,30 +253,30 @@ export default {
         {
           headerName: 'Phone',
           field: 'c_phone',
-          filter: true,
+          filter: true
         },
         {
           headerName: 'Mobile',
           field: 'c_mobile',
-          filter: true,
+          filter: true
         },
         {
           headerName: 'Address',
           field: 'c_address',
-          filter: true,
+          filter: true
         },
         
         {
           headerName: 'Email',
           field: 'c_email',
-          filter: true,
+          filter: true
         },
         {
           headerName: 'Status',
           field: 'c_status',
           cellEditor : 'agSelectCellEditor',
           cellEditorParams : {
-            values: ['active','inactive']
+            values: ['active', 'inactive']
           },
           editable: true,
           filter: true,
@@ -305,7 +302,7 @@ export default {
     
     statusFilter (obj) {
       this.setColumnFilter('c_status', obj.value)
-    },
+    }
    
   },
   computed: {
@@ -367,43 +364,42 @@ export default {
       //   return this.hide_show.includes(item.field)
       // })
 
-      switch($e.target.id) {
+      switch ($e.target.id) {
 
-        case 'c_name':
-          this.gridOptions.columnApi.setColumnVisible($e.target.id, this.client_name_field ? true:false)
-          this.gridOptions.api.sizeColumnsToFit()
-          break;
-        case  'c_phone':
-          this.gridOptions.columnApi.setColumnVisible($e.target.id, this.client_phone_field ? true:false)
-          this.gridOptions.api.sizeColumnsToFit()
-          break
-        case 'c_mobile':
-          this.gridOptions.columnApi.setColumnVisible($e.target.id, this.client_mobile_field ? true:false)
-          this.gridOptions.api.sizeColumnsToFit()
-          break;
-        case  'c_address':
-          this.gridOptions.columnApi.setColumnVisible($e.target.id, this.client_address_field ? true:false)
-          this.gridOptions.api.sizeColumnsToFit()
-          break
-        case 'c_email':
-          this.gridOptions.columnApi.setColumnVisible($e.target.id, this.client_email_field ? true:false)
-          this.gridOptions.api.sizeColumnsToFit()
-          break;
-        case  'c_status':
-          this.gridOptions.columnApi.setColumnVisible($e.target.id, this.client_status_field ? true:false)
-          this.gridOptions.api.sizeColumnsToFit()
-          break
-        case  'c_actions':
-          this.gridOptions.columnApi.setColumnVisible($e.target.id, this.client_actions_field ? true:false)
-          this.gridOptions.api.sizeColumnsToFit()
-          break
+      case 'c_name':
+        this.gridOptions.columnApi.setColumnVisible($e.target.id, !!this.client_name_field)
+        this.gridOptions.api.sizeColumnsToFit()
+        break
+      case  'c_phone':
+        this.gridOptions.columnApi.setColumnVisible($e.target.id, !!this.client_phone_field)
+        this.gridOptions.api.sizeColumnsToFit()
+        break
+      case 'c_mobile':
+        this.gridOptions.columnApi.setColumnVisible($e.target.id, !!this.client_mobile_field)
+        this.gridOptions.api.sizeColumnsToFit()
+        break
+      case  'c_address':
+        this.gridOptions.columnApi.setColumnVisible($e.target.id, !!this.client_address_field)
+        this.gridOptions.api.sizeColumnsToFit()
+        break
+      case 'c_email':
+        this.gridOptions.columnApi.setColumnVisible($e.target.id, !!this.client_email_field)
+        this.gridOptions.api.sizeColumnsToFit()
+        break
+      case  'c_status':
+        this.gridOptions.columnApi.setColumnVisible($e.target.id, !!this.client_status_field)
+        this.gridOptions.api.sizeColumnsToFit()
+        break
+      case  'c_actions':
+        this.gridOptions.columnApi.setColumnVisible($e.target.id, !!this.client_actions_field)
+        this.gridOptions.api.sizeColumnsToFit()
+        break
         
-        default:
-          console.log('No matched')
+      default:
+        console.log('No matched')
 
 
       }
-      
       
       
     },
@@ -423,7 +419,7 @@ export default {
   },
   mounted () {
     this.gridApi = this.gridOptions.api
-    this.gridOptions.api.sizeColumnsToFit();
+    this.gridOptions.api.sizeColumnsToFit()
     /* =================================================================
       NOTE:
       Header is not aligned properly in RTL version of agGrid table.
