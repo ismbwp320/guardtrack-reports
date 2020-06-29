@@ -325,6 +325,7 @@ import '@ag-grid-community/core/dist/styles/ag-grid.css'
 import '@ag-grid-community/core/dist/styles/ag-theme-alpine.css'
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 import _ from 'lodash'
+import {agGridMixins} from '@/mixins/agGridMixins'
 import ClickableStatusBarComponent from './clickableStatusBarComponentVue.js'
 import CountStatusBarComponent from './countStatusBarComponentVue.js'
 import moment from 'moment'
@@ -333,6 +334,7 @@ import moment from 'moment'
 import shiftJson from './shifts.json'
 const officersList = ['ADNAN ZAKAULLAH', 'Syed Omair', 'ABDUL RAZZAQ', 'Masroor Khan']
 export default {
+  mixins: [agGridMixins],
   components: {
     AgGridVue,
     VuePerfectScrollbar
@@ -376,8 +378,6 @@ export default {
         Highlight: true,
         Unassign: true
       },
-      rowGroups: [],
-      aggregateValues: [],
       days: '',
       active: false,
       shifts: null,
@@ -721,47 +721,47 @@ export default {
       const splitFields = dateAsString.split('/')
       return new Date(splitFields[2], splitFields[1], splitFields[0])
     },
-    onDragStart (event, data) {
-      const userAgent = window.navigator.userAgent
-      const isIE = userAgent.indexOf('Trident/') >= 0
-      event.dataTransfer.setData(isIE ? 'text' : 'text/plain', data)
-    },
-    onDragOver (event) {
-      const types = event.dataTransfer.types
-      const dragSupported = types.length
-      if (dragSupported) {
-        event.dataTransfer.dropEffect = 'move'
-      }
-      event.preventDefault()
-    },
-    onDrop (event) {
-      event.preventDefault()
-      const userAgent = window.navigator.userAgent
-      const isIE = userAgent.indexOf('Trident/') >= 0
-      const textData = event.dataTransfer.getData(isIE ? 'text' : 'text/plain')
-      if (!this.rowGroups.includes(textData)) {
-        this.rowGroups.push(textData)
-        this.gridOptions.columnApi.addRowGroupColumns([textData])
-      }
-    },
-    onVlaueDrop (event) {
-      event.preventDefault()
-      const userAgent = window.navigator.userAgent
-      const isIE = userAgent.indexOf('Trident/') >= 0
-      const textData = event.dataTransfer.getData(isIE ? 'text' : 'text/plain')
-      if (!this.aggregateValues.includes(textData)) {
-        this.aggregateValues.push(textData)
-        this.gridOptions.columnApi.addValueColumns([textData])
-      }
-    },
-    dsRowGroup (row) {
-      this.gridOptions.columnApi.removeRowGroupColumn(row)
-      this.rowGroups = this.rowGroups.filter(value => { return value !== row })
-    },
-    dsAggregateValues (value) {
-      this.gridOptions.columnApi.removeValueColumn(value)
-      this.aggregateValues = this.aggregateValues.filter(row => { return row !== value })
-    },
+    // onDragStart (event, data) {
+    //   const userAgent = window.navigator.userAgent
+    //   const isIE = userAgent.indexOf('Trident/') >= 0
+    //   event.dataTransfer.setData(isIE ? 'text' : 'text/plain', data)
+    // },
+    // onDragOver (event) {
+    //   const types = event.dataTransfer.types
+    //   const dragSupported = types.length
+    //   if (dragSupported) {
+    //     event.dataTransfer.dropEffect = 'move'
+    //   }
+    //   event.preventDefault()
+    // },
+    // onDrop (event) {
+    //   event.preventDefault()
+    //   const userAgent = window.navigator.userAgent
+    //   const isIE = userAgent.indexOf('Trident/') >= 0
+    //   const textData = event.dataTransfer.getData(isIE ? 'text' : 'text/plain')
+    //   if (!this.rowGroups.includes(textData)) {
+    //     this.rowGroups.push(textData)
+    //     this.gridOptions.columnApi.addRowGroupColumns([textData])
+    //   }
+    // },
+    // onVlaueDrop (event) {
+    //   event.preventDefault()
+    //   const userAgent = window.navigator.userAgent
+    //   const isIE = userAgent.indexOf('Trident/') >= 0
+    //   const textData = event.dataTransfer.getData(isIE ? 'text' : 'text/plain')
+    //   if (!this.aggregateValues.includes(textData)) {
+    //     this.aggregateValues.push(textData)
+    //     this.gridOptions.columnApi.addValueColumns([textData])
+    //   }
+    // },
+    // dsRowGroup (row) {
+    //   this.gridOptions.columnApi.removeRowGroupColumn(row)
+    //   this.rowGroups = this.rowGroups.filter(value => { return value !== row })
+    // },
+    // dsAggregateValues (value) {
+    //   this.gridOptions.columnApi.removeValueColumn(value)
+    //   this.aggregateValues = this.aggregateValues.filter(row => { return row !== value })
+    // },
     clickHandler (col, groupId) {
       const data = this.gridColumnApi.getColumn(col)
       this.gridColumnApi.setColumnVisible(col, !data.visible)
@@ -1021,20 +1021,6 @@ export default {
       '<span style="padding: 10px; border: 2px solid #444; background: lightgoldenrodyellow;">This is a custom \'no rows\' overlay</span>'
     this.shifts = shiftJson
     this.rowSelection = 'multiple'
-    // SideBar 
-    // this.sideBar = {
-    //   toolPanels: [
-    //     'filters',
-    //     {
-    //       id: 'columns',
-    //       labelDefault: 'Columns',
-    //       labelKey: 'columns',
-    //       iconKey: 'columns',
-    //       toolPanel: 'agColumnsToolPanel',
-    //       toolPanelParams: { suppressSyncLayoutWithGrid: true }
-    //     }
-    //   ]
-    // }
     this.frameworkComponents = {
       
       clickableStatusBarComponent: ClickableStatusBarComponent,
@@ -1056,8 +1042,8 @@ export default {
     }
   },
   mounted () {
-    this.gridApi = this.gridOptions.api
-    this.gridColumnApi = this.gridOptions.columnApi
+    // this.gridApi = this.gridOptions.api
+    // this.gridColumnApi = this.gridOptions.columnApi
     // this.gridApi.showLoadingOverlay()
     // const show = []
     // const data = this.columnDefs.map((element) => {
@@ -1077,8 +1063,6 @@ export default {
       this.filters[key] = [... new Set(this.usersData.map((v) =>  v[key]))] 
     }
    
-  },
-  created () {
   }
 }
 
