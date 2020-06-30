@@ -238,13 +238,81 @@
     </div>
     <!-- End Filter SideBar -->
     <vs-prompt
-        title="View Shift"
-        button-cancel = "border"
+        class="model-lg"
+        title="Shift Detail"
+        button-cancel = "none"
         button-accept = "hidden"
         :active.sync="activePrompt">
-        <div>
+        <vs-row>
+          <vs-col vs-type="flex" vs-w="6">
+            <div style="width:100%">
+              <vx-card title="Shift Detail" class="box-shadow-none margin-right-2">
+                <div class="mt-5">
+                    <h6>Email:</h6>
+                    <p>ww@d.com</p>
+                </div>
+                <div class="flex-justify-bw">
+                  <div class="mt-5">
+                      <h6>Number:</h6>
+                      <p>11111222223</p>
+                  </div>
+                  <div class="mt-5">
+                      <h6>PIN:</h6>
+                      <p>00411</p>
+                  </div>
+                </div>
+              </vx-card>
+                <vx-card title="Shift Detail" class="box-shadow-none">
+                    <div class="mt-5">
+                        <h6>Site Name:</h6>
+                        <p>Norway</p>
+                    </div>
+                    <!-- OTEHR DATA -->
+                    <div class="mt-5">
+                        <h6>Date:</h6>
+                        <p>Tuesday, 17 Dec 2019</p>
+                    </div>
+                </vx-card>
+            </div>
+          </vs-col>
+          <vs-col vs-type="flex" vs-w="6">
+            <vx-timeline :data="timelineData"></vx-timeline>
+          </vs-col>
+        </vs-row>
+        <!-- CARD WITH TABS COMPONENT -->
+        <div class="vx-row mt-5">
+            <!-- SIMPLE CARD WITH TABS -->
+            <div class="vx-col w-full">
+                <vx-card class="box-shadow-none">
+                    <vs-tabs>
+                        <vs-tab label="Notes">
+                            <div class="mt-3">
+                                <h6>Notes:</h6>
+                                <div>
+                                  <vs-input type="number" class="input-field-block" />
+                                  <vs-textarea label="Height" height="100px" />
+                                </div>
+                            </div>
+                        </vs-tab>
+                        <vs-tab label="Shift Instruction">
+                            <div class="mt-3">
+                                <h6>Shift Instruction:</h6>
+                                <p>Wafer sesame snaps toffee brownie liquorice danish icing fruitcake croissant. Gingerbread chocolate cake danish pie gingerbread. Muffin donut fruitcake powder jelly lemon drops cheesecake. Croissant oat cake carrot cake tiramisu halvah. Cupcake cupcake wafer muffin topping danish cheesecake croissant. Liquorice donut liquorice lollipop sesame snaps lollipop ice cream macaroon danish. Cupcake chocolate cake chupa chups gummi bears macaroon.</p>
+                            </div>
+                        </vs-tab>
+                        <vs-tab label="Expense">
+                            <div class="mt-3">
+                                <h6>Expense:</h6>
+                                <p>Cookie cheesecake fruitcake sweet roll gummi bears marzipan marshmallow marshmallow. Cheesecake muffin jujubes chocolate cake carrot cake jujubes croissant. Cake toffee carrot cake topping oat cake lemon drops toffee toffee marzipan. Gingerbread toffee marshmallow marshmallow caramels brownie donut cake. Cheesecake candy topping tart cotton candy chocolate bar jujubes powder chupa chups. Cupcake candy soufflé jelly beans. Icing lollipop tiramisu oat cake dessert.</p>
+                            </div>
+                        </vs-tab>
+                    </vs-tabs>
+                </vx-card>
+            </div>
+          </div>
+        <!-- <div >
           {{shiftModel}}
-        </div>
+        </div> -->
     </vs-prompt>
     <!-- Shift Listing -->
     <div class="vx-card p-6">
@@ -326,6 +394,7 @@ import '@ag-grid-community/core/dist/styles/ag-theme-alpine.css'
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 import _ from 'lodash'
 import {agGridMixins} from '@/mixins/agGridMixins'
+import VxTimeline from '@/components/VxTimeline'
 import ClickableStatusBarComponent from './clickableStatusBarComponentVue.js'
 import CountStatusBarComponent from './countStatusBarComponentVue.js'
 import moment from 'moment'
@@ -337,11 +406,35 @@ export default {
   mixins: [agGridMixins],
   components: {
     AgGridVue,
-    VuePerfectScrollbar
+    VuePerfectScrollbar,
+    VxTimeline
   },
   data () {
     
     return {
+      timelineData: [
+        {
+          color : 'primary',
+          icon  : 'PlusIcon',
+          title : 'New Task Added',
+          desc  : 'Bonbon macaroon jelly beans gummi bears jelly lollipop apple',
+          time  : '25 Days Ago'
+        },
+        {
+          color : 'warning',
+          icon  : 'AlertCircleIcon',
+          title : 'Task Update Found',
+          desc  : 'Cupcake gummi bears soufflé caramels candy',
+          time  : '15 Days Ago'
+        },
+        {
+          color : 'success',
+          icon  : 'CheckIcon',
+          title : 'Task Finished',
+          desc  : 'Candy ice cream cake. Halvah gummi bears',
+          time  : '20 mins ago'
+        }
+      ],
       selectDateOption: 'custom',
       dtFrom: '',
       dtTo: '',
@@ -1042,6 +1135,7 @@ export default {
     }
   },
   mounted () {
+    console.log(this.$store.state['shift'].msg)
     // this.gridApi = this.gridOptions.api
     // this.gridColumnApi = this.gridOptions.columnApi
     // this.gridApi.showLoadingOverlay()
@@ -1246,5 +1340,41 @@ export default {
 }
 .incomplete > span .pos-relative::after{
   background: lightcoral !important;
+}
+.con-vs-dialog .vs-dialog header span.after {
+    width: 3px !important;
+}
+
+.model-lg {
+  .vs-dialog {
+    max-width: 850px !important;
+  }
+  .dialog-title {
+    text-transform: uppercase;
+  }
+  footer{
+    display: none !important;
+  }
+}
+.input-field-block{
+    margin: 10px 0;
+    &.vs-con-input-label{ width: 100%; }
+    .vs-input--input{
+      display: block;
+      width: 100%;
+    }
+}
+.box-shadow-none{
+  box-shadow: none !important;
+  border:none;
+  &.margin-right-2{
+    .vx-card__body{
+      margin-right: 30px;
+    }
+  }
+}
+.flex-justify-bw{
+  display: flex;
+  justify-content: space-between;
 }
 </style>
