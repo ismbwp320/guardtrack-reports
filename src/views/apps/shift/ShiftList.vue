@@ -238,6 +238,23 @@
     </div>
     <!-- End Filter SideBar -->
     <vs-prompt
+        title="Change Officer"
+        button-cancel = "none"
+        button-accept = "hidden"
+        :active.sync="activeOfficerPrompt">
+          <vx-card title="Officer" class="box-shadow-none">
+              <div class="flex flex-col">
+                  <select class="vs-inputx vs-input--input normal my-2" >
+                    <option value="ADNAN ZAKAULLAH">ADNAN ZAKAULLAH</option>
+                    <option value="Syed Omair">Syed Omair</option>
+                    <option value="ABDUL RAZZAQ">ABDUL RAZZAQ</option>
+                    <option value="Masroor Khan">Masroor Khan</option>
+                  </select>
+                  <vs-textarea label="Reason" height="60px" />
+              </div>
+          </vx-card>
+        </vs-prompt>
+    <vs-prompt
         class="model-lg"
         title="Shift Detail"
         button-cancel = "none"
@@ -272,7 +289,46 @@
                         <h6>Date:</h6>
                         <p>Tuesday, 17 Dec 2019</p>
                     </div>
-                </vx-card>
+                </vx-card>            
+    <vs-table stripe :data="users">
+      <template slot="thead">
+        <vs-th>
+        </vs-th>
+        <vs-th>
+          Start
+        </vs-th>
+        <vs-th>
+          Finish
+        </vs-th>
+        <vs-th>
+          Total
+        </vs-th>
+      </template>
+
+      <template slot-scope="{data}">
+        <vs-tr :key="indextr" v-for="(tr, indextr) in data" >
+          <vs-td :data="data[indextr].name">
+            {{data[indextr].name}}
+          </vs-td>
+
+          <vs-td :data="data[indextr].start">
+            {{data[indextr].start}}
+          </vs-td>
+
+          <vs-td :data="data[indextr].id">
+            {{data[indextr].end}}
+          </vs-td>
+
+          <vs-td :data="data[indextr].id">
+            {{data[indextr].total}}
+          </vs-td>
+        </vs-tr>
+      </template>
+    </vs-table>
+    <div>
+      <vs-button color="danger" size="small">Start</vs-button>
+      <vs-button color="danger" size="small" class="mx-2">Finish</vs-button>
+    </div>
             </div>
           </vs-col>
           <vs-col vs-type="flex" vs-w="6">
@@ -286,24 +342,28 @@
                 <vx-card class="box-shadow-none">
                     <vs-tabs>
                         <vs-tab label="Notes">
-                            <div class="mt-3">
+                            <div class="mt-2">
                                 <h6>Notes:</h6>
                                 <div>
-                                  <vs-input type="number" class="input-field-block" />
-                                  <vs-textarea label="Height" height="100px" />
+                                  <vs-textarea label="Notes" height="60px" />
                                 </div>
                             </div>
                         </vs-tab>
                         <vs-tab label="Shift Instruction">
-                            <div class="mt-3">
+                            <div class="mt-2">
                                 <h6>Shift Instruction:</h6>
-                                <p>Wafer sesame snaps toffee brownie liquorice danish icing fruitcake croissant. Gingerbread chocolate cake danish pie gingerbread. Muffin donut fruitcake powder jelly lemon drops cheesecake. Croissant oat cake carrot cake tiramisu halvah. Cupcake cupcake wafer muffin topping danish cheesecake croissant. Liquorice donut liquorice lollipop sesame snaps lollipop ice cream macaroon danish. Cupcake chocolate cake chupa chups gummi bears macaroon.</p>
+                                <div>
+                                  <vs-textarea label="Shift Instruction" height="60px" />
+                                </div>
                             </div>
                         </vs-tab>
                         <vs-tab label="Expense">
-                            <div class="mt-3">
+                            <div class="mt-2">
                                 <h6>Expense:</h6>
-                                <p>Cookie cheesecake fruitcake sweet roll gummi bears marzipan marshmallow marshmallow. Cheesecake muffin jujubes chocolate cake carrot cake jujubes croissant. Cake toffee carrot cake topping oat cake lemon drops toffee toffee marzipan. Gingerbread toffee marshmallow marshmallow caramels brownie donut cake. Cheesecake candy topping tart cotton candy chocolate bar jujubes powder chupa chups. Cupcake candy soufflé jelly beans. Icing lollipop tiramisu oat cake dessert.</p>
+                                <div>
+                                  <vs-input type="number" label="Expense Amount" class="input-field-block" />
+                                  <vs-textarea label="Expense Reason" height="60px" />
+                                </div>
                             </div>
                         </vs-tab>
                     </vs-tabs>
@@ -395,23 +455,46 @@ import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 import _ from 'lodash'
 import {agGridMixins} from '@/mixins/agGridMixins'
 import VxTimeline from '@/components/VxTimeline'
+import VxTooltip from '@/components/VxTooltip'
 import ClickableStatusBarComponent from './clickableStatusBarComponentVue.js'
 import CountStatusBarComponent from './countStatusBarComponentVue.js'
 import moment from 'moment'
 
 // Store Module
 import shiftJson from './shifts.json'
-const officersList = ['ADNAN ZAKAULLAH', 'Syed Omair', 'ABDUL RAZZAQ', 'Masroor Khan']
+// const officersList = ['ADNAN ZAKAULLAH', 'Syed Omair', 'ABDUL RAZZAQ', 'Masroor Khan']
 export default {
   mixins: [agGridMixins],
   components: {
     AgGridVue,
     VuePerfectScrollbar,
-    VxTimeline
+    VxTimeline,
+    VxTooltip
   },
   data () {
     
     return {
+      statusOptions: [
+        { label: 'ADNAN ZAKAULLAH', value: 'ADNAN ZAKAULLAH' },
+        { label: 'Syed Omair', value: 'Syed Omair' },
+        { label: 'ABDUL RAZZAQ', value: 'ABDUL RAZZAQ' }
+      ],
+      users:[
+        {
+          id: 1,
+          name: 'Scheduled',
+          start: '19:00',
+          end: '07:00',
+          total: '12h'
+        },
+        {
+          id: 2,
+          name: 'Actual',
+          start: '',
+          end: '',
+          total: ''
+        }
+      ],
       timelineData: [
         {
           color : 'primary',
@@ -444,6 +527,8 @@ export default {
       customColumnsEdit: {},
       columnName: '',
       shiftModel: {},
+      activeOfficer: '',
+      activeOfficerPrompt: false,
       activePrompt: false,
       pinTop: [],
       pinBottom: [],
@@ -562,13 +647,7 @@ export default {
               headerName: 'Officer',
               field: 'Officer',
               hide: false,
-              filterAll: true,
-              editable: true,
-              cellEditor: 'agRichSelectCellEditor',
-              cellEditorParams: {
-                cellHeight: 50,
-                values: officersList
-              }
+              filterAll: true
             },
             { headerName: 'Phone', field: 'Phone', hide: true, filter: false, filterAll: true },
             { headerName: 'SIA', field: 'SIA', hide: true, filter: false, filterAll: true },
@@ -989,6 +1068,14 @@ export default {
           }
         },
         {
+          name: 'Change Officer',
+          action: () => {
+            this.activeOfficerPrompt = true
+            console.log(params.node.data)
+            // this.activeOfficer = params.node.data
+          }
+        },
+        {
           name: 'Pin Row',
           subMenu: [
             {
@@ -1347,7 +1434,10 @@ export default {
 
 .model-lg {
   .vs-dialog {
-    max-width: 850px !important;
+    max-width: 860px !important;
+    max-height: calc(100% - 40px);
+    overflow-y: scroll;
+    overflow-x: hidden;
   }
   .dialog-title {
     text-transform: uppercase;

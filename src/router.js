@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import auth from '@/auth/authService'
 import ShiftList from '@/views/apps/shift/ShiftList.vue'
+import TimeClock from '@/views/apps/timeclock/timeClock.vue'
 
 Vue.use(Router)
 
@@ -33,6 +34,19 @@ const router = new Router({
         // =============================================================================
         // Main App Routes
         // =============================================================================
+        {
+          path: '/apps/timeclock',
+          name: 'time-clock',
+          component: TimeClock,
+          meta: {
+            breadcrumb: [
+              { title: 'Home', url: '/' },
+              { title: 'Time Clock' },
+              { title: 'List', active: true }
+            ],
+            rule: 'editor'
+          }
+        },
         {
           path: '/apps/shift/listing',
           name: 'shift-list',

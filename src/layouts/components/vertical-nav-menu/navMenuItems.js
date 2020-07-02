@@ -33,8 +33,15 @@ export default [
         i18n: 'Calendar'
       },
       {
+        url: '/apps/timeclock',
+        name: 'TIME CLOCK',
+        slug: 'listing',
+        icon: 'CalendarIcon',
+        i18n: 'Time Clock'
+      },
+      {
         url: '/apps/shift/listing',
-        name: 'Shift List',
+        name: 'SHIFT LISTING',
         slug: 'listing',
         icon: 'CalendarIcon',
         i18n: 'Shift List'
