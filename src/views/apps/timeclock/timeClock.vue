@@ -1,11 +1,15 @@
 <template>
   <div id="shift__listing">
         <vs-prompt
-        title="Shift Detail"
+        :title="timesheetModel.callType"
         button-cancel = "none"
         button-accept = "hidden"
         :active.sync="activePrompt">
-          Welcome to Time Clock
+          <div class="flex flex-col">
+              <vs-input v-if="timesheetModel.callType === 'Start'" :label="timesheetModel.callType" v-model="timesheetModel.timesheets.time_in" class="input-field-block" />
+              <vs-input v-if="timesheetModel.callType === 'Finish'" :label="timesheetModel.callType" v-model="timesheetModel.timesheets.time_out" class="input-field-block" />
+              <vs-textarea label="Comments" height="60px" />
+          </div>
         </vs-prompt>
     <!-- Shift Listing -->
     <div class="vx-card p-6">
@@ -107,6 +111,7 @@ export default {
   data () {
     
     return {
+      timesheetModel: {},
       selectDateOption: 'custom',
       dtFrom: '',
       dtTo: '',
@@ -192,49 +197,37 @@ export default {
           children: [
             {
               headerName: 'Call Type',
-              field: 'Call Type',
+              field: 'callType',
               hide: false,
               width: 110,
               filterAll: true,
               cellRenderer : params => {
-                // console.log(params.data)
-                return params.value ? `<div class="pos-relative">${params.value}<div>` : 'Start'
+                console.log(params.data)
+                return `<div class="pos-relative" style="text-align:center;color:#fff;background: ${params.data.background}">${params.data.callType}<div>`
               },
-              onCellClicked : () => {
+              onCellClicked : (params) => {
+                console.log(params)
+                this.timesheetModel = params.data
                 this.activePrompt = true
               }
             },
             // rowGroupIndex: 1
-            { headerName: 'Site Name', field: 'Site Name', hide: false, width: 200, filterAll: true },
+            { headerName: 'Site Name', field: 'sites_name.site_name', hide: false, width: 200, filterAll: true },
             {
               headerName: 'Type',
-              field: 'Type',
+              field: 'types.type_name',
               hide: false,
-              filterAll: true,
-              cellClassRules: {
-                'progress': params => {
-                  return params.value === 'PATROL'
-                },
-                'complete': params => {
-                  return params.value === 'Site_Inspection'
-                },
-                'incomplete': params => {
-                  return params.value === 'CALL_OUT'
-                }
-              },
-              cellRenderer : params => {
-                return params.value ? `<div class="pos-relative">${params.value}<div>` : ''
-              }
+              filterAll: true
             },
             {
               headerName: 'Clients',
-              field: 'Clients',
+              field: 'clients.client_name',
               hide: false,
               filterAll: true
             },
             {
               headerName: 'Officer',
-              field: 'Officer',
+              field: 'officers.fname',
               hide: false,
               filterAll: true,
               editable: true,
@@ -244,7 +237,7 @@ export default {
                 values: officersList
               }
             },
-            { headerName: 'Date', field: 'Date', hide: false, filter: false, filterAll: true },
+            { headerName: 'Date', field: 'timesheets.reg_date', hide: false, filter: false, filterAll: true },
             {
               headerName: 'Shift Time',
               field: 'Shift Time',
@@ -253,7 +246,7 @@ export default {
               filterAll: true,
               cellRenderer : params => {
                 const d = params.data
-                return `<div>${d.Start} - ${d.End}<div>`
+                return `<div>${d.timesheets.time_in} - ${d.timesheets.time_out}<div>`
               }
             },
             {
@@ -264,17 +257,22 @@ export default {
               filterAll: true,
               cellRenderer : params => {
                 const d = params.data
-                return `<div style="text-align:center">${d.bookOn} - ${d.bookOff}<div>`
+                return `<div style="text-align:center">${d.shift_time_detail.book_on} - ${d.shift_time_detail.book_off}<div>`
               }
             },
-            { headerName: 'HR', field: 'HR', filter: false, width: 50, filterAll: true },
-            { headerName: 'Start', field: 'bookOn', hide: false, filterAll: true },
-            { headerName: 'Finish', field: 'bookOff', hide: false, filterAll: true },
-            { headerName: 'Status', field: 'Status', hide: false, filterAll: true }
+            { headerName: 'HR', field: 'timesheets.hours', filter: false, width: 50, filterAll: true },
+            { headerName: 'Start', field: 'shift_time_detail.book_on', hide: false, filterAll: true },
+            { headerName: 'Finish', field: 'shift_time_detail.book_off', hide: false, filterAll: true },
+            { headerName: 'Status', field: 'shift_time_detail.status', hide: false, filterAll: true }
           ]
         }
       ]
     }
+  },
+  async created () {
+    // const { data } = await axios.get('https://www.guardtrack.co.uk/ajax/staff_timeclock?option=&month=July,2020&max=&min=&not_approved=not_approved') 
+    // console.log(data)
+    this.timesheetHandler()
   },
   computed: {
     usersData () {
@@ -328,6 +326,64 @@ export default {
     }
   },
   methods: {
+    timesheetHandler () {
+      let newData = []
+      const dateFormat = 'DD-MM-YYYY HH:mm'
+      console.log(this.shifts)
+      this.shifts.forEach(node => {
+        // SHIFT TIME
+        const bookOnTime = `${node.timesheets.reg_date} ${node.timesheets.time_in}`
+        const bookOffTime = moment(bookOnTime, dateFormat).add(node.timesheets.hours, 'hours').format(dateFormat)
+
+        // ACTUAL TIME 
+        const bookOnValue = node.shift_time_detail.book_on
+        const bookOffValue = node.shift_time_detail.book_off
+
+        const anHour = moment(new Date()).add(1, 'hours').format(dateFormat)
+        const current = moment(new Date()).format(dateFormat)
+        const currentHour = moment(new Date()).format('HH')
+        if (current > bookOnTime && bookOnValue === '') {
+          newData = [...newData, {...node, background: 'red', callType: 'Start', dataOrder: 1}]
+        } else if (current > bookOffTime && bookOffValue === '' && bookOnValue !== '') {
+          newData = [...newData, {...node, background: 'red', callType: 'Finish', dataOrder: 1}]
+        } else if (current < bookOnTime && anHour > bookOnTime && bookOnValue === '') {
+          newData = [...newData, {...node, background: 'orange', callType: 'Start', dataOrder: 2}]
+        } else if (current < bookOffTime && anHour > bookOffTime && bookOffValue === '' && bookOnValue !== '') {
+          newData = [...newData, {...node, background: 'orange', callType: 'Finish', dataOrder: 2}]
+        } else if (current > bookOnTime && anHour > bookOnTime && bookOnValue !== '' && anHour < bookOffTime && bookOffValue === '') {
+          
+          const val = `t${currentHour}`
+          const check_call = node.check_call[val]
+          // Sub Conditions
+          if (node.shift_time_detail.check_call_status !== 0 && node.check_call_status.after_interval !== '') {
+            if ((check_call === null || check_call === '')) {
+              const current_min = moment(new Date()).format('mm')
+              if (current_min <= 15) {
+                newData = [...newData, {...node, background: 'orange', callType: 'Check', dataOrder: 2}]
+              } else {
+                newData = [...newData, {...node, background: 'red', callType: 'Check', dataOrder: 1}]
+              }
+            } else {
+              newData = [...newData, {...node, background: 'green', callType: 'Check', dataOrder: 3}]
+            }
+          } else {
+            newData = [...newData, {...node, background: 'green', callType: 'Start', dataOrder: 3}]
+          }
+          // End Sub Conditions
+        } else if (bookOffValue !== '' && bookOnValue !== '') {
+          if (node.shift_time_detail.status === 0) {
+            newData = [...newData, {...node, background: '#9e9e9e', callType: 'Approve', dataOrder: 3}]  
+          } else {
+            newData = [...newData, {...node, background: '#374767', callType: 'Approve', dataOrder: 3}]
+          }
+        } else if (bookOnValue !== '' && bookOffValue === '') {
+          newData = [...newData, {...node, background: 'green', callType: 'Start', dataOrder: 3}]
+        } else {
+          newData = [...newData, {...node, background: '#444', callType: 'Start', dataOrder: 4}]
+        }
+      })
+      this.shifts = newData.sort((a, b) => a.dataOrder - b.dataOrder)
+    },
     onCellValueChanged (params) {
       const colId = params.column.getId()
       if (colId === 'Officer') {
@@ -547,47 +603,12 @@ export default {
     }
   },
   mounted () {
-    let newData = []
-    this.shifts.forEach(node => {
-      // SHIFT TIME
-      const bookOnTime = `${node.Date} ${node.Start}`
-      const bookOffTime = moment(bookOnTime, 'DD-MM-YYYY HH:mm').add(node.HR, 'hours').format('DD-MM-YYYY HH:mm')
-
-      // ACTUAL TIME 
-      const bookOnValue = node.bookOn
-      const bookOffValue = node.bookOff
-
-
-      const anHour = moment(new Date()).add(1, 'hours').format('DD-MM-YYYY HH:mm')
-      const current = moment(new Date()).format('DD-MM-YYYY HH:mm')
-      // const currentHour = moment(new Date()).format('HH')
-      if (current > bookOnTime && bookOnValue === '') {
-        newData = [...newData, {...node, background: 'red', callType: 'Start'}]
-        console.log('1')
-      } else if (current > bookOffTime && bookOffValue === '' && bookOnValue !== '') {
-        newData = [...newData, {...node, background: 'red', callType: 'Finish'}]
-        console.log('1')
-      } else if (current < bookOnTime && anHour > bookOnTime && bookOnValue === '') {
-        console.log('hfh 2')
-      } else if (current < bookOffTime && anHour > bookOffTime && bookOffValue === '' && bookOnValue !== '') {
-        console.log('Srat 2')
-      } else if (current > bookOnTime && anHour > bookOnTime && bookOnValue !== '' && anHour < bookOffTime && bookOffValue === '') {
-        console.log('Start', 3) 
-      } else if (bookOffValue !== '' && bookOnValue !== '') {
-        console.log('Start', 3)
-      } else if (bookOnValue !== '' && bookOffValue === '') {
-        console.log('Start', 3)
-      } else {
-        console.log('Start', 4)
-      }
-      console.log(anHour, current)
-      // newData = [...rowData, node.data]
-    })
-    console.log(newData)
-    console.log(moment(new Date()).format('HH:mm'))
-    for (const key in this.usersData[0]) {
-      this.filters[key] = [... new Set(this.usersData.map((v) =>  v[key]))] 
-    }
+    this.timesheetHandler()
+    // setInterval(() => console.log('HHHH'), 5000)
+    // console.log(moment(new Date()).format('HH:mm'))
+    // for (const key in this.usersData[0]) {
+    //   this.filters[key] = [... new Set(this.usersData.map((v) =>  v[key]))] 
+    // }
    
   }
 }

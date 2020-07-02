@@ -1,56 +1,3406 @@
 [
     {
-        "Site Name": "Lea Manor High School, Northwell Drive, Luton, LU3 3TL",
-        "Type": "CALL_OUT",
-        "Subcontractor": "Employees",
-        "Officer": "Syed Omair",
-        "Phone": "7951557781",
-        "SIA": "SIA: 0130110410008404",
-        "SIA Expiry": "30 Nov -0001",
-        "Date": "01/07/2020",
-        "Day": "Sunday",
-        "Start": "20:00",
-        "End": "23:00",
-        "bookOn": "20:00",
-        "bookOff": "",
-        "HR": 3,
-        "Break": null,
-        "Pay Rate": 8,
-        "Amount": 8,
-        "Clients": "EUROTECH MONITORING SERVICES LTD",
-        "Site Start": "00:30",
-        "Site End": "01:30",
-        "Site HR": 1,
-        "Charge Rate": 26,
-        "Charge Amount": "26",
-        "Expense": 0,
-        "Status": "Unapproved"
+      "DT_RowId": "row_822879",
+      "timesheets": {
+        "oid": "17146",
+        "reg_date": "02-07-2020",
+        "day": "Thursday",
+        "time_in": "08:00",
+        "time_out": "19:00",
+        "hours": "11",
+        "rate": "8.72",
+        "site_type": "1",
+        "highlight": "0",
+        "site_id": "820504",
+        "green": "0",
+        "deleted": "0",
+        "id": "822879",
+        "company_id": "1",
+        "notes_status": "1",
+        "break_status": "",
+        "broke_id": "0",
+        "status": "closed",
+        "check_call_status": "0"
+      },
+      "sites": {
+        "time_in": "08:00",
+        "time_out": "19:00",
+        "hours": "11"
+      },
+      "sites_name": {
+        "site_name": "Colechurch House,1 London Bridge Walk.SE1 2SX",
+        "client_id": "158",
+        "id": "16254",
+        "post_code": "SE1 2SX",
+        "check_call_status": "0"
+      },
+      "officers": {
+        "contractor": "0",
+        "fname": "RANA ASLAM",
+        "lname": "ASLAM"
+      },
+      "contractor": {
+        "name": null,
+        "short_name": null
+      },
+      "clients": {
+        "client_name": "KM SECURITY SERVICES PLC "
+      },
+      "types": {
+        "type_name": "SG",
+        "type_id": "1"
+      },
+      "shift_time_detail": {
+        "book_on": "08:00",
+        "book_off": "",
+        "staff_book_on": "07:55",
+        "staff_book_off": "",
+        "status": "0",
+        "officer_status": "0",
+        "book_on_location": "51.50609691083514,-0.08678686634715412",
+        "book_off_location": "",
+        "check_call_status": "0"
+      },
+      "check_call_status": {
+        "after_interval": null
+      },
+      "check_call": {
+        "t0": "",
+        "t1": "",
+        "t2": "",
+        "t3": "",
+        "t4": "",
+        "t5": "",
+        "t6": "",
+        "t7": "",
+        "t8": "",
+        "t9": "",
+        "t10": "",
+        "t11": "",
+        "t12": "",
+        "t13": "",
+        "t14": "",
+        "t15": "",
+        "t16": "",
+        "t17": "",
+        "t18": "",
+        "t19": "",
+        "t20": "",
+        "t21": "",
+        "t22": "",
+        "t23": ""
+      }
     },
     {
-        "Site Name": "Lea Manor High School, Northwell Drive, Luton, LU3 3TL",
-        "Type": "CALL_OUT",
-        "Subcontractor": "Employees",
-        "Officer": "Syed Omair",
-        "Phone": "7951557781",
-        "SIA": "SIA: 0130110410008404",
-        "SIA Expiry": "30 Nov -0001",
-        "Date": "01/07/2020",
-        "Day": "Sunday",
-        "Start": "12:00",
-        "End": "19:00",
-        "bookOn": "12:00",
-        "bookOff": "",
-        "HR": 1,
-        "Break": null,
-        "Pay Rate": 8,
-        "Amount": 8,
-        "Clients": "EUROTECH MONITORING SERVICES LTD",
-        "Site Start": "00:30",
-        "Site End": "01:30",
-        "Site HR": 1,
-        "Charge Rate": 26,
-        "Charge Amount": "26",
-        "Expense": 0,
-        "Status": "Unapproved"
+      "DT_RowId": "row_825025",
+      "timesheets": {
+        "oid": "15542",
+        "reg_date": "01-07-2020",
+        "day": "Wednesday",
+        "time_in": "20:00",
+        "time_out": "08:00",
+        "hours": "12",
+        "rate": "0.00",
+        "site_type": "1",
+        "highlight": "0",
+        "site_id": "822650",
+        "green": "0",
+        "deleted": "0",
+        "id": "825025",
+        "company_id": "1",
+        "notes_status": "0",
+        "break_status": "",
+        "broke_id": "0",
+        "status": "closed",
+        "check_call_status": "1"
+      },
+      "sites": {
+        "time_in": "20:00",
+        "time_out": "08:00",
+        "hours": "12"
+      },
+      "sites_name": {
+        "site_name": "Unite – DurhamRushford Court, North Rd, Durham , DH1 4RY",
+        "client_id": "247",
+        "id": "10647",
+        "post_code": "DH1 4RY",
+        "check_call_status": "0"
+      },
+      "officers": {
+        "contractor": "72",
+        "fname": "AMMAR IBRAHIM (Hamid - Bristol)",
+        "lname": "IBRAHIM"
+      },
+      "contractor": {
+        "name": "Hamid - Bristol",
+        "short_name": "Hamid - Bristol"
+      },
+      "clients": {
+        "client_name": "Crystal Facilities Management Services Ltd "
+      },
+      "types": {
+        "type_name": "SG",
+        "type_id": "1"
+      },
+      "shift_time_detail": {
+        "book_on": "20:00",
+        "book_off": "",
+        "staff_book_on": "",
+        "staff_book_off": "",
+        "status": "0",
+        "officer_status": "0",
+        "book_on_location": "",
+        "book_off_location": "",
+        "check_call_status": "1"
+      },
+      "check_call_status": {
+        "after_interval": "1"
+      },
+      "check_call": {
+        "t0": "1",
+        "t1": "1",
+        "t2": "1",
+        "t3": "1",
+        "t4": "1",
+        "t5": "",
+        "t6": "",
+        "t7": "",
+        "t8": "",
+        "t9": "",
+        "t10": "",
+        "t11": "",
+        "t12": "",
+        "t13": "",
+        "t14": "",
+        "t15": "",
+        "t16": "",
+        "t17": "",
+        "t18": "",
+        "t19": "",
+        "t20": "",
+        "t21": "1",
+        "t22": "1",
+        "t23": "1"
+      }
+    },
+    {
+      "DT_RowId": "row_825026",
+      "timesheets": {
+        "oid": "15542",
+        "reg_date": "02-07-2020",
+        "day": "Thursday",
+        "time_in": "20:00",
+        "time_out": "08:00",
+        "hours": "12",
+        "rate": "0.00",
+        "site_type": "1",
+        "highlight": "0",
+        "site_id": "822651",
+        "green": "0",
+        "deleted": "0",
+        "id": "825026",
+        "company_id": "1",
+        "notes_status": "0",
+        "break_status": "",
+        "broke_id": "0",
+        "status": "closed",
+        "check_call_status": "0"
+      },
+      "sites": {
+        "time_in": "20:00",
+        "time_out": "08:00",
+        "hours": "12"
+      },
+      "sites_name": {
+        "site_name": "Unite – DurhamRushford Court, North Rd, Durham , DH1 4RY",
+        "client_id": "247",
+        "id": "10647",
+        "post_code": "DH1 4RY",
+        "check_call_status": "0"
+      },
+      "officers": {
+        "contractor": "72",
+        "fname": "AMMAR IBRAHIM (Hamid - Bristol)",
+        "lname": "IBRAHIM"
+      },
+      "contractor": {
+        "name": "Hamid - Bristol",
+        "short_name": "Hamid - Bristol"
+      },
+      "clients": {
+        "client_name": "Crystal Facilities Management Services Ltd "
+      },
+      "types": {
+        "type_name": "SG",
+        "type_id": "1"
+      },
+      "shift_time_detail": {
+        "book_on": "",
+        "book_off": "",
+        "staff_book_on": "",
+        "staff_book_off": "",
+        "status": "0",
+        "officer_status": "0",
+        "book_on_location": "",
+        "book_off_location": "",
+        "check_call_status": "0"
+      },
+      "check_call_status": {
+        "after_interval": null
+      },
+      "check_call": {
+        "t0": "",
+        "t1": "",
+        "t2": "",
+        "t3": "",
+        "t4": "",
+        "t5": "",
+        "t6": "",
+        "t7": "",
+        "t8": "",
+        "t9": "",
+        "t10": "",
+        "t11": "",
+        "t12": "",
+        "t13": "",
+        "t14": "",
+        "t15": "",
+        "t16": "",
+        "t17": "",
+        "t18": "",
+        "t19": "",
+        "t20": "",
+        "t21": "",
+        "t22": "",
+        "t23": ""
+      }
+    },
+    {
+      "DT_RowId": "row_826003",
+      "timesheets": {
+        "oid": "13148",
+        "reg_date": "02-07-2020",
+        "day": "Thursday",
+        "time_in": "07:00",
+        "time_out": "15:00",
+        "hours": "8",
+        "rate": "10.55",
+        "site_type": "1",
+        "highlight": "0",
+        "site_id": "823622",
+        "green": "0",
+        "deleted": "0",
+        "id": "826003",
+        "company_id": "1",
+        "notes_status": "0",
+        "break_status": "",
+        "broke_id": "0",
+        "status": "closed",
+        "check_call_status": "0"
+      },
+      "sites": {
+        "time_in": "07:00",
+        "time_out": "15:00",
+        "hours": "8"
+      },
+      "sites_name": {
+        "site_name": "Princes Court ",
+        "client_id": "312",
+        "id": "11740",
+        "post_code": "SW3 1ES",
+        "check_call_status": "0"
+      },
+      "officers": {
+        "contractor": "0",
+        "fname": "Khalid Pervez",
+        "lname": "Pervez"
+      },
+      "contractor": {
+        "name": null,
+        "short_name": null
+      },
+      "clients": {
+        "client_name": "MK9 SERVICES"
+      },
+      "types": {
+        "type_name": "SG",
+        "type_id": "1"
+      },
+      "shift_time_detail": {
+        "book_on": "07:00",
+        "book_off": "",
+        "staff_book_on": "06:54",
+        "staff_book_off": "",
+        "status": "0",
+        "officer_status": "0",
+        "book_on_location": "51.49976056469188,-0.1635124848825434",
+        "book_off_location": "",
+        "check_call_status": "0"
+      },
+      "check_call_status": {
+        "after_interval": null
+      },
+      "check_call": {
+        "t0": "",
+        "t1": "",
+        "t2": "",
+        "t3": "",
+        "t4": "",
+        "t5": "",
+        "t6": "",
+        "t7": "",
+        "t8": "",
+        "t9": "",
+        "t10": "",
+        "t11": "",
+        "t12": "",
+        "t13": "",
+        "t14": "",
+        "t15": "",
+        "t16": "",
+        "t17": "",
+        "t18": "",
+        "t19": "",
+        "t20": "",
+        "t21": "",
+        "t22": "",
+        "t23": ""
+      }
+    },
+    {
+      "DT_RowId": "row_826034",
+      "timesheets": {
+        "oid": "13007",
+        "reg_date": "02-07-2020",
+        "day": "Thursday",
+        "time_in": "15:00",
+        "time_out": "23:00",
+        "hours": "8",
+        "rate": "8.21",
+        "site_type": "1",
+        "highlight": "0",
+        "site_id": "823653",
+        "green": "0",
+        "deleted": "0",
+        "id": "826034",
+        "company_id": "1",
+        "notes_status": "0",
+        "break_status": "",
+        "broke_id": "0",
+        "status": "closed",
+        "check_call_status": "0"
+      },
+      "sites": {
+        "time_in": "15:00",
+        "time_out": "23:00",
+        "hours": "8"
+      },
+      "sites_name": {
+        "site_name": "Princes Court ",
+        "client_id": "312",
+        "id": "11740",
+        "post_code": "SW3 1ES",
+        "check_call_status": "0"
+      },
+      "officers": {
+        "contractor": "0",
+        "fname": "Syed vazeer ali",
+        "lname": "ali"
+      },
+      "contractor": {
+        "name": null,
+        "short_name": null
+      },
+      "clients": {
+        "client_name": "MK9 SERVICES"
+      },
+      "types": {
+        "type_name": "SG",
+        "type_id": "1"
+      },
+      "shift_time_detail": {
+        "book_on": "",
+        "book_off": "",
+        "staff_book_on": "",
+        "staff_book_off": "",
+        "status": "0",
+        "officer_status": "0",
+        "book_on_location": "",
+        "book_off_location": "",
+        "check_call_status": "0"
+      },
+      "check_call_status": {
+        "after_interval": null
+      },
+      "check_call": {
+        "t0": "",
+        "t1": "",
+        "t2": "",
+        "t3": "",
+        "t4": "",
+        "t5": "",
+        "t6": "",
+        "t7": "",
+        "t8": "",
+        "t9": "",
+        "t10": "",
+        "t11": "",
+        "t12": "",
+        "t13": "",
+        "t14": "",
+        "t15": "",
+        "t16": "",
+        "t17": "",
+        "t18": "",
+        "t19": "",
+        "t20": "",
+        "t21": "",
+        "t22": "",
+        "t23": ""
+      }
+    },
+    {
+      "DT_RowId": "row_826064",
+      "timesheets": {
+        "oid": "17377",
+        "reg_date": "01-07-2020",
+        "day": "Wednesday",
+        "time_in": "23:00",
+        "time_out": "07:00",
+        "hours": "8",
+        "rate": "0.00",
+        "site_type": "1",
+        "highlight": "0",
+        "site_id": "823683",
+        "green": "0",
+        "deleted": "0",
+        "id": "826064",
+        "company_id": "1",
+        "notes_status": "0",
+        "break_status": "",
+        "broke_id": "0",
+        "status": "closed",
+        "check_call_status": "0"
+      },
+      "sites": {
+        "time_in": "23:00",
+        "time_out": "07:00",
+        "hours": "8"
+      },
+      "sites_name": {
+        "site_name": "Princes Court ",
+        "client_id": "312",
+        "id": "11740",
+        "post_code": "SW3 1ES",
+        "check_call_status": "0"
+      },
+      "officers": {
+        "contractor": "0",
+        "fname": "Wahab Idrees khan",
+        "lname": "Idrees khan"
+      },
+      "contractor": {
+        "name": null,
+        "short_name": null
+      },
+      "clients": {
+        "client_name": "MK9 SERVICES"
+      },
+      "types": {
+        "type_name": "SG",
+        "type_id": "1"
+      },
+      "shift_time_detail": {
+        "book_on": "23:00",
+        "book_off": "07:33",
+        "staff_book_on": "22:53",
+        "staff_book_off": "07:33",
+        "status": "0",
+        "officer_status": "0",
+        "book_on_location": "51.49975289704678,-0.1637920404341469",
+        "book_off_location": "51.51165266471666,-0.03935809385678474",
+        "check_call_status": "0"
+      },
+      "check_call_status": {
+        "after_interval": null
+      },
+      "check_call": {
+        "t0": "",
+        "t1": "",
+        "t2": "",
+        "t3": "",
+        "t4": "",
+        "t5": "",
+        "t6": "",
+        "t7": "",
+        "t8": "",
+        "t9": "",
+        "t10": "",
+        "t11": "",
+        "t12": "",
+        "t13": "",
+        "t14": "",
+        "t15": "",
+        "t16": "",
+        "t17": "",
+        "t18": "",
+        "t19": "",
+        "t20": "",
+        "t21": "",
+        "t22": "",
+        "t23": ""
+      }
+    },
+    {
+      "DT_RowId": "row_826065",
+      "timesheets": {
+        "oid": "13146",
+        "reg_date": "02-07-2020",
+        "day": "Thursday",
+        "time_in": "23:00",
+        "time_out": "07:00",
+        "hours": "8",
+        "rate": "10.55",
+        "site_type": "1",
+        "highlight": "0",
+        "site_id": "823684",
+        "green": "0",
+        "deleted": "0",
+        "id": "826065",
+        "company_id": "1",
+        "notes_status": "0",
+        "break_status": "",
+        "broke_id": "0",
+        "status": "closed",
+        "check_call_status": "0"
+      },
+      "sites": {
+        "time_in": "23:00",
+        "time_out": "07:00",
+        "hours": "8"
+      },
+      "sites_name": {
+        "site_name": "Princes Court ",
+        "client_id": "312",
+        "id": "11740",
+        "post_code": "SW3 1ES",
+        "check_call_status": "0"
+      },
+      "officers": {
+        "contractor": "0",
+        "fname": "Faisal Siddique",
+        "lname": "Siddique"
+      },
+      "contractor": {
+        "name": null,
+        "short_name": null
+      },
+      "clients": {
+        "client_name": "MK9 SERVICES"
+      },
+      "types": {
+        "type_name": "SG",
+        "type_id": "1"
+      },
+      "shift_time_detail": {
+        "book_on": "",
+        "book_off": "",
+        "staff_book_on": "",
+        "staff_book_off": "",
+        "status": "0",
+        "officer_status": "0",
+        "book_on_location": "",
+        "book_off_location": "",
+        "check_call_status": "0"
+      },
+      "check_call_status": {
+        "after_interval": null
+      },
+      "check_call": {
+        "t0": "",
+        "t1": "",
+        "t2": "",
+        "t3": "",
+        "t4": "",
+        "t5": "",
+        "t6": "",
+        "t7": "",
+        "t8": "",
+        "t9": "",
+        "t10": "",
+        "t11": "",
+        "t12": "",
+        "t13": "",
+        "t14": "",
+        "t15": "",
+        "t16": "",
+        "t17": "",
+        "t18": "",
+        "t19": "",
+        "t20": "",
+        "t21": "",
+        "t22": "",
+        "t23": ""
+      }
+    },
+    {
+      "DT_RowId": "row_826302",
+      "timesheets": {
+        "oid": "15078",
+        "reg_date": "01-07-2020",
+        "day": "Wednesday",
+        "time_in": "18:00",
+        "time_out": "07:00",
+        "hours": "13",
+        "rate": "9.00",
+        "site_type": "2",
+        "highlight": "0",
+        "site_id": "823921",
+        "green": "0",
+        "deleted": "0",
+        "id": "826302",
+        "company_id": "1",
+        "notes_status": "0",
+        "break_status": "",
+        "broke_id": "0",
+        "status": "closed",
+        "check_call_status": "1"
+      },
+      "sites": {
+        "time_in": "18:00",
+        "time_out": "07:00",
+        "hours": "13"
+      },
+      "sites_name": {
+        "site_name": "Erith Park, Arthur Street, DA8 2EU",
+        "client_id": "78",
+        "id": "9253",
+        "post_code": "DA8 2EU",
+        "check_call_status": "0"
+      },
+      "officers": {
+        "contractor": "0",
+        "fname": "ASIF YASINI",
+        "lname": "YASINI"
+      },
+      "contractor": {
+        "name": null,
+        "short_name": null
+      },
+      "clients": {
+        "client_name": "Biosite Systems Ltd"
+      },
+      "types": {
+        "type_name": "DH",
+        "type_id": "2"
+      },
+      "shift_time_detail": {
+        "book_on": "18:00",
+        "book_off": "07:24",
+        "staff_book_on": "17:57",
+        "staff_book_off": "07:24",
+        "status": "0",
+        "officer_status": "0",
+        "book_on_location": "51.4519114,0.2413099",
+        "book_off_location": "51.5207697,0.2726333",
+        "check_call_status": "0"
+      },
+      "check_call_status": {
+        "after_interval": "1"
+      },
+      "check_call": {
+        "t0": "1",
+        "t1": "",
+        "t2": "1",
+        "t3": "1",
+        "t4": "",
+        "t5": "1",
+        "t6": "1",
+        "t7": "",
+        "t8": "",
+        "t9": "",
+        "t10": "",
+        "t11": "",
+        "t12": "",
+        "t13": "",
+        "t14": "",
+        "t15": "",
+        "t16": "",
+        "t17": "",
+        "t18": "",
+        "t19": "",
+        "t20": "1",
+        "t21": "1",
+        "t22": "1",
+        "t23": "1"
+      }
+    },
+    {
+      "DT_RowId": "row_826303",
+      "timesheets": {
+        "oid": "15078",
+        "reg_date": "02-07-2020",
+        "day": "Thursday",
+        "time_in": "18:00",
+        "time_out": "07:00",
+        "hours": "13",
+        "rate": "9.00",
+        "site_type": "2",
+        "highlight": "0",
+        "site_id": "823922",
+        "green": "0",
+        "deleted": "0",
+        "id": "826303",
+        "company_id": "1",
+        "notes_status": "0",
+        "break_status": "",
+        "broke_id": "0",
+        "status": "closed",
+        "check_call_status": "0"
+      },
+      "sites": {
+        "time_in": "18:00",
+        "time_out": "07:00",
+        "hours": "13"
+      },
+      "sites_name": {
+        "site_name": "Erith Park, Arthur Street, DA8 2EU",
+        "client_id": "78",
+        "id": "9253",
+        "post_code": "DA8 2EU",
+        "check_call_status": "0"
+      },
+      "officers": {
+        "contractor": "0",
+        "fname": "ASIF YASINI",
+        "lname": "YASINI"
+      },
+      "contractor": {
+        "name": null,
+        "short_name": null
+      },
+      "clients": {
+        "client_name": "Biosite Systems Ltd"
+      },
+      "types": {
+        "type_name": "DH",
+        "type_id": "2"
+      },
+      "shift_time_detail": {
+        "book_on": "",
+        "book_off": "",
+        "staff_book_on": "",
+        "staff_book_off": "",
+        "status": "0",
+        "officer_status": "0",
+        "book_on_location": "",
+        "book_off_location": "",
+        "check_call_status": "0"
+      },
+      "check_call_status": {
+        "after_interval": null
+      },
+      "check_call": {
+        "t0": "",
+        "t1": "",
+        "t2": "",
+        "t3": "",
+        "t4": "",
+        "t5": "",
+        "t6": "",
+        "t7": "",
+        "t8": "",
+        "t9": "",
+        "t10": "",
+        "t11": "",
+        "t12": "",
+        "t13": "",
+        "t14": "",
+        "t15": "",
+        "t16": "",
+        "t17": "",
+        "t18": "",
+        "t19": "",
+        "t20": "",
+        "t21": "",
+        "t22": "",
+        "t23": ""
+      }
+    },
+    {
+      "DT_RowId": "row_826342",
+      "timesheets": {
+        "oid": "15082",
+        "reg_date": "02-07-2020",
+        "day": "Thursday",
+        "time_in": "01:00",
+        "time_out": "19:00",
+        "hours": "18",
+        "rate": "8.21",
+        "site_type": "2",
+        "highlight": "0",
+        "site_id": "823961",
+        "green": "0",
+        "deleted": "0",
+        "id": "826342",
+        "company_id": "1",
+        "notes_status": "0",
+        "break_status": "",
+        "broke_id": "0",
+        "status": "closed",
+        "check_call_status": "0"
+      },
+      "sites": {
+        "time_in": "07:00",
+        "time_out": "19:00",
+        "hours": "12"
+      },
+      "sites_name": {
+        "site_name": "Chalton Cross Farm, Houghton Road, Chalton, Luton, LU4 4JS",
+        "client_id": "154",
+        "id": "8652",
+        "post_code": " LU4 4JS",
+        "check_call_status": "0"
+      },
+      "officers": {
+        "contractor": "0",
+        "fname": "Mohammad Yasini",
+        "lname": "Yasini"
+      },
+      "contractor": {
+        "name": null,
+        "short_name": null
+      },
+      "clients": {
+        "client_name": "OM METROPOLITAN TOTAL SECURITY LTD (MK9)"
+      },
+      "types": {
+        "type_name": "DH",
+        "type_id": "2"
+      },
+      "shift_time_detail": {
+        "book_on": "01:00",
+        "book_off": "",
+        "staff_book_on": "00:54",
+        "staff_book_off": "",
+        "status": "0",
+        "officer_status": "0",
+        "book_on_location": "51.6835809,-0.051473",
+        "book_off_location": "",
+        "check_call_status": "0"
+      },
+      "check_call_status": {
+        "after_interval": null
+      },
+      "check_call": {
+        "t0": "",
+        "t1": "",
+        "t2": "",
+        "t3": "",
+        "t4": "",
+        "t5": "",
+        "t6": "",
+        "t7": "",
+        "t8": "",
+        "t9": "",
+        "t10": "",
+        "t11": "",
+        "t12": "",
+        "t13": "",
+        "t14": "",
+        "t15": "",
+        "t16": "",
+        "t17": "",
+        "t18": "",
+        "t19": "",
+        "t20": "",
+        "t21": "",
+        "t22": "",
+        "t23": ""
+      }
+    },
+    {
+      "DT_RowId": "row_826373",
+      "timesheets": {
+        "oid": "15082",
+        "reg_date": "02-07-2020",
+        "day": "Thursday",
+        "time_in": "19:00",
+        "time_out": "07:00",
+        "hours": "12",
+        "rate": "8.21",
+        "site_type": "2",
+        "highlight": "0",
+        "site_id": "823992",
+        "green": "0",
+        "deleted": "0",
+        "id": "826373",
+        "company_id": "1",
+        "notes_status": "0",
+        "break_status": "",
+        "broke_id": "0",
+        "status": "closed",
+        "check_call_status": "0"
+      },
+      "sites": {
+        "time_in": "19:00",
+        "time_out": "07:00",
+        "hours": "12"
+      },
+      "sites_name": {
+        "site_name": "Chalton Cross Farm, Houghton Road, Chalton, Luton, LU4 4JS",
+        "client_id": "154",
+        "id": "8652",
+        "post_code": " LU4 4JS",
+        "check_call_status": "0"
+      },
+      "officers": {
+        "contractor": "0",
+        "fname": "Mohammad Yasini",
+        "lname": "Yasini"
+      },
+      "contractor": {
+        "name": null,
+        "short_name": null
+      },
+      "clients": {
+        "client_name": "OM METROPOLITAN TOTAL SECURITY LTD (MK9)"
+      },
+      "types": {
+        "type_name": "DH",
+        "type_id": "2"
+      },
+      "shift_time_detail": {
+        "book_on": "",
+        "book_off": "",
+        "staff_book_on": "",
+        "staff_book_off": "",
+        "status": "0",
+        "officer_status": "0",
+        "book_on_location": "",
+        "book_off_location": "",
+        "check_call_status": "0"
+      },
+      "check_call_status": {
+        "after_interval": null
+      },
+      "check_call": {
+        "t0": "",
+        "t1": "",
+        "t2": "",
+        "t3": "",
+        "t4": "",
+        "t5": "",
+        "t6": "",
+        "t7": "",
+        "t8": "",
+        "t9": "",
+        "t10": "",
+        "t11": "",
+        "t12": "",
+        "t13": "",
+        "t14": "",
+        "t15": "",
+        "t16": "",
+        "t17": "",
+        "t18": "",
+        "t19": "",
+        "t20": "",
+        "t21": "",
+        "t22": "",
+        "t23": ""
+      }
+    },
+    {
+      "DT_RowId": "row_826404",
+      "timesheets": {
+        "oid": "11189",
+        "reg_date": "02-07-2020",
+        "day": "Thursday",
+        "time_in": "17:00",
+        "time_out": "03:00",
+        "hours": "10",
+        "rate": "0.00",
+        "site_type": "2",
+        "highlight": "0",
+        "site_id": "824023",
+        "green": "0",
+        "deleted": "0",
+        "id": "826404",
+        "company_id": "1",
+        "notes_status": "0",
+        "break_status": "",
+        "broke_id": "0",
+        "status": "closed",
+        "check_call_status": "0"
+      },
+      "sites": {
+        "time_in": "17:00",
+        "time_out": "01:00",
+        "hours": "8"
+      },
+      "sites_name": {
+        "site_name": "Knights Park; Longfield Road; Tunbridge Wells TN2 3U",
+        "client_id": "10",
+        "id": "16799",
+        "post_code": "TN2 3U",
+        "check_call_status": "0"
+      },
+      "officers": {
+        "contractor": "0",
+        "fname": "AMJAD PERVAIZ",
+        "lname": "PERVAIZ"
+      },
+      "contractor": {
+        "name": null,
+        "short_name": null
+      },
+      "clients": {
+        "client_name": "Tragopan Security Solutions Ltd."
+      },
+      "types": {
+        "type_name": "DH",
+        "type_id": "2"
+      },
+      "shift_time_detail": {
+        "book_on": "",
+        "book_off": "",
+        "staff_book_on": "",
+        "staff_book_off": "",
+        "status": "0",
+        "officer_status": "0",
+        "book_on_location": "",
+        "book_off_location": "",
+        "check_call_status": "0"
+      },
+      "check_call_status": {
+        "after_interval": null
+      },
+      "check_call": {
+        "t0": "",
+        "t1": "",
+        "t2": "",
+        "t3": "",
+        "t4": "",
+        "t5": "",
+        "t6": "",
+        "t7": "",
+        "t8": "",
+        "t9": "",
+        "t10": "",
+        "t11": "",
+        "t12": "",
+        "t13": "",
+        "t14": "",
+        "t15": "",
+        "t16": "",
+        "t17": "",
+        "t18": "",
+        "t19": "",
+        "t20": "",
+        "t21": "",
+        "t22": "",
+        "t23": ""
+      }
+    },
+    {
+      "DT_RowId": "row_826435",
+      "timesheets": {
+        "oid": "9",
+        "reg_date": "02-07-2020",
+        "day": "Thursday",
+        "time_in": "07:00",
+        "time_out": "19:00",
+        "hours": "12",
+        "rate": "9.00",
+        "site_type": "2",
+        "highlight": "0",
+        "site_id": "824054",
+        "green": "0",
+        "deleted": "0",
+        "id": "826435",
+        "company_id": "1",
+        "notes_status": "0",
+        "break_status": "",
+        "broke_id": "0",
+        "status": "closed",
+        "check_call_status": "0"
+      },
+      "sites": {
+        "time_in": "07:00",
+        "time_out": "19:00",
+        "hours": "12"
+      },
+      "sites_name": {
+        "site_name": "Brethrens Meeting Hall, 265 The Ridgeway, N. Harrow, HA2 7DA",
+        "client_id": "154",
+        "id": "20786",
+        "post_code": "HA2 7DA",
+        "check_call_status": "0"
+      },
+      "officers": {
+        "contractor": "0",
+        "fname": "ABDUL KHALIQ",
+        "lname": "KHALIQ"
+      },
+      "contractor": {
+        "name": null,
+        "short_name": null
+      },
+      "clients": {
+        "client_name": "OM METROPOLITAN TOTAL SECURITY LTD (MK9)"
+      },
+      "types": {
+        "type_name": "DH",
+        "type_id": "2"
+      },
+      "shift_time_detail": {
+        "book_on": "07:00",
+        "book_off": "",
+        "staff_book_on": "",
+        "staff_book_off": "",
+        "status": "0",
+        "officer_status": "0",
+        "book_on_location": "",
+        "book_off_location": "",
+        "check_call_status": "0"
+      },
+      "check_call_status": {
+        "after_interval": null
+      },
+      "check_call": {
+        "t0": "",
+        "t1": "",
+        "t2": "",
+        "t3": "",
+        "t4": "",
+        "t5": "",
+        "t6": "",
+        "t7": "",
+        "t8": "",
+        "t9": "",
+        "t10": "",
+        "t11": "",
+        "t12": "",
+        "t13": "",
+        "t14": "",
+        "t15": "",
+        "t16": "",
+        "t17": "",
+        "t18": "",
+        "t19": "",
+        "t20": "",
+        "t21": "",
+        "t22": "",
+        "t23": ""
+      }
+    },
+    {
+      "DT_RowId": "row_826465",
+      "timesheets": {
+        "oid": "9",
+        "reg_date": "01-07-2020",
+        "day": "Wednesday",
+        "time_in": "16:00",
+        "time_out": "07:00",
+        "hours": "15",
+        "rate": "9.00",
+        "site_type": "2",
+        "highlight": "0",
+        "site_id": "824084",
+        "green": "0",
+        "deleted": "0",
+        "id": "826465",
+        "company_id": "1",
+        "notes_status": "0",
+        "break_status": "",
+        "broke_id": "0",
+        "status": "closed",
+        "check_call_status": "0"
+      },
+      "sites": {
+        "time_in": "19:00",
+        "time_out": "07:00",
+        "hours": "12"
+      },
+      "sites_name": {
+        "site_name": "Brethrens Meeting Hall, 265 The Ridgeway, N. Harrow, HA2 7DA",
+        "client_id": "154",
+        "id": "20786",
+        "post_code": "HA2 7DA",
+        "check_call_status": "0"
+      },
+      "officers": {
+        "contractor": "0",
+        "fname": "ABDUL KHALIQ",
+        "lname": "KHALIQ"
+      },
+      "contractor": {
+        "name": null,
+        "short_name": null
+      },
+      "clients": {
+        "client_name": "OM METROPOLITAN TOTAL SECURITY LTD (MK9)"
+      },
+      "types": {
+        "type_name": "DH",
+        "type_id": "2"
+      },
+      "shift_time_detail": {
+        "book_on": "16:00",
+        "book_off": "07:04",
+        "staff_book_on": "",
+        "staff_book_off": "07:04",
+        "status": "0",
+        "officer_status": "0",
+        "book_on_location": "",
+        "book_off_location": "51.57801869899281,-0.3604395792731772",
+        "check_call_status": "0"
+      },
+      "check_call_status": {
+        "after_interval": null
+      },
+      "check_call": {
+        "t0": "",
+        "t1": "",
+        "t2": "",
+        "t3": "",
+        "t4": "",
+        "t5": "",
+        "t6": "",
+        "t7": "",
+        "t8": "",
+        "t9": "",
+        "t10": "",
+        "t11": "",
+        "t12": "",
+        "t13": "",
+        "t14": "",
+        "t15": "",
+        "t16": "",
+        "t17": "",
+        "t18": "",
+        "t19": "",
+        "t20": "",
+        "t21": "",
+        "t22": "",
+        "t23": ""
+      }
+    },
+    {
+      "DT_RowId": "row_826466",
+      "timesheets": {
+        "oid": "9",
+        "reg_date": "02-07-2020",
+        "day": "Thursday",
+        "time_in": "19:00",
+        "time_out": "07:00",
+        "hours": "12",
+        "rate": "9.00",
+        "site_type": "2",
+        "highlight": "0",
+        "site_id": "824085",
+        "green": "0",
+        "deleted": "0",
+        "id": "826466",
+        "company_id": "1",
+        "notes_status": "0",
+        "break_status": "",
+        "broke_id": "0",
+        "status": "closed",
+        "check_call_status": "0"
+      },
+      "sites": {
+        "time_in": "19:00",
+        "time_out": "07:00",
+        "hours": "12"
+      },
+      "sites_name": {
+        "site_name": "Brethrens Meeting Hall, 265 The Ridgeway, N. Harrow, HA2 7DA",
+        "client_id": "154",
+        "id": "20786",
+        "post_code": "HA2 7DA",
+        "check_call_status": "0"
+      },
+      "officers": {
+        "contractor": "0",
+        "fname": "ABDUL KHALIQ",
+        "lname": "KHALIQ"
+      },
+      "contractor": {
+        "name": null,
+        "short_name": null
+      },
+      "clients": {
+        "client_name": "OM METROPOLITAN TOTAL SECURITY LTD (MK9)"
+      },
+      "types": {
+        "type_name": "DH",
+        "type_id": "2"
+      },
+      "shift_time_detail": {
+        "book_on": "",
+        "book_off": "",
+        "staff_book_on": "",
+        "staff_book_off": "",
+        "status": "0",
+        "officer_status": "0",
+        "book_on_location": "",
+        "book_off_location": "",
+        "check_call_status": "0"
+      },
+      "check_call_status": {
+        "after_interval": null
+      },
+      "check_call": {
+        "t0": "",
+        "t1": "",
+        "t2": "",
+        "t3": "",
+        "t4": "",
+        "t5": "",
+        "t6": "",
+        "t7": "",
+        "t8": "",
+        "t9": "",
+        "t10": "",
+        "t11": "",
+        "t12": "",
+        "t13": "",
+        "t14": "",
+        "t15": "",
+        "t16": "",
+        "t17": "",
+        "t18": "",
+        "t19": "",
+        "t20": "",
+        "t21": "",
+        "t22": "",
+        "t23": ""
+      }
+    },
+    {
+      "DT_RowId": "row_826496",
+      "timesheets": {
+        "oid": "433",
+        "reg_date": "02-07-2020",
+        "day": "Thursday",
+        "time_in": "16:30",
+        "time_out": "08:30",
+        "hours": "16",
+        "rate": "8.50",
+        "site_type": "2",
+        "highlight": "0",
+        "site_id": "824115",
+        "green": "0",
+        "deleted": "0",
+        "id": "826496",
+        "company_id": "1",
+        "notes_status": "0",
+        "break_status": "",
+        "broke_id": "0",
+        "status": "closed",
+        "check_call_status": "0"
+      },
+      "sites": {
+        "time_in": "16:30",
+        "time_out": "08:30",
+        "hours": "16"
+      },
+      "sites_name": {
+        "site_name": "54 Stilwell Close, Yateley, GU46 6XH",
+        "client_id": "78",
+        "id": "18468",
+        "post_code": " GU46 6XH",
+        "check_call_status": "0"
+      },
+      "officers": {
+        "contractor": "0",
+        "fname": "FAWAD MASUD ",
+        "lname": ""
+      },
+      "contractor": {
+        "name": null,
+        "short_name": null
+      },
+      "clients": {
+        "client_name": "Biosite Systems Ltd"
+      },
+      "types": {
+        "type_name": "DH",
+        "type_id": "2"
+      },
+      "shift_time_detail": {
+        "book_on": "",
+        "book_off": "",
+        "staff_book_on": "",
+        "staff_book_off": "",
+        "status": "0",
+        "officer_status": "0",
+        "book_on_location": "",
+        "book_off_location": "",
+        "check_call_status": "0"
+      },
+      "check_call_status": {
+        "after_interval": null
+      },
+      "check_call": {
+        "t0": "",
+        "t1": "",
+        "t2": "",
+        "t3": "",
+        "t4": "",
+        "t5": "",
+        "t6": "",
+        "t7": "",
+        "t8": "",
+        "t9": "",
+        "t10": "",
+        "t11": "",
+        "t12": "",
+        "t13": "",
+        "t14": "",
+        "t15": "",
+        "t16": "",
+        "t17": "",
+        "t18": "",
+        "t19": "",
+        "t20": "",
+        "t21": "",
+        "t22": "",
+        "t23": ""
+      }
+    },
+    {
+      "DT_RowId": "row_826521",
+      "timesheets": {
+        "oid": "2026",
+        "reg_date": "01-07-2020",
+        "day": "Wednesday",
+        "time_in": "18:30",
+        "time_out": "06:30",
+        "hours": "12",
+        "rate": "8.21",
+        "site_type": "2",
+        "highlight": "0",
+        "site_id": "824140",
+        "green": "0",
+        "deleted": "0",
+        "id": "826521",
+        "company_id": "1",
+        "notes_status": "0",
+        "break_status": "",
+        "broke_id": "0",
+        "status": "closed",
+        "check_call_status": "0"
+      },
+      "sites": {
+        "time_in": "18:30",
+        "time_out": "06:30",
+        "hours": "12"
+      },
+      "sites_name": {
+        "site_name": "Gascoigne Estate, St Margarets, Barking, London, IG11 7JL",
+        "client_id": "78",
+        "id": "11478",
+        "post_code": "IG11 7JL",
+        "check_call_status": "0"
+      },
+      "officers": {
+        "contractor": "0",
+        "fname": "Syed Noor Ahmad Shah",
+        "lname": " Shah"
+      },
+      "contractor": {
+        "name": null,
+        "short_name": null
+      },
+      "clients": {
+        "client_name": "Biosite Systems Ltd"
+      },
+      "types": {
+        "type_name": "DH",
+        "type_id": "2"
+      },
+      "shift_time_detail": {
+        "book_on": "18:30",
+        "book_off": "06:45",
+        "staff_book_on": "18:35",
+        "staff_book_off": "06:45",
+        "status": "0",
+        "officer_status": "0",
+        "book_on_location": "51.5312058,0.0773344",
+        "book_off_location": "51.5276684,0.1802404",
+        "check_call_status": "0"
+      },
+      "check_call_status": {
+        "after_interval": null
+      },
+      "check_call": {
+        "t0": "",
+        "t1": "",
+        "t2": "",
+        "t3": "",
+        "t4": "",
+        "t5": "",
+        "t6": "",
+        "t7": "",
+        "t8": "",
+        "t9": "",
+        "t10": "",
+        "t11": "",
+        "t12": "",
+        "t13": "",
+        "t14": "",
+        "t15": "",
+        "t16": "",
+        "t17": "",
+        "t18": "",
+        "t19": "",
+        "t20": "",
+        "t21": "",
+        "t22": "",
+        "t23": ""
+      }
+    },
+    {
+      "DT_RowId": "row_826522",
+      "timesheets": {
+        "oid": "2026",
+        "reg_date": "02-07-2020",
+        "day": "Thursday",
+        "time_in": "18:30",
+        "time_out": "06:30",
+        "hours": "12",
+        "rate": "8.21",
+        "site_type": "2",
+        "highlight": "0",
+        "site_id": "824141",
+        "green": "0",
+        "deleted": "0",
+        "id": "826522",
+        "company_id": "1",
+        "notes_status": "0",
+        "break_status": "",
+        "broke_id": "0",
+        "status": "closed",
+        "check_call_status": "0"
+      },
+      "sites": {
+        "time_in": "18:30",
+        "time_out": "06:30",
+        "hours": "12"
+      },
+      "sites_name": {
+        "site_name": "Gascoigne Estate, St Margarets, Barking, London, IG11 7JL",
+        "client_id": "78",
+        "id": "11478",
+        "post_code": "IG11 7JL",
+        "check_call_status": "0"
+      },
+      "officers": {
+        "contractor": "0",
+        "fname": "Syed Noor Ahmad Shah",
+        "lname": " Shah"
+      },
+      "contractor": {
+        "name": null,
+        "short_name": null
+      },
+      "clients": {
+        "client_name": "Biosite Systems Ltd"
+      },
+      "types": {
+        "type_name": "DH",
+        "type_id": "2"
+      },
+      "shift_time_detail": {
+        "book_on": "",
+        "book_off": "",
+        "staff_book_on": "",
+        "staff_book_off": "",
+        "status": "0",
+        "officer_status": "0",
+        "book_on_location": "",
+        "book_off_location": "",
+        "check_call_status": "0"
+      },
+      "check_call_status": {
+        "after_interval": null
+      },
+      "check_call": {
+        "t0": "",
+        "t1": "",
+        "t2": "",
+        "t3": "",
+        "t4": "",
+        "t5": "",
+        "t6": "",
+        "t7": "",
+        "t8": "",
+        "t9": "",
+        "t10": "",
+        "t11": "",
+        "t12": "",
+        "t13": "",
+        "t14": "",
+        "t15": "",
+        "t16": "",
+        "t17": "",
+        "t18": "",
+        "t19": "",
+        "t20": "",
+        "t21": "",
+        "t22": "",
+        "t23": ""
+      }
+    },
+    {
+      "DT_RowId": "row_826810",
+      "timesheets": {
+        "oid": "11637",
+        "reg_date": "02-07-2020",
+        "day": "Thursday",
+        "time_in": "16:00",
+        "time_out": "07:00",
+        "hours": "15",
+        "rate": "8.00",
+        "site_type": "1",
+        "highlight": "0",
+        "site_id": "824429",
+        "green": "0",
+        "deleted": "0",
+        "id": "826810",
+        "company_id": "1",
+        "notes_status": "0",
+        "break_status": "",
+        "broke_id": "0",
+        "status": "closed",
+        "check_call_status": "1"
+      },
+      "sites": {
+        "time_in": "16:00",
+        "time_out": "07:00",
+        "hours": "15"
+      },
+      "sites_name": {
+        "site_name": "Bellway Homes - St. Georges Park, Suttons Lane, Havering, Hornchurch, RM12 6RS",
+        "client_id": "157",
+        "id": "9707",
+        "post_code": "RM12 6RS",
+        "check_call_status": "1"
+      },
+      "officers": {
+        "contractor": "0",
+        "fname": "IMRAN QURESHI",
+        "lname": "QURESHI"
+      },
+      "contractor": {
+        "name": null,
+        "short_name": null
+      },
+      "clients": {
+        "client_name": "Security And Training Services Ltd"
+      },
+      "types": {
+        "type_name": "SG",
+        "type_id": "1"
+      },
+      "shift_time_detail": {
+        "book_on": "",
+        "book_off": "",
+        "staff_book_on": "",
+        "staff_book_off": "",
+        "status": "0",
+        "officer_status": "0",
+        "book_on_location": "",
+        "book_off_location": "",
+        "check_call_status": "0"
+      },
+      "check_call_status": {
+        "after_interval": ""
+      },
+      "check_call": {
+        "t0": "",
+        "t1": "",
+        "t2": "",
+        "t3": "",
+        "t4": "",
+        "t5": "",
+        "t6": "",
+        "t7": "",
+        "t8": "",
+        "t9": "",
+        "t10": "",
+        "t11": "",
+        "t12": "",
+        "t13": "",
+        "t14": "",
+        "t15": "",
+        "t16": "",
+        "t17": "",
+        "t18": "",
+        "t19": "",
+        "t20": "",
+        "t21": "",
+        "t22": "",
+        "t23": ""
+      }
+    },
+    {
+      "DT_RowId": "row_826815",
+      "timesheets": {
+        "oid": "14877",
+        "reg_date": "02-07-2020",
+        "day": "Thursday",
+        "time_in": "20:00",
+        "time_out": "06:00",
+        "hours": "10",
+        "rate": "8.21",
+        "site_type": "1",
+        "highlight": "0",
+        "site_id": "824434",
+        "green": "0",
+        "deleted": "0",
+        "id": "826815",
+        "company_id": "1",
+        "notes_status": "0",
+        "break_status": "",
+        "broke_id": "0",
+        "status": "closed",
+        "check_call_status": "0"
+      },
+      "sites": {
+        "time_in": "20:00",
+        "time_out": "06:00",
+        "hours": "10"
+      },
+      "sites_name": {
+        "site_name": "SOUTH BERMONDSEY",
+        "client_id": "157",
+        "id": "20802",
+        "post_code": "SE16 3LD",
+        "check_call_status": "0"
+      },
+      "officers": {
+        "contractor": "0",
+        "fname": "ABDIWALI ALI",
+        "lname": "ALI"
+      },
+      "contractor": {
+        "name": null,
+        "short_name": null
+      },
+      "clients": {
+        "client_name": "Security And Training Services Ltd"
+      },
+      "types": {
+        "type_name": "SG",
+        "type_id": "1"
+      },
+      "shift_time_detail": {
+        "book_on": "",
+        "book_off": "",
+        "staff_book_on": "",
+        "staff_book_off": "",
+        "status": "0",
+        "officer_status": "0",
+        "book_on_location": "",
+        "book_off_location": "",
+        "check_call_status": "0"
+      },
+      "check_call_status": {
+        "after_interval": null
+      },
+      "check_call": {
+        "t0": "",
+        "t1": "",
+        "t2": "",
+        "t3": "",
+        "t4": "",
+        "t5": "",
+        "t6": "",
+        "t7": "",
+        "t8": "",
+        "t9": "",
+        "t10": "",
+        "t11": "",
+        "t12": "",
+        "t13": "",
+        "t14": "",
+        "t15": "",
+        "t16": "",
+        "t17": "",
+        "t18": "",
+        "t19": "",
+        "t20": "",
+        "t21": "",
+        "t22": "",
+        "t23": ""
+      }
+    },
+    {
+      "DT_RowId": "row_826823",
+      "timesheets": {
+        "oid": "8456",
+        "reg_date": "02-07-2020",
+        "day": "Thursday",
+        "time_in": "08:00",
+        "time_out": "18:00",
+        "hours": "10",
+        "rate": "0.00",
+        "site_type": "1",
+        "highlight": "0",
+        "site_id": "824442",
+        "green": "0",
+        "deleted": "0",
+        "id": "826823",
+        "company_id": "1",
+        "notes_status": "0",
+        "break_status": "",
+        "broke_id": "0",
+        "status": "closed",
+        "check_call_status": "0"
+      },
+      "sites": {
+        "time_in": "08:00",
+        "time_out": "18:00",
+        "hours": "10"
+      },
+      "sites_name": {
+        "site_name": "GATE HOUSE - 1 ST Johns Square London, EC1M 4DH",
+        "client_id": "717",
+        "id": "19159",
+        "post_code": "EC1M 4DH",
+        "check_call_status": "0"
+      },
+      "officers": {
+        "contractor": "0",
+        "fname": "Rejwan Sulaiman",
+        "lname": "Sulaiman"
+      },
+      "contractor": {
+        "name": null,
+        "short_name": null
+      },
+      "clients": {
+        "client_name": "OCS Group UK Limited"
+      },
+      "types": {
+        "type_name": "SG",
+        "type_id": "1"
+      },
+      "shift_time_detail": {
+        "book_on": "08:00",
+        "book_off": "",
+        "staff_book_on": "07:46",
+        "staff_book_off": "",
+        "status": "0",
+        "officer_status": "0",
+        "book_on_location": "51.526442,0.1117162",
+        "book_off_location": "",
+        "check_call_status": "0"
+      },
+      "check_call_status": {
+        "after_interval": null
+      },
+      "check_call": {
+        "t0": "",
+        "t1": "",
+        "t2": "",
+        "t3": "",
+        "t4": "",
+        "t5": "",
+        "t6": "",
+        "t7": "",
+        "t8": "",
+        "t9": "",
+        "t10": "",
+        "t11": "",
+        "t12": "",
+        "t13": "",
+        "t14": "",
+        "t15": "",
+        "t16": "",
+        "t17": "",
+        "t18": "",
+        "t19": "",
+        "t20": "",
+        "t21": "",
+        "t22": "",
+        "t23": ""
+      }
+    },
+    {
+      "DT_RowId": "row_826877",
+      "timesheets": {
+        "oid": "17007",
+        "reg_date": "02-07-2020",
+        "day": "Thursday",
+        "time_in": "19:00",
+        "time_out": "07:00",
+        "hours": "12",
+        "rate": "0.00",
+        "site_type": "1",
+        "highlight": "0",
+        "site_id": "824496",
+        "green": "0",
+        "deleted": "0",
+        "id": "826877",
+        "company_id": "1",
+        "notes_status": "0",
+        "break_status": "",
+        "broke_id": "0",
+        "status": "closed",
+        "check_call_status": "1"
+      },
+      "sites": {
+        "time_in": "19:00",
+        "time_out": "07:00",
+        "hours": "12"
+      },
+      "sites_name": {
+        "site_name": "Queen Victoria Road, BS6 6US",
+        "client_id": "197",
+        "id": "1440",
+        "post_code": "BS6 6US",
+        "check_call_status": "1"
+      },
+      "officers": {
+        "contractor": "162",
+        "fname": "IHAB SAID (Intelliguard)",
+        "lname": "SAID"
+      },
+      "contractor": {
+        "name": "Intelliguard",
+        "short_name": "Intelliguard"
+      },
+      "clients": {
+        "client_name": "DFG - Anchor Construction Logistics Ltd"
+      },
+      "types": {
+        "type_name": "SG",
+        "type_id": "1"
+      },
+      "shift_time_detail": {
+        "book_on": "",
+        "book_off": "",
+        "staff_book_on": "",
+        "staff_book_off": "",
+        "status": "0",
+        "officer_status": "0",
+        "book_on_location": "",
+        "book_off_location": "",
+        "check_call_status": "0"
+      },
+      "check_call_status": {
+        "after_interval": "1"
+      },
+      "check_call": {
+        "t0": "",
+        "t1": "",
+        "t2": "",
+        "t3": "",
+        "t4": "",
+        "t5": "",
+        "t6": "",
+        "t7": "",
+        "t8": "",
+        "t9": "",
+        "t10": "",
+        "t11": "",
+        "t12": "",
+        "t13": "",
+        "t14": "",
+        "t15": "",
+        "t16": "",
+        "t17": "",
+        "t18": "",
+        "t19": "",
+        "t20": "",
+        "t21": "",
+        "t22": "",
+        "t23": ""
+      }
+    },
+    {
+      "DT_RowId": "row_826907",
+      "timesheets": {
+        "oid": "17007",
+        "reg_date": "01-07-2020",
+        "day": "Wednesday",
+        "time_in": "19:00",
+        "time_out": "07:00",
+        "hours": "12",
+        "rate": "0.00",
+        "site_type": "1",
+        "highlight": "0",
+        "site_id": "824526",
+        "green": "0",
+        "deleted": "0",
+        "id": "826907",
+        "company_id": "1",
+        "notes_status": "0",
+        "break_status": "",
+        "broke_id": "0",
+        "status": "closed",
+        "check_call_status": "1"
+      },
+      "sites": {
+        "time_in": "19:00",
+        "time_out": "07:00",
+        "hours": "12"
+      },
+      "sites_name": {
+        "site_name": "Queen Victoria Road, BS6 6US",
+        "client_id": "197",
+        "id": "1440",
+        "post_code": "BS6 6US",
+        "check_call_status": "1"
+      },
+      "officers": {
+        "contractor": "162",
+        "fname": "IHAB SAID (Intelliguard)",
+        "lname": "SAID"
+      },
+      "contractor": {
+        "name": "Intelliguard",
+        "short_name": "Intelliguard"
+      },
+      "clients": {
+        "client_name": "DFG - Anchor Construction Logistics Ltd"
+      },
+      "types": {
+        "type_name": "SG",
+        "type_id": "1"
+      },
+      "shift_time_detail": {
+        "book_on": "19:00",
+        "book_off": "07:05",
+        "staff_book_on": "19:02",
+        "staff_book_off": "07:05",
+        "status": "0",
+        "officer_status": "0",
+        "book_on_location": "51.47136325547207,-2.61478629517364",
+        "book_off_location": "51.4359847569995,-2.584370262772618",
+        "check_call_status": "0"
+      },
+      "check_call_status": {
+        "after_interval": "1"
+      },
+      "check_call": {
+        "t0": "1",
+        "t1": "1",
+        "t2": "1",
+        "t3": "1",
+        "t4": "1",
+        "t5": "1",
+        "t6": "1",
+        "t7": "",
+        "t8": "",
+        "t9": "",
+        "t10": "",
+        "t11": "",
+        "t12": "",
+        "t13": "",
+        "t14": "",
+        "t15": "",
+        "t16": "",
+        "t17": "",
+        "t18": "",
+        "t19": "",
+        "t20": "1",
+        "t21": "1",
+        "t22": "1",
+        "t23": "1"
+      }
+    },
+    {
+      "DT_RowId": "row_826908",
+      "timesheets": {
+        "oid": "16979",
+        "reg_date": "02-07-2020",
+        "day": "Thursday",
+        "time_in": "19:00",
+        "time_out": "07:00",
+        "hours": "12",
+        "rate": "0.00",
+        "site_type": "1",
+        "highlight": "0",
+        "site_id": "824527",
+        "green": "0",
+        "deleted": "0",
+        "id": "826908",
+        "company_id": "1",
+        "notes_status": "0",
+        "break_status": "",
+        "broke_id": "0",
+        "status": "closed",
+        "check_call_status": "1"
+      },
+      "sites": {
+        "time_in": "19:00",
+        "time_out": "07:00",
+        "hours": "12"
+      },
+      "sites_name": {
+        "site_name": "Queen Victoria Road, BS6 6US",
+        "client_id": "197",
+        "id": "1440",
+        "post_code": "BS6 6US",
+        "check_call_status": "1"
+      },
+      "officers": {
+        "contractor": "162",
+        "fname": "Mohamed Amin (Intelliguard)",
+        "lname": "Amin"
+      },
+      "contractor": {
+        "name": "Intelliguard",
+        "short_name": "Intelliguard"
+      },
+      "clients": {
+        "client_name": "DFG - Anchor Construction Logistics Ltd"
+      },
+      "types": {
+        "type_name": "SG",
+        "type_id": "1"
+      },
+      "shift_time_detail": {
+        "book_on": "",
+        "book_off": "",
+        "staff_book_on": "",
+        "staff_book_off": "",
+        "status": "0",
+        "officer_status": "0",
+        "book_on_location": "",
+        "book_off_location": "",
+        "check_call_status": "0"
+      },
+      "check_call_status": {
+        "after_interval": "1"
+      },
+      "check_call": {
+        "t0": "",
+        "t1": "",
+        "t2": "",
+        "t3": "",
+        "t4": "",
+        "t5": "",
+        "t6": "",
+        "t7": "",
+        "t8": "",
+        "t9": "",
+        "t10": "",
+        "t11": "",
+        "t12": "",
+        "t13": "",
+        "t14": "",
+        "t15": "",
+        "t16": "",
+        "t17": "",
+        "t18": "",
+        "t19": "",
+        "t20": "",
+        "t21": "",
+        "t22": "",
+        "t23": ""
+      }
+    },
+    {
+      "DT_RowId": "row_826938",
+      "timesheets": {
+        "oid": "17548",
+        "reg_date": "01-07-2020",
+        "day": "Wednesday",
+        "time_in": "19:00",
+        "time_out": "07:00",
+        "hours": "12",
+        "rate": "0.00",
+        "site_type": "1",
+        "highlight": "0",
+        "site_id": "824557",
+        "green": "0",
+        "deleted": "0",
+        "id": "826938",
+        "company_id": "1",
+        "notes_status": "0",
+        "break_status": "",
+        "broke_id": "0",
+        "status": "closed",
+        "check_call_status": "1"
+      },
+      "sites": {
+        "time_in": "19:00",
+        "time_out": "07:00",
+        "hours": "12"
+      },
+      "sites_name": {
+        "site_name": "Queen Victoria Road, BS6 6US",
+        "client_id": "197",
+        "id": "1440",
+        "post_code": "BS6 6US",
+        "check_call_status": "1"
+      },
+      "officers": {
+        "contractor": "162",
+        "fname": "AIUB MACALIN (Intelliguard)",
+        "lname": "MACALIN"
+      },
+      "contractor": {
+        "name": "Intelliguard",
+        "short_name": "Intelliguard"
+      },
+      "clients": {
+        "client_name": "DFG - Anchor Construction Logistics Ltd"
+      },
+      "types": {
+        "type_name": "SG",
+        "type_id": "1"
+      },
+      "shift_time_detail": {
+        "book_on": "19:15",
+        "book_off": "",
+        "staff_book_on": "19:11",
+        "staff_book_off": "",
+        "status": "0",
+        "officer_status": "0",
+        "book_on_location": "51.47133815758285,-2.614489440602116",
+        "book_off_location": "",
+        "check_call_status": "0"
+      },
+      "check_call_status": {
+        "after_interval": "1"
+      },
+      "check_call": {
+        "t0": "1",
+        "t1": "1",
+        "t2": "1",
+        "t3": "1",
+        "t4": "1",
+        "t5": "1",
+        "t6": "1",
+        "t7": "",
+        "t8": "",
+        "t9": "",
+        "t10": "",
+        "t11": "",
+        "t12": "",
+        "t13": "",
+        "t14": "",
+        "t15": "",
+        "t16": "",
+        "t17": "",
+        "t18": "",
+        "t19": "",
+        "t20": "1",
+        "t21": "1",
+        "t22": "1",
+        "t23": "1"
+      }
+    },
+    {
+      "DT_RowId": "row_826939",
+      "timesheets": {
+        "oid": "17308",
+        "reg_date": "02-07-2020",
+        "day": "Thursday",
+        "time_in": "19:00",
+        "time_out": "07:00",
+        "hours": "12",
+        "rate": "0.00",
+        "site_type": "1",
+        "highlight": "0",
+        "site_id": "824558",
+        "green": "0",
+        "deleted": "0",
+        "id": "826939",
+        "company_id": "1",
+        "notes_status": "0",
+        "break_status": "",
+        "broke_id": "0",
+        "status": "closed",
+        "check_call_status": "1"
+      },
+      "sites": {
+        "time_in": "19:00",
+        "time_out": "07:00",
+        "hours": "12"
+      },
+      "sites_name": {
+        "site_name": "Queen Victoria Road, BS6 6US",
+        "client_id": "197",
+        "id": "1440",
+        "post_code": "BS6 6US",
+        "check_call_status": "1"
+      },
+      "officers": {
+        "contractor": "162",
+        "fname": "MUKHTAR HASAN (Intelliguard)",
+        "lname": "HASAN"
+      },
+      "contractor": {
+        "name": "Intelliguard",
+        "short_name": "Intelliguard"
+      },
+      "clients": {
+        "client_name": "DFG - Anchor Construction Logistics Ltd"
+      },
+      "types": {
+        "type_name": "SG",
+        "type_id": "1"
+      },
+      "shift_time_detail": {
+        "book_on": "",
+        "book_off": "",
+        "staff_book_on": "",
+        "staff_book_off": "",
+        "status": "0",
+        "officer_status": "0",
+        "book_on_location": "",
+        "book_off_location": "",
+        "check_call_status": "0"
+      },
+      "check_call_status": {
+        "after_interval": "1"
+      },
+      "check_call": {
+        "t0": "",
+        "t1": "",
+        "t2": "",
+        "t3": "",
+        "t4": "",
+        "t5": "",
+        "t6": "",
+        "t7": "",
+        "t8": "",
+        "t9": "",
+        "t10": "",
+        "t11": "",
+        "t12": "",
+        "t13": "",
+        "t14": "",
+        "t15": "",
+        "t16": "",
+        "t17": "",
+        "t18": "",
+        "t19": "",
+        "t20": "",
+        "t21": "",
+        "t22": "",
+        "t23": ""
+      }
+    },
+    {
+      "DT_RowId": "row_826970",
+      "timesheets": {
+        "oid": "8550",
+        "reg_date": "02-07-2020",
+        "day": "Thursday",
+        "time_in": "08:00",
+        "time_out": "18:00",
+        "hours": "10",
+        "rate": "0.00",
+        "site_type": "1",
+        "highlight": "0",
+        "site_id": "824589",
+        "green": "0",
+        "deleted": "0",
+        "id": "826970",
+        "company_id": "1",
+        "notes_status": "0",
+        "break_status": "",
+        "broke_id": "0",
+        "status": "closed",
+        "check_call_status": "0"
+      },
+      "sites": {
+        "time_in": "08:00",
+        "time_out": "18:00",
+        "hours": "10"
+      },
+      "sites_name": {
+        "site_name": "40 Clarendon Road, Watford WD17 1JJ",
+        "client_id": "3",
+        "id": "15674",
+        "post_code": "",
+        "check_call_status": "0"
+      },
+      "officers": {
+        "contractor": "0",
+        "fname": "MUHAMMAD UMER",
+        "lname": "UMER"
+      },
+      "contractor": {
+        "name": null,
+        "short_name": null
+      },
+      "clients": {
+        "client_name": "SMART SEC"
+      },
+      "types": {
+        "type_name": "SG",
+        "type_id": "1"
+      },
+      "shift_time_detail": {
+        "book_on": "08:00",
+        "book_off": "",
+        "staff_book_on": "",
+        "staff_book_off": "",
+        "status": "0",
+        "officer_status": "0",
+        "book_on_location": "",
+        "book_off_location": "",
+        "check_call_status": "0"
+      },
+      "check_call_status": {
+        "after_interval": null
+      },
+      "check_call": {
+        "t0": "",
+        "t1": "",
+        "t2": "",
+        "t3": "",
+        "t4": "",
+        "t5": "",
+        "t6": "",
+        "t7": "",
+        "t8": "",
+        "t9": "",
+        "t10": "",
+        "t11": "",
+        "t12": "",
+        "t13": "",
+        "t14": "",
+        "t15": "",
+        "t16": "",
+        "t17": "",
+        "t18": "",
+        "t19": "",
+        "t20": "",
+        "t21": "",
+        "t22": "",
+        "t23": ""
+      }
+    },
+    {
+      "DT_RowId": "row_827000",
+      "timesheets": {
+        "oid": "15397",
+        "reg_date": "01-07-2020",
+        "day": "Wednesday",
+        "time_in": "18:00",
+        "time_out": "07:00",
+        "hours": "13",
+        "rate": "0.00",
+        "site_type": "1",
+        "highlight": "0",
+        "site_id": "824619",
+        "green": "0",
+        "deleted": "0",
+        "id": "827000",
+        "company_id": "1",
+        "notes_status": "0",
+        "break_status": "",
+        "broke_id": "0",
+        "status": "closed",
+        "check_call_status": "1"
+      },
+      "sites": {
+        "time_in": "17:00",
+        "time_out": "07:00",
+        "hours": "14"
+      },
+      "sites_name": {
+        "site_name": "The Green, Dog Kennel Lane, Shirley, Solihull, B90 4JG",
+        "client_id": "863",
+        "id": "19122",
+        "post_code": "B90 4JG",
+        "check_call_status": "0"
+      },
+      "officers": {
+        "contractor": "162",
+        "fname": "HUSSNAIN AHMAD (Intelliguard)",
+        "lname": "AHMAD"
+      },
+      "contractor": {
+        "name": "Intelliguard",
+        "short_name": "Intelliguard"
+      },
+      "clients": {
+        "client_name": "McGoff Construction Ltd"
+      },
+      "types": {
+        "type_name": "SG",
+        "type_id": "1"
+      },
+      "shift_time_detail": {
+        "book_on": "18:00",
+        "book_off": "07:28",
+        "staff_book_on": "",
+        "staff_book_off": "07:28",
+        "status": "0",
+        "officer_status": "0",
+        "book_on_location": "",
+        "book_off_location": "52.3935053,-1.8205085",
+        "check_call_status": "0"
+      },
+      "check_call_status": {
+        "after_interval": "1"
+      },
+      "check_call": {
+        "t0": "1",
+        "t1": "1",
+        "t2": "1",
+        "t3": "1",
+        "t4": "1",
+        "t5": "1",
+        "t6": "1",
+        "t7": "",
+        "t8": "",
+        "t9": "",
+        "t10": "",
+        "t11": "",
+        "t12": "",
+        "t13": "",
+        "t14": "",
+        "t15": "",
+        "t16": "",
+        "t17": "",
+        "t18": "",
+        "t19": "",
+        "t20": "1",
+        "t21": "1",
+        "t22": "1",
+        "t23": "1"
+      }
+    },
+    {
+      "DT_RowId": "row_827001",
+      "timesheets": {
+        "oid": "15397",
+        "reg_date": "02-07-2020",
+        "day": "Thursday",
+        "time_in": "18:00",
+        "time_out": "07:00",
+        "hours": "13",
+        "rate": "0.00",
+        "site_type": "1",
+        "highlight": "0",
+        "site_id": "824620",
+        "green": "0",
+        "deleted": "0",
+        "id": "827001",
+        "company_id": "1",
+        "notes_status": "0",
+        "break_status": "",
+        "broke_id": "0",
+        "status": "closed",
+        "check_call_status": "0"
+      },
+      "sites": {
+        "time_in": "17:00",
+        "time_out": "07:00",
+        "hours": "14"
+      },
+      "sites_name": {
+        "site_name": "The Green, Dog Kennel Lane, Shirley, Solihull, B90 4JG",
+        "client_id": "863",
+        "id": "19122",
+        "post_code": "B90 4JG",
+        "check_call_status": "0"
+      },
+      "officers": {
+        "contractor": "162",
+        "fname": "HUSSNAIN AHMAD (Intelliguard)",
+        "lname": "AHMAD"
+      },
+      "contractor": {
+        "name": "Intelliguard",
+        "short_name": "Intelliguard"
+      },
+      "clients": {
+        "client_name": "McGoff Construction Ltd"
+      },
+      "types": {
+        "type_name": "SG",
+        "type_id": "1"
+      },
+      "shift_time_detail": {
+        "book_on": "",
+        "book_off": "",
+        "staff_book_on": "",
+        "staff_book_off": "",
+        "status": "0",
+        "officer_status": "0",
+        "book_on_location": "",
+        "book_off_location": "",
+        "check_call_status": "0"
+      },
+      "check_call_status": {
+        "after_interval": null
+      },
+      "check_call": {
+        "t0": "",
+        "t1": "",
+        "t2": "",
+        "t3": "",
+        "t4": "",
+        "t5": "",
+        "t6": "",
+        "t7": "",
+        "t8": "",
+        "t9": "",
+        "t10": "",
+        "t11": "",
+        "t12": "",
+        "t13": "",
+        "t14": "",
+        "t15": "",
+        "t16": "",
+        "t17": "",
+        "t18": "",
+        "t19": "",
+        "t20": "",
+        "t21": "",
+        "t22": "",
+        "t23": ""
+      }
+    },
+    {
+      "DT_RowId": "row_827774",
+      "timesheets": {
+        "oid": "15676",
+        "reg_date": "01-07-2020",
+        "day": "Wednesday",
+        "time_in": "18:00",
+        "time_out": "03:30",
+        "hours": "9.5",
+        "rate": "0.00",
+        "site_type": "2",
+        "highlight": "0",
+        "site_id": "825391",
+        "green": "0",
+        "deleted": "0",
+        "id": "827774",
+        "company_id": "1",
+        "notes_status": "0",
+        "break_status": "",
+        "broke_id": "0",
+        "status": "closed",
+        "check_call_status": "1"
+      },
+      "sites": {
+        "time_in": "18:00",
+        "time_out": "03:30",
+        "hours": "9.5"
+      },
+      "sites_name": {
+        "site_name": "Veolia Welland Road Dogsthorpe Peterborough PE1 3TD",
+        "client_id": "327",
+        "id": "20830",
+        "post_code": "PE1 3TD ",
+        "check_call_status": "0"
+      },
+      "officers": {
+        "contractor": "288",
+        "fname": "FAIZAN ALI (Special K9)",
+        "lname": "ALI"
+      },
+      "contractor": {
+        "name": "Special K9",
+        "short_name": "Special K9"
+      },
+      "clients": {
+        "client_name": "SRG Security Ltd"
+      },
+      "types": {
+        "type_name": "DH",
+        "type_id": "2"
+      },
+      "shift_time_detail": {
+        "book_on": "18:00",
+        "book_off": "",
+        "staff_book_on": "",
+        "staff_book_off": "",
+        "status": "0",
+        "officer_status": "0",
+        "book_on_location": "",
+        "book_off_location": "",
+        "check_call_status": "1"
+      },
+      "check_call_status": {
+        "after_interval": "1"
+      },
+      "check_call": {
+        "t0": "",
+        "t1": "",
+        "t2": "",
+        "t3": "",
+        "t4": "",
+        "t5": "",
+        "t6": "",
+        "t7": "",
+        "t8": "",
+        "t9": "",
+        "t10": "",
+        "t11": "",
+        "t12": "",
+        "t13": "",
+        "t14": "",
+        "t15": "",
+        "t16": "",
+        "t17": "",
+        "t18": "",
+        "t19": "",
+        "t20": "",
+        "t21": "",
+        "t22": "1",
+        "t23": ""
+      }
+    },
+    {
+      "DT_RowId": "row_827775",
+      "timesheets": {
+        "oid": "15676",
+        "reg_date": "02-07-2020",
+        "day": "Thursday",
+        "time_in": "18:00",
+        "time_out": "03:30",
+        "hours": "9.5",
+        "rate": "0.00",
+        "site_type": "2",
+        "highlight": "0",
+        "site_id": "825392",
+        "green": "0",
+        "deleted": "0",
+        "id": "827775",
+        "company_id": "1",
+        "notes_status": "0",
+        "break_status": "",
+        "broke_id": "0",
+        "status": "closed",
+        "check_call_status": "0"
+      },
+      "sites": {
+        "time_in": "18:00",
+        "time_out": "03:30",
+        "hours": "9.5"
+      },
+      "sites_name": {
+        "site_name": "Veolia Welland Road Dogsthorpe Peterborough PE1 3TD",
+        "client_id": "327",
+        "id": "20830",
+        "post_code": "PE1 3TD ",
+        "check_call_status": "0"
+      },
+      "officers": {
+        "contractor": "288",
+        "fname": "FAIZAN ALI (Special K9)",
+        "lname": "ALI"
+      },
+      "contractor": {
+        "name": "Special K9",
+        "short_name": "Special K9"
+      },
+      "clients": {
+        "client_name": "SRG Security Ltd"
+      },
+      "types": {
+        "type_name": "DH",
+        "type_id": "2"
+      },
+      "shift_time_detail": {
+        "book_on": "",
+        "book_off": "",
+        "staff_book_on": "",
+        "staff_book_off": "",
+        "status": "0",
+        "officer_status": "0",
+        "book_on_location": "",
+        "book_off_location": "",
+        "check_call_status": "0"
+      },
+      "check_call_status": {
+        "after_interval": null
+      },
+      "check_call": {
+        "t0": "",
+        "t1": "",
+        "t2": "",
+        "t3": "",
+        "t4": "",
+        "t5": "",
+        "t6": "",
+        "t7": "",
+        "t8": "",
+        "t9": "",
+        "t10": "",
+        "t11": "",
+        "t12": "",
+        "t13": "",
+        "t14": "",
+        "t15": "",
+        "t16": "",
+        "t17": "",
+        "t18": "",
+        "t19": "",
+        "t20": "",
+        "t21": "",
+        "t22": "",
+        "t23": ""
+      }
+    },
+    {
+      "DT_RowId": "row_828004",
+      "timesheets": {
+        "oid": "16083",
+        "reg_date": "01-07-2020",
+        "day": "Wednesday",
+        "time_in": "17:00",
+        "time_out": "07:00",
+        "hours": "14",
+        "rate": "8.71",
+        "site_type": "1",
+        "highlight": "0",
+        "site_id": "825621",
+        "green": "0",
+        "deleted": "0",
+        "id": "828004",
+        "company_id": "1",
+        "notes_status": "1",
+        "break_status": "",
+        "broke_id": "0",
+        "status": "closed",
+        "check_call_status": "1"
+      },
+      "sites": {
+        "time_in": "17:00",
+        "time_out": "07:00",
+        "hours": "14"
+      },
+      "sites_name": {
+        "site_name": "NU Living Watts Grove (Watts Grove, Gale Street E3 3RQ).",
+        "client_id": "78",
+        "id": "20769",
+        "post_code": "E3 3RQ",
+        "check_call_status": "0"
+      },
+      "officers": {
+        "contractor": "0",
+        "fname": "MIHAIL GASPAR ",
+        "lname": "GASPAR "
+      },
+      "contractor": {
+        "name": null,
+        "short_name": null
+      },
+      "clients": {
+        "client_name": "Biosite Systems Ltd"
+      },
+      "types": {
+        "type_name": "SG",
+        "type_id": "1"
+      },
+      "shift_time_detail": {
+        "book_on": "17:00",
+        "book_off": "",
+        "staff_book_on": "",
+        "staff_book_off": "",
+        "status": "0",
+        "officer_status": "0",
+        "book_on_location": "",
+        "book_off_location": "",
+        "check_call_status": "1"
+      },
+      "check_call_status": {
+        "after_interval": "1"
+      },
+      "check_call": {
+        "t0": "1",
+        "t1": "1",
+        "t2": "1",
+        "t3": "1",
+        "t4": "1",
+        "t5": "",
+        "t6": "",
+        "t7": "",
+        "t8": "",
+        "t9": "",
+        "t10": "",
+        "t11": "",
+        "t12": "",
+        "t13": "",
+        "t14": "",
+        "t15": "",
+        "t16": "",
+        "t17": "",
+        "t18": "",
+        "t19": "",
+        "t20": "1",
+        "t21": "1",
+        "t22": "1",
+        "t23": "1"
+      }
+    },
+    {
+      "DT_RowId": "row_828005",
+      "timesheets": {
+        "oid": "16083",
+        "reg_date": "02-07-2020",
+        "day": "Thursday",
+        "time_in": "17:00",
+        "time_out": "07:00",
+        "hours": "14",
+        "rate": "8.71",
+        "site_type": "1",
+        "highlight": "0",
+        "site_id": "825622",
+        "green": "0",
+        "deleted": "0",
+        "id": "828005",
+        "company_id": "1",
+        "notes_status": "0",
+        "break_status": "",
+        "broke_id": "0",
+        "status": "closed",
+        "check_call_status": "0"
+      },
+      "sites": {
+        "time_in": "17:00",
+        "time_out": "07:00",
+        "hours": "14"
+      },
+      "sites_name": {
+        "site_name": "NU Living Watts Grove (Watts Grove, Gale Street E3 3RQ).",
+        "client_id": "78",
+        "id": "20769",
+        "post_code": "E3 3RQ",
+        "check_call_status": "0"
+      },
+      "officers": {
+        "contractor": "0",
+        "fname": "MIHAIL GASPAR ",
+        "lname": "GASPAR "
+      },
+      "contractor": {
+        "name": null,
+        "short_name": null
+      },
+      "clients": {
+        "client_name": "Biosite Systems Ltd"
+      },
+      "types": {
+        "type_name": "SG",
+        "type_id": "1"
+      },
+      "shift_time_detail": {
+        "book_on": "",
+        "book_off": "",
+        "staff_book_on": "",
+        "staff_book_off": "",
+        "status": "0",
+        "officer_status": "0",
+        "book_on_location": "",
+        "book_off_location": "",
+        "check_call_status": "0"
+      },
+      "check_call_status": {
+        "after_interval": null
+      },
+      "check_call": {
+        "t0": "",
+        "t1": "",
+        "t2": "",
+        "t3": "",
+        "t4": "",
+        "t5": "",
+        "t6": "",
+        "t7": "",
+        "t8": "",
+        "t9": "",
+        "t10": "",
+        "t11": "",
+        "t12": "",
+        "t13": "",
+        "t14": "",
+        "t15": "",
+        "t16": "",
+        "t17": "",
+        "t18": "",
+        "t19": "",
+        "t20": "",
+        "t21": "",
+        "t22": "",
+        "t23": ""
+      }
+    },
+    {
+      "DT_RowId": "row_828042",
+      "timesheets": {
+        "oid": "13674",
+        "reg_date": "02-07-2020",
+        "day": "Thursday",
+        "time_in": "06:00",
+        "time_out": "16:00",
+        "hours": "10",
+        "rate": "9.00",
+        "site_type": "1",
+        "highlight": "0",
+        "site_id": "825659",
+        "green": "0",
+        "deleted": "0",
+        "id": "828042",
+        "company_id": "1",
+        "notes_status": "0",
+        "break_status": "",
+        "broke_id": "0",
+        "status": "closed",
+        "check_call_status": "0"
+      },
+      "sites": {
+        "time_in": "06:00",
+        "time_out": "16:00",
+        "hours": "10"
+      },
+      "sites_name": {
+        "site_name": "The Brinell Building - 30 Station Street, Brighton, BN1 4RB",
+        "client_id": "810",
+        "id": "16732",
+        "post_code": "BN1 4RB",
+        "check_call_status": "0"
+      },
+      "officers": {
+        "contractor": "0",
+        "fname": "Sami Babakir Mohammed",
+        "lname": "Mohammed"
+      },
+      "contractor": {
+        "name": null,
+        "short_name": null
+      },
+      "clients": {
+        "client_name": "Guarding UK Ltd"
+      },
+      "types": {
+        "type_name": "SG",
+        "type_id": "1"
+      },
+      "shift_time_detail": {
+        "book_on": "06:00",
+        "book_off": "",
+        "staff_book_on": "",
+        "staff_book_off": "",
+        "status": "0",
+        "officer_status": "0",
+        "book_on_location": "",
+        "book_off_location": "",
+        "check_call_status": "0"
+      },
+      "check_call_status": {
+        "after_interval": null
+      },
+      "check_call": {
+        "t0": "",
+        "t1": "",
+        "t2": "",
+        "t3": "",
+        "t4": "",
+        "t5": "",
+        "t6": "",
+        "t7": "",
+        "t8": "",
+        "t9": "",
+        "t10": "",
+        "t11": "",
+        "t12": "",
+        "t13": "",
+        "t14": "",
+        "t15": "",
+        "t16": "",
+        "t17": "",
+        "t18": "",
+        "t19": "",
+        "t20": "",
+        "t21": "",
+        "t22": "",
+        "t23": ""
+      }
+    },
+    {
+      "DT_RowId": "row_828145",
+      "timesheets": {
+        "oid": "11812",
+        "reg_date": "02-07-2020",
+        "day": "Thursday",
+        "time_in": "09:00",
+        "time_out": "16:00",
+        "hours": "7",
+        "rate": "0.00",
+        "site_type": "1",
+        "highlight": "0",
+        "site_id": "825762",
+        "green": "0",
+        "deleted": "0",
+        "id": "828145",
+        "company_id": "1",
+        "notes_status": "0",
+        "break_status": "",
+        "broke_id": "0",
+        "status": "closed",
+        "check_call_status": "0"
+      },
+      "sites": {
+        "time_in": "09:00",
+        "time_out": "16:00",
+        "hours": "7"
+      },
+      "sites_name": {
+        "site_name": "PSI Croydon 125 high street 8th floor, Grosvenor House CR0 9XP",
+        "client_id": "408",
+        "id": "6906",
+        "post_code": "CR0 9XP",
+        "check_call_status": "0"
+      },
+      "officers": {
+        "contractor": "0",
+        "fname": "WALID YOUSSEF",
+        "lname": "YOUSSEF"
+      },
+      "contractor": {
+        "name": null,
+        "short_name": null
+      },
+      "clients": {
+        "client_name": " Guard Group Nationwide Ltd"
+      },
+      "types": {
+        "type_name": "SG",
+        "type_id": "1"
+      },
+      "shift_time_detail": {
+        "book_on": "09:00",
+        "book_off": "",
+        "staff_book_on": "08:50",
+        "staff_book_off": "",
+        "status": "0",
+        "officer_status": "0",
+        "book_on_location": "51.36971661618325,-0.09956699416735178",
+        "book_off_location": "",
+        "check_call_status": "0"
+      },
+      "check_call_status": {
+        "after_interval": null
+      },
+      "check_call": {
+        "t0": "",
+        "t1": "",
+        "t2": "",
+        "t3": "",
+        "t4": "",
+        "t5": "",
+        "t6": "",
+        "t7": "",
+        "t8": "",
+        "t9": "",
+        "t10": "",
+        "t11": "",
+        "t12": "",
+        "t13": "",
+        "t14": "",
+        "t15": "",
+        "t16": "",
+        "t17": "",
+        "t18": "",
+        "t19": "",
+        "t20": "",
+        "t21": "",
+        "t22": "",
+        "t23": ""
+      }
+    },
+    {
+      "DT_RowId": "row_828349",
+      "timesheets": {
+        "oid": "17354",
+        "reg_date": "01-07-2020",
+        "day": "Wednesday",
+        "time_in": "19:00",
+        "time_out": "07:00",
+        "hours": "12",
+        "rate": "8.72",
+        "site_type": "1",
+        "highlight": "0",
+        "site_id": "825966",
+        "green": "0",
+        "deleted": "0",
+        "id": "828349",
+        "company_id": "1",
+        "notes_status": "0",
+        "break_status": "",
+        "broke_id": "0",
+        "status": "closed",
+        "check_call_status": "1"
+      },
+      "sites": {
+        "time_in": "19:00",
+        "time_out": "07:00",
+        "hours": "12"
+      },
+      "sites_name": {
+        "site_name": "Central West, 320 Ruislip Road East, Greenford, London, UB6 9FE",
+        "client_id": "918",
+        "id": "20813",
+        "post_code": " UB6 9FE",
+        "check_call_status": "0"
+      },
+      "officers": {
+        "contractor": "0",
+        "fname": "MUHAMMAD Asad ANWAR",
+        "lname": "ANWAR"
+      },
+      "contractor": {
+        "name": null,
+        "short_name": null
+      },
+      "clients": {
+        "client_name": "VPS UK"
+      },
+      "types": {
+        "type_name": "SG",
+        "type_id": "1"
+      },
+      "shift_time_detail": {
+        "book_on": "19:00",
+        "book_off": "07:09",
+        "staff_book_on": "18:42",
+        "staff_book_off": "07:09",
+        "status": "0",
+        "officer_status": "0",
+        "book_on_location": "51.52744651618168,-0.3511338714657455",
+        "book_off_location": "51.52879333058925,-0.3510873300062424",
+        "check_call_status": "0"
+      },
+      "check_call_status": {
+        "after_interval": "1"
+      },
+      "check_call": {
+        "t0": "1",
+        "t1": "",
+        "t2": "1",
+        "t3": "1",
+        "t4": "",
+        "t5": "",
+        "t6": "1",
+        "t7": "",
+        "t8": "",
+        "t9": "",
+        "t10": "",
+        "t11": "",
+        "t12": "",
+        "t13": "",
+        "t14": "",
+        "t15": "",
+        "t16": "",
+        "t17": "",
+        "t18": "",
+        "t19": "",
+        "t20": "1",
+        "t21": "1",
+        "t22": "1",
+        "t23": "1"
+      }
+    },
+    {
+      "DT_RowId": "row_828655",
+      "timesheets": {
+        "oid": "15756",
+        "reg_date": "02-07-2020",
+        "day": "Thursday",
+        "time_in": "18:00",
+        "time_out": "06:00",
+        "hours": "12",
+        "rate": "0.00",
+        "site_type": "1",
+        "highlight": "0",
+        "site_id": "826272",
+        "green": "0",
+        "deleted": "0",
+        "id": "828655",
+        "company_id": "1",
+        "notes_status": "0",
+        "break_status": "",
+        "broke_id": "0",
+        "status": "closed",
+        "check_call_status": "0"
+      },
+      "sites": {
+        "time_in": "18:00",
+        "time_out": "06:00",
+        "hours": "12"
+      },
+      "sites_name": {
+        "site_name": "LBR Rydale Court Care Home, Victoria Road, Barking, IG11 8PE",
+        "client_id": "800",
+        "id": "16701",
+        "post_code": "IG11 8PE",
+        "check_call_status": "0"
+      },
+      "officers": {
+        "contractor": "0",
+        "fname": "MOAZZAM SULTAN",
+        "lname": "SULTAN"
+      },
+      "contractor": {
+        "name": null,
+        "short_name": null
+      },
+      "clients": {
+        "client_name": "CHARTER SECURITY"
+      },
+      "types": {
+        "type_name": "SG",
+        "type_id": "1"
+      },
+      "shift_time_detail": {
+        "book_on": "",
+        "book_off": "",
+        "staff_book_on": "",
+        "staff_book_off": "",
+        "status": "0",
+        "officer_status": "0",
+        "book_on_location": "",
+        "book_off_location": "",
+        "check_call_status": "0"
+      },
+      "check_call_status": {
+        "after_interval": null
+      },
+      "check_call": {
+        "t0": "",
+        "t1": "",
+        "t2": "",
+        "t3": "",
+        "t4": "",
+        "t5": "",
+        "t6": "",
+        "t7": "",
+        "t8": "",
+        "t9": "",
+        "t10": "",
+        "t11": "",
+        "t12": "",
+        "t13": "",
+        "t14": "",
+        "t15": "",
+        "t16": "",
+        "t17": "",
+        "t18": "",
+        "t19": "",
+        "t20": "",
+        "t21": "",
+        "t22": "",
+        "t23": ""
+      }
     }
-]
+  ]
