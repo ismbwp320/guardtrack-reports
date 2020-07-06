@@ -12,6 +12,133 @@
               <vs-button @click="submitHandler" color="primary" type="filled">Add</vs-button>
           </div>
         </vs-prompt>
+        <vs-prompt
+            class="model-lg"
+            :title="shiftModel.sites_name.site_name"
+            button-cancel = "none"
+            button-accept = "hidden"
+            :active.sync="activeView">
+            <vs-row>
+              <vs-col vs-type="flex" vs-w="6">
+                <div style="width:100%">
+                  <vx-card class="box-shadow-none margin-right-2">
+                    <ul>
+                        <li class="flex mb-3">
+                            <span class="inline-block font-semibold">Name</span>
+                            <span class="mx-2">-</span>
+                            <span class="mr-4">{{shiftModel.officers.fname}}</span>
+                        </li>
+                        <li class="flex mb-3">
+                            <span class="inline-block font-semibold">Email</span>
+                            <span class="mx-2">-</span>
+                            <span class="mr-4">marshad5758@gmail.com</span>
+                        </li>
+                        <li class="flex mb-3">
+                            <span class="inline-block font-semibold">Number</span>
+                            <span class="mx-2">-</span>
+                            <span class="mr-4">07473865793</span>
+                        </li>
+                        <li class="flex mb-3">
+                            <span class="inline-block font-semibold">Sia Number</span>
+                            <span class="mx-2">-</span>
+                            <span class="mr-4">1012315572399006</span>
+                        </li>
+                        <li class="flex mb-3">
+                            <span class="inline-block font-semibold">Sia Expiry</span>
+                            <span class="mx-2">-</span>
+                            <span class="mr-4">17 Feb 2021</span>
+                        </li>
+                        <li class="flex mb-3">
+                            <span class="inline-block font-semibold">PIN</span>
+                            <span class="mx-2">-</span>
+                            <span class="mr-4">11249</span>
+                        </li>
+                    </ul>
+                  </vx-card>
+                  <vx-card title="Shift Detail" class="box-shadow-none">
+                      <div class="mt-5">
+                          <h6>Site Name:</h6>
+                          <p>Norway</p>
+                      </div>
+                      <!-- OTEHR DATA -->
+                      <div class="mt-5">
+                          <h6>Date:</h6>
+                          <p>Tuesday, 17 Dec 2019</p>
+                      </div>
+                  </vx-card>            
+                  <vs-table stripe :data="users">
+                    <template slot="thead">
+                      <vs-th></vs-th>
+                      <vs-th>Start</vs-th>
+                      <vs-th>Finish</vs-th>
+                      <vs-th>Total</vs-th>
+                    </template>
+                    <template slot-scope="{data}">
+                      <vs-tr :key="indextr" v-for="(tr, indextr) in data" >
+                        <vs-td :data="data[indextr].name">
+                          {{data[indextr].name}}
+                        </vs-td>
+
+                        <vs-td :data="data[indextr].start">
+                          {{data[indextr].start}}
+                        </vs-td>
+
+                        <vs-td :data="data[indextr].id">
+                          {{data[indextr].end}}
+                        </vs-td>
+
+                        <vs-td :data="data[indextr].id">
+                          {{data[indextr].total}}
+                        </vs-td>
+                      </vs-tr>
+                    </template>
+                  </vs-table>
+        <div>
+          <vs-button color="danger" size="small">Start</vs-button>
+          <vs-button color="danger" size="small" class="mx-2">Finish</vs-button>
+        </div>
+                </div>
+              </vs-col>
+              <vs-col vs-type="flex" vs-w="6">
+                <vx-timeline :data="timelineData"></vx-timeline>
+              </vs-col>
+            </vs-row>
+            <!-- CARD WITH TABS COMPONENT -->
+            <div class="vx-row mt-5">
+                <!-- SIMPLE CARD WITH TABS -->
+                <div class="vx-col w-full">
+                    <vx-card class="box-shadow-none">
+                        <vs-tabs>
+                            <vs-tab label="Notes">
+                                <div class="mt-2">
+                                    <h6>Notes:</h6>
+                                    <div>
+                                      <vs-textarea label="Notes" height="60px" />
+                                    </div>
+                                </div>
+                            </vs-tab>
+                            <vs-tab label="Shift Instruction">
+                                <div class="mt-2">
+                                    <h6>Shift Instruction:</h6>
+                                    <div>
+                                      <vs-textarea label="Shift Instruction" height="60px" />
+                                    </div>
+                                </div>
+                            </vs-tab>
+                            <vs-tab label="Expense">
+                                <div class="mt-2">
+                                    <h6>Expense:</h6>
+                                    <div>
+                                      <vs-input type="number" label="Expense Amount" class="input-field-block" />
+                                      <vs-textarea label="Expense Reason" height="60px" />
+                                    </div>
+                                </div>
+                            </vs-tab>
+                        </vs-tabs>
+                    </vx-card>
+                </div>
+              </div>
+        </vs-prompt>
     <!-- Shift Listing -->
     <div class="vx-card p-6">
       <div class="flex flex-wrap items-center">
@@ -112,6 +239,45 @@ export default {
   data () {
     
     return {
+      users:[
+        {
+          id: 1,
+          name: 'Scheduled',
+          start: '19:00',
+          end: '07:00',
+          total: '12h'
+        },
+        {
+          id: 2,
+          name: 'Actual',
+          start: '',
+          end: '',
+          total: ''
+        }
+      ],
+      timelineData: [
+        {
+          color : 'primary',
+          icon  : 'PlusIcon',
+          title : 'New Task Added',
+          desc  : 'Bonbon macaroon jelly beans gummi bears jelly lollipop apple',
+          time  : '25 Days Ago'
+        },
+        {
+          color : 'warning',
+          icon  : 'AlertCircleIcon',
+          title : 'Task Update Found',
+          desc  : 'Cupcake gummi bears soufflé caramels candy',
+          time  : '15 Days Ago'
+        },
+        {
+          color : 'success',
+          icon  : 'CheckIcon',
+          title : 'Task Finished',
+          desc  : 'Candy ice cream cake. Halvah gummi bears',
+          time  : '20 mins ago'
+        }
+      ],
       timesheetModel: {},
       selectDateOption: 'custom',
       dtFrom: '',
@@ -121,8 +287,12 @@ export default {
       customColumns: [],
       customColumnsEdit: {},
       columnName: '',
-      shiftModel: {},
+      shiftModel: {
+        sites_name: {},
+        officers: {}
+      },
       activePrompt: false,
+      activeView: false,
       pinTop: [],
       pinBottom: [],
       searchModel: '',
@@ -466,7 +636,7 @@ export default {
         {
           name: 'View',
           action: () => {
-            this.activePrompt = true
+            this.activeView = true
             this.shiftModel = params.node.data
           }
         },

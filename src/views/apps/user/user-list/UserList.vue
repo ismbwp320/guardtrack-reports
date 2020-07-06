@@ -28,16 +28,16 @@
             <!-- <vs-button class="btn-drop" type="line" color="primary" icon-pack="feather" icon="icon-chevron-down"></vs-button> -->
             <vs-dropdown-menu>
 
-              <vs-dropdown-item @click="gridApi.paginationSetPageSize(10)">
+              <vs-dropdown-item @click="gridApi.paginationSetPageSize(50)">
                 <span>10</span>
               </vs-dropdown-item>
-              <vs-dropdown-item @click="gridApi.paginationSetPageSize(20)">
+              <vs-dropdown-item @click="gridApi.paginationSetPageSize(100)">
                 <span>20</span>
               </vs-dropdown-item>
-              <vs-dropdown-item @click="gridApi.paginationSetPageSize(25)">
+              <vs-dropdown-item @click="gridApi.paginationSetPageSize(250)">
                 <span>25</span>
               </vs-dropdown-item>
-              <vs-dropdown-item @click="gridApi.paginationSetPageSize(30)">
+              <vs-dropdown-item @click="gridApi.paginationSetPageSize(300)">
                 <span>30</span>
               </vs-dropdown-item>
             </vs-dropdown-menu>
@@ -130,14 +130,13 @@
         ref="agGridTable"
         :components="components"
         :gridOptions="gridOptions"
-        class="ag-theme-material w-100 my-4 ag-grid-table"
+        class="ag-theme-alpine w-100 my-4 ag-grid-table"
         :columnDefs="columnDefs"
         :defaultColDef="defaultColDef"
         :rowData="usersData"
         rowSelection="multiple"
         colResizeDefault="shift"
         :animateRows="true"
-        :floatingFilter="true"
         :pagination="true"
         :paginationPageSize="paginationPageSize"
         :suppressPaginationPanel="true"
@@ -311,7 +310,7 @@ export default {
     },
     paginationPageSize () {
       if (this.gridApi) return this.gridApi.paginationGetPageSize()
-      else return 10
+      else return 50
     },
     totalPages () {
       if (this.gridApi) return this.gridApi.paginationGetTotalPages()

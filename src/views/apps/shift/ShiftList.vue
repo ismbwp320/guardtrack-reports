@@ -75,13 +75,13 @@
                                     <vs-input type="Number" v-model="toRate" required />
                                   </div>
                                   <vs-button  size="small"  class="my-3 mx-1" @click="payRateHandler" color="primary" type="filled">Apply</vs-button>                    
-                                  <label v-for="(item, index) in filters[child.headerName]" :key="index"  class="custom-label flex">
+                                  <!-- <label v-for="(item, index) in filters[child.headerName]" :key="index"  class="custom-label flex">
                                     <div class="bg-custom shadow w-6 h-6 p-1 flex justify-center items-center mr-2">
                                       <input type="checkbox" :class="child.headerName.replace(/\s+/g, '')" :checked="checkBoxHandler(child.headerName, item)" class="hidden" v-on:change="filterHandler(child.headerName, item)">
                                       <svg class="hidden w-4 h-4 text-green-600 pointer-events-none" viewBox="0 0 172 172"><g fill="none" stroke-width="none" stroke-miterlimit="10" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode:normal"><path d="M0 172V0h172v172z"/><path d="M145.433 37.933L64.5 118.8658 33.7337 88.0996l-10.134 10.1341L64.5 139.1341l91.067-91.067z" fill="currentColor" stroke-width="1"/></g></svg>
                                     </div>
                                     <span class="select-none">{{item}}</span>
-                                  </label>
+                                  </label> -->
                                 </template>
                                 <template v-else-if="child.headerName === 'Status'">
                                   <div class="btn-group">
@@ -90,21 +90,21 @@
                                     </template>
                                   </div>
                                 </template>
-                              <template v-else>
-                                <template v-if="child.headerName === 'Charge Rate'">
+                                <template v-else-if="child.headerName === 'Charge Rate'">
                                   <div class="d-flex">
                                     <vs-input type="Number" v-model="fromChargeRate" />
                                     <vs-input type="Number" v-model="toChargeRate" />
                                   </div>
                                   <vs-button  size="small"  class="my-3 mx-1" @click="chargeRateHandler" color="primary" type="filled">Apply</vs-button>                                  
                                 </template>
+                              <template v-else>
                               <vs-input
                                 @input="filterSearch(child.headerName, filterSearchQuery[child.headerName.replace(/\s+/g, '')])"
                                 v-model="filterSearchQuery[child.headerName.replace(/\s+/g, '')]"
                                 class="w-full sm:order-normal order-3 mb-4 ag-search" placeholder="Search..."/>
                                 <label  class="custom-label flex">
                                   <div class="bg-custom shadow w-6 h-6 p-1 flex justify-center items-center mr-2">
-                                    <input type="checkbox" :checked="child.filterAll" class="hidden" v-on:change="selectNothing(child.headerName, filters[child.headerName])">
+                                    <input type="checkbox" :class="child.headerName.replace(/\s+/g, '')" :checked="child.filterAll" class="hidden" v-on:change="selectNothing(child.headerName, filters[child.headerName])">
                                     <svg class="hidden w-4 h-4 text-green-600 pointer-events-none" viewBox="0 0 172 172"><g fill="none" stroke-width="none" stroke-miterlimit="10" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode:normal"><path d="M0 172V0h172v172z"/><path d="M145.433 37.933L64.5 118.8658 33.7337 88.0996l-10.134 10.1341L64.5 139.1341l91.067-91.067z" fill="currentColor" stroke-width="1"/></g></svg>
                                   </div>
                                   <span class="select-none">Select All</span>
@@ -1017,15 +1017,17 @@ export default {
     selectNothing (instanceName, child) {
       const instance = this.gridOptions.api.getFilterInstance(instanceName)
       const getModelValues = instance.getValueModel()
+      console.log(instance)
+      debugger
       const checkboxes = document.getElementsByClassName(instanceName.replace(/\s+/g, ''))
       if (_.isEqual(getModelValues.availableValues, getModelValues.selectedValues)) {
         instance.setModel({
           type: 'set',
           values: []
         })
-        
+      
         for (const item in child) {
-          checkboxes[item].checked = false
+          checkboxes[Number(item)].checked = false
           // console.log(instanceName, child[item])
           // this.filterHandler(instanceName, child[item])
         }
@@ -1035,7 +1037,7 @@ export default {
           values: [...child]
         })
         for (const item in child) {
-          checkboxes[item].checked = true
+          checkboxes[Number(item)].checked = true
         }
       }
       instance.onFilterChanged()
@@ -1223,6 +1225,7 @@ export default {
   },
   mounted () {
     console.log(this.$store.state['shift'].msg)
+    console.log(this.gridApi.getModel())
     // this.gridApi = this.gridOptions.api
     // this.gridColumnApi = this.gridOptions.columnApi
     // this.gridApi.showLoadingOverlay()

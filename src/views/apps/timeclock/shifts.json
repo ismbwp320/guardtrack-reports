@@ -2259,13 +2259,13 @@
       "type_id": "1"
     },
     "shift_time_detail": {
-      "book_on": "",
+      "book_on": "11:00",
       "book_off": "",
-      "staff_book_on": "",
+      "staff_book_on": "10:56",
       "staff_book_off": "",
       "status": "0",
       "officer_status": "0",
-      "book_on_location": "",
+      "book_on_location": "51.50589065023766,-0.08644337206462591",
       "book_off_location": "",
       "check_call_status": "0"
     },
@@ -3273,6 +3273,190 @@
     "shift_time_detail": {
       "book_on": "17:00",
       "book_off": "18:00",
+      "staff_book_on": "",
+      "staff_book_off": "",
+      "status": "0",
+      "officer_status": "0",
+      "book_on_location": "",
+      "book_off_location": "",
+      "check_call_status": "0"
+    },
+    "check_call_status": {
+      "after_interval": null
+    },
+    "check_call": {
+      "t0": "",
+      "t1": "",
+      "t2": "",
+      "t3": "",
+      "t4": "",
+      "t5": "",
+      "t6": "",
+      "t7": "",
+      "t8": "",
+      "t9": "",
+      "t10": "",
+      "t11": "",
+      "t12": "",
+      "t13": "",
+      "t14": "",
+      "t15": "",
+      "t16": "",
+      "t17": "",
+      "t18": "",
+      "t19": "",
+      "t20": "",
+      "t21": "",
+      "t22": "",
+      "t23": ""
+    }
+  },
+  {
+    "DT_RowId": "row_830699",
+    "timesheets": {
+      "oid": "14950",
+      "reg_date": "06-07-2020",
+      "day": "Monday",
+      "time_in": "16:30",
+      "time_out": "07:00",
+      "hours": "14.5",
+      "rate": "0.00",
+      "site_type": "1",
+      "highlight": "0",
+      "site_id": "828316",
+      "green": "0",
+      "deleted": "0",
+      "id": "830699",
+      "company_id": "1",
+      "notes_status": "0",
+      "break_status": "",
+      "broke_id": "0",
+      "status": "closed",
+      "check_call_status": "0"
+    },
+    "sites": {
+      "time_in": "16:30",
+      "time_out": "07:00",
+      "hours": "14.5"
+    },
+    "sites_name": {
+      "site_name": "Pioneer Construction Site Knowsthrpe Road Leeds LS9 0NX",
+      "client_id": "591",
+      "id": "20928",
+      "post_code": "LS9 0NX",
+      "check_call_status": "0"
+    },
+    "officers": {
+      "contractor": "162",
+      "fname": "Afzal khan (Intelliguaed) (Intelliguard)",
+      "lname": "khan (Intelliguaed)"
+    },
+    "contractor": {
+      "name": "Intelliguard",
+      "short_name": "Intelliguard"
+    },
+    "clients": {
+      "client_name": "Star Group FM"
+    },
+    "types": {
+      "type_name": "SG",
+      "type_id": "1"
+    },
+    "shift_time_detail": {
+      "book_on": "",
+      "book_off": "",
+      "staff_book_on": "",
+      "staff_book_off": "",
+      "status": "0",
+      "officer_status": "0",
+      "book_on_location": "",
+      "book_off_location": "",
+      "check_call_status": "0"
+    },
+    "check_call_status": {
+      "after_interval": null
+    },
+    "check_call": {
+      "t0": "",
+      "t1": "",
+      "t2": "",
+      "t3": "",
+      "t4": "",
+      "t5": "",
+      "t6": "",
+      "t7": "",
+      "t8": "",
+      "t9": "",
+      "t10": "",
+      "t11": "",
+      "t12": "",
+      "t13": "",
+      "t14": "",
+      "t15": "",
+      "t16": "",
+      "t17": "",
+      "t18": "",
+      "t19": "",
+      "t20": "",
+      "t21": "",
+      "t22": "",
+      "t23": ""
+    }
+  },
+  {
+    "DT_RowId": "row_830736",
+    "timesheets": {
+      "oid": "17882",
+      "reg_date": "06-07-2020",
+      "day": "Monday",
+      "time_in": "17:00",
+      "time_out": "09:00",
+      "hours": "16",
+      "rate": "0.00",
+      "site_type": "1",
+      "highlight": "0",
+      "site_id": "828353",
+      "green": "0",
+      "deleted": "0",
+      "id": "830736",
+      "company_id": "1",
+      "notes_status": "0",
+      "break_status": "",
+      "broke_id": "0",
+      "status": "closed",
+      "check_call_status": "0"
+    },
+    "sites": {
+      "time_in": "17:00",
+      "time_out": "09:00",
+      "hours": "16"
+    },
+    "sites_name": {
+      "site_name": "Active Management Solutions Ltd - 9 Sterling Centre, Eastern Road, BRACKNELL, Berkshire, RG12 2PW",
+      "client_id": "316",
+      "id": "20932",
+      "post_code": "RG12 2PW ",
+      "check_call_status": "0"
+    },
+    "officers": {
+      "contractor": "72",
+      "fname": "IQBAL JAVED DAR (Hamid - Bristol)",
+      "lname": "DAR"
+    },
+    "contractor": {
+      "name": "Hamid - Bristol",
+      "short_name": "Hamid - Bristol"
+    },
+    "clients": {
+      "client_name": "The Keyholding Company Ltd "
+    },
+    "types": {
+      "type_name": "SG",
+      "type_id": "1"
+    },
+    "shift_time_detail": {
+      "book_on": "",
+      "book_off": "",
       "staff_book_on": "",
       "staff_book_off": "",
       "status": "0",
