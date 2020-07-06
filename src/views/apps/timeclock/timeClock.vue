@@ -9,6 +9,7 @@
               <vs-input v-if="timesheetModel.callType === 'Start'" :label="timesheetModel.callType" v-model="timesheetModel.timesheets.time_in" class="input-field-block" />
               <vs-input v-if="timesheetModel.callType === 'Finish'" :label="timesheetModel.callType" v-model="timesheetModel.timesheets.time_out" class="input-field-block" />
               <vs-textarea label="Comments" height="60px" />
+              <vs-button @click="submitHandler" color="primary" type="filled">Add</vs-button>
           </div>
         </vs-prompt>
     <!-- Shift Listing -->
@@ -326,10 +327,22 @@ export default {
     }
   },
   methods: {
+    submitHandler () {
+      this.shifts = this.shifts.map(obj => {
+        let data = {}
+        if (this.timesheetModel.callType === 'Start') {
+          data = {
+            book_on : this.timesheetModel.timesheets.time_in
+          }
+        }
+        return obj.DT_RowId === this.timesheetModel.DT_RowId ? { ...obj, shift_time_detail: {...data} } : obj
+      })
+      this.activePrompt = false
+    },
     timesheetHandler () {
       let newData = []
       const dateFormat = 'DD-MM-YYYY HH:mm'
-      console.log(this.shifts)
+
       this.shifts.forEach(node => {
         // SHIFT TIME
         const bookOnTime = `${node.timesheets.reg_date} ${node.timesheets.time_in}`
@@ -355,7 +368,7 @@ export default {
           const val = `t${currentHour}`
           const check_call = node.check_call[val]
           // Sub Conditions
-          if (node.shift_time_detail.check_call_status !== 0 && node.check_call_status.after_interval !== '') {
+          if (node.shift_time_detail.check_call_status !== '0' && node.check_call_status.after_interval !== null) {
             if ((check_call === null || check_call === '')) {
               const current_min = moment(new Date()).format('mm')
               if (current_min <= 15) {
@@ -371,15 +384,15 @@ export default {
           }
           // End Sub Conditions
         } else if (bookOffValue !== '' && bookOnValue !== '') {
-          if (node.shift_time_detail.status === 0) {
-            newData = [...newData, {...node, background: '#9e9e9e', callType: 'Approve', dataOrder: 3}]  
+          if (node.shift_time_detail.status === '0') {
+            newData = [...newData, {...node, background: '#9e9e9e', callType: 'Approve', dataOrder: 4}]  
           } else {
-            newData = [...newData, {...node, background: '#374767', callType: 'Approve', dataOrder: 3}]
+            newData = [...newData, {...node, background: '#374767', callType: 'Approve', dataOrder: 4}]
           }
         } else if (bookOnValue !== '' && bookOffValue === '') {
           newData = [...newData, {...node, background: 'green', callType: 'Start', dataOrder: 3}]
         } else {
-          newData = [...newData, {...node, background: '#444', callType: 'Start', dataOrder: 4}]
+          newData = [...newData, {...node, background: '#444', callType: 'Start', dataOrder: 5}]
         }
       })
       this.shifts = newData.sort((a, b) => a.dataOrder - b.dataOrder)
@@ -616,6 +629,9 @@ export default {
 </script>
 
 <style lang="scss">
+.con-vs-dialog .vs-dialog footer{
+  display: none !important;
+}
 .bg-shift-col {
   background: #f8d7da;
 }
