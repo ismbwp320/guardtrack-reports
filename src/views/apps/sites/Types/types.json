@@ -1,0 +1,68 @@
+[
+    {
+      "DT_RowId": "row_5",
+      "types": {
+        "type_id": "5",
+        "type_name": "SG",
+        "color": "#c7bb21",
+        "status": "0",
+        "alarm": "0",
+        "company_id": "6"
+      }
+    },
+    {
+      "DT_RowId": "row_10",
+      "types": {
+        "type_id": "10",
+        "type_name": "DH",
+        "color": "#64a516",
+        "status": "0",
+        "alarm": "0",
+        "company_id": "6"
+      }
+    },
+    {
+      "DT_RowId": "row_13",
+      "types": {
+        "type_id": "13",
+        "type_name": "rg",
+        "color": "#374767",
+        "status": "0",
+        "alarm": "0",
+        "company_id": "6"
+      }
+    },
+    {
+      "DT_RowId": "row_25",
+      "types": {
+        "type_id": "25",
+        "type_name": "MSK",
+        "color": "#2786df",
+        "status": "0",
+        "alarm": "0",
+        "company_id": "6"
+      }
+    },
+    {
+      "DT_RowId": "row_72",
+      "types": {
+        "type_id": "72",
+        "type_name": "color_test",
+        "color": "#d44545",
+        "status": "0",
+        "alarm": "0",
+        "company_id": "6"
+      }
+    },
+    {
+      "DT_RowId": "row_106",
+      "types": {
+        "type_id": "106",
+        "type_name": "hell_on",
+        "color": "#000000",
+        "status": "0",
+        "alarm": "0",
+        "company_id": "6"
+      }
+    }
+  ]

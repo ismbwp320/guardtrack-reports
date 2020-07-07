@@ -1,7 +1,6 @@
 <template>
 
   <div id="page-user-list">
-          <site-filters  />
           <site-add-new />
           <!-- <types-add-new /> -->
      <vs-tabs>
@@ -39,8 +38,6 @@
 
         <!-- TABLE ACTION COL-2: SEARCH & EXPORT AS CSV -->
           <vs-input class="sm:mr-4 mr-0 sm:w-auto w-full sm:order-normal order-3 sm:mt-0 mt-4 ag-search" v-model="searchQuery" @input="updateSearchQuery" placeholder="Search..." />
-          <!-- <vs-button class="mb-4 md:mb-0" @click="gridApi.exportDataAsCsv()">Export as CSV</vs-button> -->
-          <vs-button  icon="icon-eye" class="hide-show-checkboxs" @click="activePrompt = true" icon-pack="feather" />
           
       </div>
 
@@ -151,7 +148,6 @@ import { AgGridVue } from 'ag-grid-vue'
 import '@/assets/scss/vuexy/extraComponents/agGridStyleOverride.scss'
 
 import SiteAddNew from './SiteAddNew'
-import SiteFilters from './SiteFilters'
 import TypesList from './Types/TypesList.vue'
 import TypesAddNew from './Types/TypesAddNew.vue'
 // Store Module
@@ -163,7 +159,7 @@ import CellRendererActions from './cell-renderer/CellRendererActions.vue'
 
 
 //
-
+import sitesJson from './sites.json'
 
 export default {
   components: {
@@ -173,13 +169,13 @@ export default {
     CellRendererStatus,
     CellRendererActions,
     SiteAddNew,
-    SiteFilters,
     TypesList,
     TypesAddNew
   },
   data () {
     
     return {
+      sites: sitesJson,
       activePrompt: false,
       site_name_field:true,
       sin_field:true,
@@ -208,40 +204,32 @@ export default {
       },
       columnDefs: [
         {
-          headerName: 'ID',
-          field:'id',
-          filter: true,
-          checkboxSelection: true,
-          headerCheckboxSelectionFilteredOnly: true,
-          headerCheckboxSelection: true
-        },
-
-        {
           headerName: 'Site Name',
-          field: 'site_name',
+          field: 'Site Name',
           filter: true
           
         },
         {
           headerName: 'SIN',
-          field: 'sin',
+          field: 'SIN',
+          filter: true
+        },
+        {
+          headerName: 'Client',
+          field: 'Client',
           filter: true
         },
         {
           headerName: 'Location',
-          field: 'location',
+          field: 'Location',
           filter: true
         },
         {
           headerName: 'Status',
-          field: 'status',
+          field: 'Status',
           cellEditor : 'agSelectCellEditor',
-          cellEditorParams : {
-            values: ['active', 'inactive']
-          },
           editable: true,
-          filter: true,
-          cellRendererFramework: 'CellRendererStatus'
+          filter: true
         },    
         {
           headerName: 'Check Calls',
@@ -266,11 +254,11 @@ export default {
   },
   computed: {
     usersData () {
-      return this.$store.state.userManagement.users
+      return this.sites
     },
     paginationPageSize () {
       if (this.gridApi) return this.gridApi.paginationGetPageSize()
-      else return 10
+      else return 50
     },
     totalPages () {
       if (this.gridApi) return this.gridApi.paginationGetTotalPages()
@@ -371,7 +359,7 @@ export default {
   },
   mounted () {
     this.gridApi = this.gridOptions.api
-    this.gridOptions.api.sizeColumnsToFit()
+    // this.gridOptions.api.sizeColumnsToFit()
     /* =================================================================
       NOTE:
       Header is not aligned properly in RTL version of agGrid table.

@@ -1,15 +1,15 @@
 <template>
     <ag-grid-vue
         ref="agGridTable"
+        :components="components"
         :gridOptions="gridOptions"
-        class="ag-theme-material w-100 my-4 ag-grid-table"
+        class="ag-theme-alpine w-100 my-4 ag-grid-table"
         :columnDefs="columnDefs"
         :defaultColDef="defaultColDef"
         :rowData="TypesData"
         rowSelection="multiple"
         colResizeDefault="shift"
         :animateRows="true"
-        :floatingFilter="true"
         :pagination="true"
         :suppressPaginationPanel="true"
         :enableRtl="$vs.rtl">
@@ -22,10 +22,14 @@
 import { AgGridVue } from 'ag-grid-vue'
 import moduleUserManagement from '@/store/user-management/moduleUserManagement.js'
 import '@/assets/scss/vuexy/extraComponents/agGridStyleOverride.scss'
+// Cell Renderer
+import CellRendererLink from './cell-renderer/CellRendererLink.vue'
+import typesJson from './types.json'
 export default {
   name:'Types-list',
   data: () => {
     return {
+      types: typesJson,
       rowData: [
         {
           position:'Honda',
@@ -47,7 +51,7 @@ export default {
       columnDefs: [
         {
           headerName: 'ID',
-          field:'id',
+          field:'types.type_id',
           filter: true,
           checkboxSelection: true,
           headerCheckboxSelectionFilteredOnly: true,
@@ -56,31 +60,40 @@ export default {
 
         {
           headerName: 'Types',
-          field: 'types',
+          field: 'types.type_name',
           filter: true
         },
         {
           headerName: 'Color',
-          field: 'color',
-          filter: true
+          field: 'types.color',
+          filter: true,
+          cellRendererFramework:'CellRendererLink'
         },
         {
           headerName: 'Status',
-          field: 'status',
-          filter: true
+          field: 'types.status',
+          filter: true,
+          cellRenderer : params => {
+            return `<div> ${params.value === '0' ? 'InActive' : 'Active' }</div>`
+          }
         }
-      ]
+      ],
+      // Cell Renderer Components
+      components: {
+        CellRendererLink
+      }
 
     }
   },
   computed:{
     TypesData () {
-      return this.$store.state.userManagement.users
+      return this.types
     }
 
   },
   components:{
-    AgGridVue
+    AgGridVue,
+    CellRendererLink
   },
   mounted () {
     this.gridOptions.api.sizeColumnsToFit()
