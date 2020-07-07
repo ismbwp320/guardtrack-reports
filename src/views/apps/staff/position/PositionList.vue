@@ -2,14 +2,13 @@
     <ag-grid-vue
         ref="agGridTable"
         :gridOptions="gridOptions"
-        class="ag-theme-material w-100 my-4 ag-grid-table"
+        class="ag-theme-alpine w-100 my-4 ag-grid-table"
         :columnDefs="columnDefs"
         :defaultColDef="defaultColDef"
         :rowData="positionData"
         rowSelection="multiple"
         colResizeDefault="shift"
         :animateRows="true"
-        :floatingFilter="true"
         :pagination="true"
         :suppressPaginationPanel="true"
         :enableRtl="$vs.rtl">
