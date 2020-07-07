@@ -450,6 +450,9 @@ export default {
       transform: translateY(-58%);
     }
   }
+  .con-vs-dialog .vs-dialog footer{
+    display: block !important;
+  }
 }
 .pagi-btn {
   border: none !important;

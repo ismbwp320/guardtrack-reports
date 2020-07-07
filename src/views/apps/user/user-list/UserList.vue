@@ -1,139 +1,86 @@
-<!-- =========================================================================================
-  File Name: UserList.vue
-  Description: User List page
-  ----------------------------------------------------------------------------------------
-  Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
-  Author: Pixinvent
-  Author URL: http://www.themeforest.net/user/pixinvent
-========================================================================================== -->
-
 <template>
-
   <div id="page-user-list">
-    <user-filter  />
     <client-add-new />
-    
+    <vs-prompt
+        title="Update Client"
+        accept-text= "Update Client"
+        button-cancel = "border"
+        :is-valid="validateForm"
+        :active.sync="activePrompt">
+        <div>
+            <form>
+                <div class="vx-row">
+                    <div class="vx-col w-full">
+                      <div class="flex flex-row bg-gray-200">
+                        <div class="py-2 pr-2">
+                           <vs-input v-validate="'required'" name="c_name" class="w-full mb-4 mt-5" placeholder="Client name" v-model="clientLocal.name" :color="validateForm ? 'success' : 'danger'" />
+                        </div>
+                        <div class="py-2 pr-2">
+                           <vs-input v-validate="'required'" name="c_phone" class="w-full mb-4 mt-5" placeholder="Phone" v-model="clientLocal.phone" :color="validateForm ? 'success' : 'danger'" />
+                        </div>
+                        <div class="py-2">
+                            <vs-input v-validate="'required'" name="c_mobile" class="w-full mb-4 mt-5" placeholder="Mobile" v-model="clientLocal.mobile" :color="validateForm ? 'success' : 'danger'" />
+                        </div>
+                      </div>
+                      <vs-textarea rows="5" label="Address" v-model="clientLocal.desc" />
+                      <div class="flex flex-row bg-gray-200">
+                          <div class="py-2 pr-2 w-1/2">
+                              <vs-input v-validate="'required'" name="c_email" class="w-full mb-4 mt-5" placeholder="Email" v-model="clientLocal.email" :color="validateForm ? 'success' : 'danger'" />
+                          </div>
+                          <div class="py-2 pr-2 w-1/2">
+                             <vs-input v-validate="'required'" name="c_post_code" class="w-full mb-4 mt-5" placeholder="Post Code" v-model="clientLocal.postCode" :color="validateForm ? 'success' : 'danger'" />
+                          </div>
+                      </div>
+                      <div class="flex flex-row bg-gray-200">
+                          <div class="py-2 pr-2 w-1/2">
+                               <vs-input v-validate="'required'" name="c_city" class="w-full mb-4 mt-5" placeholder="City/Town" v-model="clientLocal.city" :color="validateForm ? 'success' : 'danger'" />
+                          </div>
+                          <div class="py-2 pr-2 w-1/2">
+                               <vs-input v-validate="'required'" name="c_country" class="w-full mb-4 mt-5" placeholder="Country" v-model="clientLocal.country" :color="validateForm ? 'success' : 'danger'" />
+                          </div>
+                      </div>
+                         
+                    </div>
+                </div>
 
+            </form>
+        </div>
+    </vs-prompt>
     <div class="vx-card p-6">
-
       <div class="flex flex-wrap items-center">
-
         <!-- ITEMS PER PAGE -->
         <div class="flex-grow">
           <vs-dropdown vs-trigger-click class="cursor-pointer">
             <div class="p-4 border pagi-btn border-solid d-theme-border-grey-light rounded-full d-theme-dark-bg cursor-pointer flex items-center justify-between font-medium">
-              <span class="mr-2">{{ currentPage * paginationPageSize - (paginationPageSize - 1) }} - {{ usersData.length - currentPage * paginationPageSize > 0 ? currentPage * paginationPageSize : usersData.length }} of {{ usersData.length }}</span>
+              <span class="mr-2">{{ paginationMask }}</span>
               <feather-icon icon="ChevronDownIcon" svgClasses="h-4 w-4" />
             </div>
-            <!-- <vs-button class="btn-drop" type="line" color="primary" icon-pack="feather" icon="icon-chevron-down"></vs-button> -->
             <vs-dropdown-menu>
-
-              <vs-dropdown-item @click="gridApi.paginationSetPageSize(50)">
-                <span>10</span>
-              </vs-dropdown-item>
-              <vs-dropdown-item @click="gridApi.paginationSetPageSize(100)">
-                <span>20</span>
-              </vs-dropdown-item>
-              <vs-dropdown-item @click="gridApi.paginationSetPageSize(250)">
-                <span>25</span>
-              </vs-dropdown-item>
-              <vs-dropdown-item @click="gridApi.paginationSetPageSize(300)">
-                <span>30</span>
+              <vs-dropdown-item v-for="n in 5" :key="n" @click="gridApi.paginationSetPageSize(n*50)">
+                <span>{{ n*50 }}</span>
               </vs-dropdown-item>
             </vs-dropdown-menu>
           </vs-dropdown>
         </div>
 
-        <!-- TABLE ACTION COL-2: SEARCH & EXPORT AS CSV -->
-          <vs-input class="sm:mr-4 mr-0 sm:w-auto w-full sm:order-normal order-3 sm:mt-0 mt-4 ag-search" v-model="searchQuery" @input="updateSearchQuery" placeholder="Search..." />
-          <!-- <vs-button class="mb-4 md:mb-0" @click="gridApi.exportDataAsCsv()">Export as CSV</vs-button> -->
-          <vs-button  icon="icon-eye" @click="activePrompt = true" icon-pack="feather" />
-          
+        <!-- QUICK SEARCH -->
+        <vs-input class="sm:mr-4 mr-0 sm:w-auto w-full sm:order-normal order-3 sm:mt-0 mt-4 ag-search" v-model="searchQuery" @input="updateSearchQuery" placeholder="Search..." />  
       </div>
 
-
       <!-- AgGrid Table -->
-      <div>
-        
-        <vs-prompt
-            title="Choose Colums"
-            accept-text= "Apply"
-            button-cancel = "border"
-            @cancel="clearFields"
-            @accept="ColumnsShow"
-            @close="clearFields"
-            :active.sync="activePrompt">
-            <div>
-              <div class="flex flex-row bg-gray-200">
-                <div class="py-2 pr-2 w-1/2">
-                  <label class="custom-label flex">
-                  <div class="bg-custom shadow w-6 h-6 p-1 flex justify-center items-center mr-2">
-                    <input type="checkbox" class="hidden" v-model="client_name_field" v-on:change="ColumnsShow($event)" id="c_name">
-                    <svg class="hidden w-4 h-4 text-green-600 pointer-events-none" viewBox="0 0 172 172"><g fill="none" stroke-width="none" stroke-miterlimit="10" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode:normal"><path d="M0 172V0h172v172z"/><path d="M145.433 37.933L64.5 118.8658 33.7337 88.0996l-10.134 10.1341L64.5 139.1341l91.067-91.067z" fill="currentColor" stroke-width="1"/></g></svg>
-                  </div>
-                  <span class="select-none">{{$t('ClientName')}}</span>
-                  </label>
-                  <label class="custom-label flex">
-                  <div class="bg-custom shadow w-6 h-6 p-1 flex justify-center items-center mr-2">
-                    <input type="checkbox" class="hidden" v-model="client_phone_field" v-on:change="ColumnsShow($event)" id="c_phone">
-                    <svg class="hidden w-4 h-4 text-green-600 pointer-events-none" viewBox="0 0 172 172"><g fill="none" stroke-width="none" stroke-miterlimit="10" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode:normal"><path d="M0 172V0h172v172z"/><path d="M145.433 37.933L64.5 118.8658 33.7337 88.0996l-10.134 10.1341L64.5 139.1341l91.067-91.067z" fill="currentColor" stroke-width="1"/></g></svg>
-                  </div>
-                  <span class="select-none">{{$t('ClientPhone')}}</span>
-                  </label>
-                  <label class="custom-label flex">
-                  <div class="bg-custom shadow w-6 h-6 p-1 flex justify-center items-center mr-2">
-                    <input type="checkbox" class="hidden" v-model="client_mobile_field" v-on:change="ColumnsShow($event)" id="c_mobile">
-                    <svg class="hidden w-4 h-4 text-green-600 pointer-events-none" viewBox="0 0 172 172"><g fill="none" stroke-width="none" stroke-miterlimit="10" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode:normal"><path d="M0 172V0h172v172z"/><path d="M145.433 37.933L64.5 118.8658 33.7337 88.0996l-10.134 10.1341L64.5 139.1341l91.067-91.067z" fill="currentColor" stroke-width="1"/></g></svg>
-                  </div>
-                  <span class="select-none">{{$t('ClientMobile')}}</span>
-                  </label>
-                  <label class="custom-label flex">
-                  <div class="bg-custom shadow w-6 h-6 p-1 flex justify-center items-center mr-2">
-                    <input type="checkbox" class="hidden" v-model="client_address_field" v-on:change="ColumnsShow($event)" id="c_address">
-                    <svg class="hidden w-4 h-4 text-green-600 pointer-events-none" viewBox="0 0 172 172"><g fill="none" stroke-width="none" stroke-miterlimit="10" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode:normal"><path d="M0 172V0h172v172z"/><path d="M145.433 37.933L64.5 118.8658 33.7337 88.0996l-10.134 10.1341L64.5 139.1341l91.067-91.067z" fill="currentColor" stroke-width="1"/></g></svg>
-                  </div>
-                  <span class="select-none">{{$t('ClientAddress')}}</span>
-                  </label>
-                </div>
-                <div class="py-2 pr-2 w-1/2">
-                  <label class="custom-label flex">
-                  <div class="bg-custom shadow w-6 h-6 p-1 flex justify-center items-center mr-2">
-                    <input type="checkbox" class="hidden" v-model="client_email_field" v-on:change="ColumnsShow($event)" id="c_email">
-                    <svg class="hidden w-4 h-4 text-green-600 pointer-events-none" viewBox="0 0 172 172"><g fill="none" stroke-width="none" stroke-miterlimit="10" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode:normal"><path d="M0 172V0h172v172z"/><path d="M145.433 37.933L64.5 118.8658 33.7337 88.0996l-10.134 10.1341L64.5 139.1341l91.067-91.067z" fill="currentColor" stroke-width="1"/></g></svg>
-                  </div>
-                  <span class="select-none">{{$t('ClientEmail')}}</span>
-                  </label>
-                  <label class="custom-label flex">
-                  <div class="bg-custom shadow w-6 h-6 p-1 flex justify-center items-center mr-2">
-                    <input type="checkbox" class="hidden" v-model="client_status_field" v-on:change="ColumnsShow($event)" id="c_status">
-                    <svg class="hidden w-4 h-4 text-green-600 pointer-events-none" viewBox="0 0 172 172"><g fill="none" stroke-width="none" stroke-miterlimit="10" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode:normal"><path d="M0 172V0h172v172z"/><path d="M145.433 37.933L64.5 118.8658 33.7337 88.0996l-10.134 10.1341L64.5 139.1341l91.067-91.067z" fill="currentColor" stroke-width="1"/></g></svg>
-                  </div>
-                  <span class="select-none">{{$t('ClientStatus')}}</span>
-                  </label>
-                  <label class="custom-label flex">
-                  <div class="bg-custom shadow w-6 h-6 p-1 flex justify-center items-center mr-2">
-                    <input type="checkbox" class="hidden" v-model="client_actions_field" v-on:change="ColumnsShow($event)" id="c_actions">
-                    <svg class="hidden w-4 h-4 text-green-600 pointer-events-none" viewBox="0 0 172 172"><g fill="none" stroke-width="none" stroke-miterlimit="10" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode:normal"><path d="M0 172V0h172v172z"/><path d="M145.433 37.933L64.5 118.8658 33.7337 88.0996l-10.134 10.1341L64.5 139.1341l91.067-91.067z" fill="currentColor" stroke-width="1"/></g></svg>
-                  </div>
-                  <span class="select-none">{{$t('ClientActions')}}</span>
-                  </label>
-                </div>
-
-              </div>
-            </div>
-        </vs-prompt>
-        
-        
-      <!-- <button v-on:click="exportData" class="vs-component vs-button vs-button-primary vs-button-filled">Export</button> -->
-          </div>
       <ag-grid-vue
         ref="agGridTable"
+        :modules="modules"
         :components="components"
         :gridOptions="gridOptions"
         class="ag-theme-alpine w-100 my-4 ag-grid-table"
         :columnDefs="columnDefs"
         :defaultColDef="defaultColDef"
         :rowData="usersData"
+        rowGroupPanelShow="always"
+        pivotPanelShow="always"
+        :allowContextMenuWithControlKey="true"
+        :getContextMenuItems="getContextMenuItems"
         rowSelection="multiple"
         colResizeDefault="shift"
         :animateRows="true"
@@ -154,11 +101,13 @@
 </template>
 
 <script>
-import { AgGridVue } from 'ag-grid-vue'
+import { AgGridVue } from '@ag-grid-community/vue'
+import { AllModules } from '@ag-grid-enterprise/all-modules'
 import '@/assets/scss/vuexy/extraComponents/agGridStyleOverride.scss'
+import '@ag-grid-community/core/dist/styles/ag-grid.css'
+import '@ag-grid-community/core/dist/styles/ag-theme-alpine.css'
 
 import ClientAddNew from './clientAddNew'
-import UserFilter from '../UserFilter'
 
 // Store Module
 import moduleUserManagement from '@/store/user-management/moduleUserManagement.js'
@@ -167,7 +116,6 @@ import moduleUserManagement from '@/store/user-management/moduleUserManagement.j
 import CellRendererLink from './cell-renderer/CellRendererLink.vue'
 import CellRendererStatus from './cell-renderer/CellRendererStatus.vue'
 import CellRendererVerified from './cell-renderer/CellRendererVerified.vue'
-import CellRendererActions from './cell-renderer/CellRendererActions.vue'
 
 
 //
@@ -181,13 +129,12 @@ export default {
     CellRendererLink,
     CellRendererStatus,
     CellRendererVerified,
-    CellRendererActions,
-    ClientAddNew,
-    UserFilter
+    ClientAddNew
   },
   data () {
     
     return {
+      modules: AllModules,
       activePrompt: false,
       client_name_field:true,
       client_phone_field:true,
@@ -280,11 +227,6 @@ export default {
           editable: true,
           filter: true,
           cellRendererFramework: 'CellRendererStatus'
-        },
-        {
-          headerName: 'Actions',
-          field: 'c_actions',
-          cellRendererFramework: 'CellRendererActions'
         }
       ],
 
@@ -292,8 +234,7 @@ export default {
       components: {
         CellRendererLink,
         CellRendererStatus,
-        CellRendererVerified,
-        CellRendererActions
+        CellRendererVerified
       }
     }
   },
@@ -305,6 +246,14 @@ export default {
    
   },
   computed: {
+    validateForm () {
+      return !this.errors.any() && this.clientLocal.name !== ''
+    },
+    paginationMask () {
+      const d = this.currentPage * this.paginationPageSize
+      const dataLength = this.usersData.length
+      return `${d - (this.paginationPageSize - 1)} - ${dataLength - d > 0 ? d : dataLength} of ${dataLength}`
+    },
     usersData () {
       return this.$store.state.userManagement.users
     },
@@ -327,90 +276,34 @@ export default {
     }
   },
   methods: {
-    clearFields () {
-      Object.assign(this.clientLocal, {
-        c_name: '',
-        c_phone: '',
-        c_mobile: '',
-        c_city:'',
-        c_postCode:'',
-        c_country:'',
-        c_email: '',
-        c_desc: ''
-      })
-    }, 
-    addClient () {
-      this.$validator.validateAll().then(result => {
-        if (result) {
-          //this.$store.dispatch('client/addClient', Object.assign({}, this.clientLocal))
-          this.clearFields()
-        }
-      })
-    },
-    setColumnFilter (column, val) {
-      const filter = this.gridApi.getFilterInstance(column)
-      let modelObj = null
-
-      if (val !== 'all') {
-        modelObj = { type: 'equals', filter: val }
-      }
-
-      filter.setModel(modelObj)
-      this.gridApi.onFilterChanged()
-    },
-    ColumnsShow ($e) {
-      // this.fileteredColumn = this.columnDefs.filter(item => {
-      //   return this.hide_show.includes(item.field)
-      // })
-
-      switch ($e.target.id) {
-
-      case 'c_name':
-        this.gridOptions.columnApi.setColumnVisible($e.target.id, !!this.client_name_field)
-        this.gridOptions.api.sizeColumnsToFit()
-        break
-      case  'c_phone':
-        this.gridOptions.columnApi.setColumnVisible($e.target.id, !!this.client_phone_field)
-        this.gridOptions.api.sizeColumnsToFit()
-        break
-      case 'c_mobile':
-        this.gridOptions.columnApi.setColumnVisible($e.target.id, !!this.client_mobile_field)
-        this.gridOptions.api.sizeColumnsToFit()
-        break
-      case  'c_address':
-        this.gridOptions.columnApi.setColumnVisible($e.target.id, !!this.client_address_field)
-        this.gridOptions.api.sizeColumnsToFit()
-        break
-      case 'c_email':
-        this.gridOptions.columnApi.setColumnVisible($e.target.id, !!this.client_email_field)
-        this.gridOptions.api.sizeColumnsToFit()
-        break
-      case  'c_status':
-        this.gridOptions.columnApi.setColumnVisible($e.target.id, !!this.client_status_field)
-        this.gridOptions.api.sizeColumnsToFit()
-        break
-      case  'c_actions':
-        this.gridOptions.columnApi.setColumnVisible($e.target.id, !!this.client_actions_field)
-        this.gridOptions.api.sizeColumnsToFit()
-        break
-        
-      default:
-        console.log('No matched')
-
-
-      }
-      
-      
-    },
-    resetColFilters () {
-      // Reset Grid Filter
-      this.gridApi.setFilterModel(null)
-      this.gridApi.onFilterChanged()
-
-      // Reset Filter Options
-      this.roleFilter = this.statusFilter = this.isVerifiedFilter = this.departmentFilter = { label: 'All', value: 'all' }
-
-      this.$refs.filterCard.removeRefreshAnimation()
+    getContextMenuItems (params) {
+      const result = [
+        {
+          name: 'Update',
+          action: () => {
+            this.activePrompt = true
+            const data = params.node.data
+            this.clientLocal = {
+              name: data.c_name,
+              phone: data.c_phone,
+              mobile: data.c_mobile,
+              city: data.c_city,
+              postCode: data.c_postCode,
+              country: data.c_country,
+              email: data.c_email,
+              desc: data.c_address
+            }
+            // this.clientLocal = params.node.data
+          }
+        },
+        'separator',
+        'copy',
+        'separator',
+        'paste',
+        'separator',
+        'export'
+      ]
+      return result
     },
     updateSearchQuery (val) {
       this.gridApi.setQuickFilter(val)

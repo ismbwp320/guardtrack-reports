@@ -1,12 +1,3 @@
-<!-- =========================================================================================
-  File Name: UserList.vue
-  Description: User List page
-  ----------------------------------------------------------------------------------------
-  Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
-  Author: Pixinvent
-  Author URL: http://www.themeforest.net/user/pixinvent
-========================================================================================== -->
-
 <template>
 
   <div id="page-user-list">
@@ -167,7 +158,7 @@
         ref="agGridTable"
         :components="components"
         :gridOptions="gridOptions"
-        class="ag-theme-material w-100 my-4 ag-grid-table"
+        class="ag-theme-alpine w-100 my-4 ag-grid-table"
         :columnDefs="columnDefs"
         :defaultColDef="defaultColDef"
         :rowData="usersData"

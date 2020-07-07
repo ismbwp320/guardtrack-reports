@@ -798,7 +798,7 @@ export default {
 
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .con-vs-dialog .vs-dialog footer{
   display: none !important;
 }

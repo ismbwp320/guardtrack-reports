@@ -12,6 +12,8 @@
     <div class="pb-2 pt-2 text-right">
     <vs-button @click="activePrompt = true" class="addClient">{{$t('AddClient')}}</vs-button>
     <vs-prompt
+        id="add-client"
+        class="add-client"
         title="Add Client"
         accept-text= "Add Client"
         button-cancel = "border"
@@ -20,7 +22,7 @@
         @close="clearFields"
         :is-valid="validateForm"
         :active.sync="activePrompt">
-        <div>
+        <div >
             <form>
                 <div class="vx-row">
                     <div class="vx-col w-full">
@@ -101,7 +103,8 @@ export default {
     addClient () {
       this.$validator.validateAll().then(result => {
         if (result) {
-          this.$store.dispatch('client/addClient', Object.assign({}, this.clientLocal))
+          console.log(this.clientLocal)
+          // this.$store.dispatch('client/addClient', Object.assign({}, this.clientLocal))
           this.clearFields()
         }
       })
@@ -109,3 +112,10 @@ export default {
   }
 }
 </script>
+<style lang="scss">
+#add-client{
+  .con-vs-dialog .vs-dialog footer{
+    display: block !important;
+  }
+}
+</style>

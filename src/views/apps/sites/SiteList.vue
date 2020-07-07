@@ -114,14 +114,13 @@
         ref="agGridTable"
         :components="components"
         :gridOptions="gridOptions"
-        class="ag-theme-material w-100 my-4 ag-grid-table"
+        class="ag-theme-alpine w-100 my-4 ag-grid-table"
         :columnDefs="columnDefs"
         :defaultColDef="defaultColDef"
         :rowData="usersData"
         rowSelection="multiple"
         colResizeDefault="shift"
         :animateRows="true"
-        :floatingFilter="true"
         :pagination="true"
         :paginationPageSize="paginationPageSize"
         :suppressPaginationPanel="true"
@@ -248,11 +247,6 @@ export default {
           headerName: 'Check Calls',
           field: 'check_calls',
           filter: true
-        }, 
-        {
-          headerName: 'Actions',
-          field: 's_actions',
-          cellRendererFramework: 'CellRendererActions'
         }
       ],
 
