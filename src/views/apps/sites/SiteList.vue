@@ -1,11 +1,6 @@
 <template>
-
   <div id="page-user-list">
           <site-add-new />
-          <!-- <types-add-new /> -->
-     <vs-tabs>
-      <vs-tab label="Sites">
-        <div class="con-tab-ejemplo">
       <div class="vx-card p-6">
 
       <div class="flex flex-wrap items-center">
@@ -14,23 +9,12 @@
         <div class="flex-grow">
           <vs-dropdown vs-trigger-click class="cursor-pointer">
             <div class="p-4 border pagi-btn border-solid d-theme-border-grey-light rounded-full d-theme-dark-bg cursor-pointer flex items-center justify-between font-medium">
-              <span class="mr-2">{{ currentPage * paginationPageSize - (paginationPageSize - 1) }} - {{ usersData.length - currentPage * paginationPageSize > 0 ? currentPage * paginationPageSize : usersData.length }} of {{ usersData.length }}</span>
+              <span class="mr-2">{{ paginationMask }}</span>
               <feather-icon icon="ChevronDownIcon" svgClasses="h-4 w-4" />
             </div>
-            <!-- <vs-button class="btn-drop" type="line" color="primary" icon-pack="feather" icon="icon-chevron-down"></vs-button> -->
             <vs-dropdown-menu>
-
-              <vs-dropdown-item @click="gridApi.paginationSetPageSize(10)">
-                <span>10</span>
-              </vs-dropdown-item>
-              <vs-dropdown-item @click="gridApi.paginationSetPageSize(20)">
-                <span>20</span>
-              </vs-dropdown-item>
-              <vs-dropdown-item @click="gridApi.paginationSetPageSize(25)">
-                <span>25</span>
-              </vs-dropdown-item>
-              <vs-dropdown-item @click="gridApi.paginationSetPageSize(30)">
-                <span>30</span>
+              <vs-dropdown-item v-for="n in 5" :key="n" @click="gridApi.paginationSetPageSize(n*50)">
+                <span>{{ n*50 }}</span>
               </vs-dropdown-item>
             </vs-dropdown-menu>
           </vs-dropdown>
@@ -109,35 +93,36 @@
           </div>
       <ag-grid-vue
         ref="agGridTable"
+        :modules="modules"
         :components="components"
         :gridOptions="gridOptions"
+        @grid-ready="onGridReady"
         class="ag-theme-alpine w-100 my-4 ag-grid-table"
         :columnDefs="columnDefs"
         :defaultColDef="defaultColDef"
         :rowData="usersData"
-        rowSelection="multiple"
+        :rowSelection="rowSelection"
+        :rowGroupPanelShow="rowGroupPanelShow"
+        :pivotPanelShow="pivotPanelShow"
         colResizeDefault="shift"
+        :rowDragManaged="true"
+        :suppressMoveWhenRowDragging="true"
         :animateRows="true"
         :pagination="true"
         :paginationPageSize="paginationPageSize"
         :suppressPaginationPanel="true"
-        :enableRtl="$vs.rtl">
+        :frameworkComponents="frameworkComponents"
+        :allowContextMenuWithControlKey="true"
+        :statusBar="statusBar"        
+        :detailCellRendererParams="detailCellRendererParams"
+        :sideBar="sideBar">
       </ag-grid-vue>
-
       <vs-pagination
         :total="totalPages"
         :max="7"
         v-model="currentPage" />
 
     </div>
-        </div>
-      </vs-tab>
-      <vs-tab label="Types">
-        <div class="con-tab-ejemplo">
-            <TypesList />
-        </div>
-      </vs-tab>  
-    </vs-tabs>
     
   </div>
 
@@ -145,38 +130,85 @@
 
 <script>
 import { AgGridVue } from 'ag-grid-vue'
+import { AllModules } from '@ag-grid-enterprise/all-modules'
 import '@/assets/scss/vuexy/extraComponents/agGridStyleOverride.scss'
 
 import SiteAddNew from './SiteAddNew'
-import TypesList from './Types/TypesList.vue'
-import TypesAddNew from './Types/TypesAddNew.vue'
 // Store Module
 import moduleUserManagement from '@/store/user-management/moduleUserManagement.js'
 
 // Cell Renderer
 import CellRendererStatus from './cell-renderer/cellRendererStatus.vue'
 import CellRendererActions from './cell-renderer/CellRendererActions.vue'
-
+import {agGridMixins} from '@/mixins/agGridMixins'
+import {sharedFunctions} from '@/mixins/sharedFunctions'
 
 //
 import sitesJson from './sites.json'
 
 export default {
+  mixins: [agGridMixins, sharedFunctions],
   components: {
     AgGridVue,
 
     // Cell Renderer
     CellRendererStatus,
     CellRendererActions,
-    SiteAddNew,
-    TypesList,
-    TypesAddNew
+    SiteAddNew
   },
   data () {
     
     return {
       sites: sitesJson,
+      shiftModel: {},
+      activeOfficer: '',
+      activeOfficerPrompt: false,
       activePrompt: false,
+      pinTop: [],
+      pinBottom: [],
+      clearDisable: true,
+      contextFilters: {
+        clients: false,
+        officer: false,
+        sites: false,
+        date: false
+      },
+      sideBar: null,
+      statusBar: null,
+      modules: AllModules,
+      gridApi: null,
+      columnApi: null,
+      frameworkComponents: null,
+      detailCellRendererParams: null,
+      rowSelection: null,
+      filters: {},
+      filterSearchQuery: {},
+      searchQuery: '',
+      rowGroupPanelShow: 'always',
+      pivotPanelShow: 'always',
+      settings: {
+        maxScrollbarLength : 60,
+        wheelSpeed         : .60
+      },
+      // AgGrid
+      gridOptions: {
+        masterDetail: true,
+        enableFillHandle: true,
+        enableRangeSelection: true,
+        undoRedoCellEditing: true,
+        undoRedoCellEditingLimit: 20,
+        enableCellChangeFlash: true
+
+      },
+      defaultColDef: {
+        sortable: true,
+        resizable: true,
+        enableRowGroup: true,
+        enablePivot: true,
+        enable: true,
+        filter: true,
+        flex: 1
+      },
       site_name_field:true,
       sin_field:true,
       location_field:true,
@@ -190,51 +222,46 @@ export default {
         status:'',
         check_calls:''
       },
-      searchQuery: '',
-
-      // AgGrid
-      gridApi: null,
-      gridOptions: {
-        rowClass:'animate-edit-icon'
-      },
-      defaultColDef: {
-        sortable: true,
-        resizable: true,
-        suppressMenu: true
-      },
       columnDefs: [
         {
-          headerName: 'Site Name',
-          field: 'Site Name',
-          filter: true
-          
-        },
-        {
-          headerName: 'SIN',
-          field: 'SIN',
-          filter: true
-        },
-        {
-          headerName: 'Client',
-          field: 'Client',
-          filter: true
-        },
-        {
-          headerName: 'Location',
-          field: 'Location',
-          filter: true
-        },
-        {
-          headerName: 'Status',
-          field: 'Status',
-          cellEditor : 'agSelectCellEditor',
-          editable: true,
-          filter: true
-        },    
-        {
-          headerName: 'Check Calls',
-          field: 'check_calls',
-          filter: true
+          headerName: 'Staff Details',
+          groupId: 0,
+          active: true,
+          children: [
+            {
+              headerName: 'Site Name',
+              field: 'Site Name',
+              filter: true
+              
+            },
+            {
+              headerName: 'SIN',
+              field: 'SIN',
+              filter: true
+            },
+            {
+              headerName: 'Client',
+              field: 'Client',
+              filter: true
+            },
+            {
+              headerName: 'Location',
+              field: 'Location',
+              filter: true
+            },
+            {
+              headerName: 'Status',
+              field: 'Status',
+              cellEditor : 'agSelectCellEditor',
+              editable: true,
+              filter: true
+            },    
+            {
+              headerName: 'Check Calls',
+              field: 'check_calls',
+              filter: true
+            }
+          ]
         }
       ],
 
@@ -245,33 +272,9 @@ export default {
       }
     }
   },
-  watch: {
-    
-    statusFilter (obj) {
-      this.setColumnFilter('status', obj.value)
-    }
-   
-  },
   computed: {
     usersData () {
       return this.sites
-    },
-    paginationPageSize () {
-      if (this.gridApi) return this.gridApi.paginationGetPageSize()
-      else return 50
-    },
-    totalPages () {
-      if (this.gridApi) return this.gridApi.paginationGetTotalPages()
-      else return 0
-    },
-    currentPage: {
-      get () {
-        if (this.gridApi) return this.gridApi.paginationGetCurrentPage() + 1
-        else return 1
-      },
-      set (val) {
-        this.gridApi.paginationGoToPage(val - 1)
-      }
     }
   },
   methods: {
@@ -292,90 +295,9 @@ export default {
         }
       })
     },
-    setColumnFilter (column, val) {
-      const filter = this.gridApi.getFilterInstance(column)
-      let modelObj = null
-
-      if (val !== 'all') {
-        modelObj = { type: 'equals', filter: val }
-      }
-
-      filter.setModel(modelObj)
-      this.gridApi.onFilterChanged()
-    },
-    ColumnsShow ($e) {
-      // this.fileteredColumn = this.columnDefs.filter(item => {
-      //   return this.hide_show.includes(item.field)
-      // })
-
-      switch ($e.target.id) {
-
-      case 'site_name':
-        this.gridOptions.columnApi.setColumnVisible($e.target.id, !!this.site_name_field)
-        this.gridOptions.api.sizeColumnsToFit()
-        break
-      case  'sin':
-        this.gridOptions.columnApi.setColumnVisible($e.target.id, !!this.sin_field)
-        this.gridOptions.api.sizeColumnsToFit()
-        break
-      case 'status':
-        this.gridOptions.columnApi.setColumnVisible($e.target.id, !!this.status_field)
-        this.gridOptions.api.sizeColumnsToFit()
-        break
-      case 'location':
-        this.gridOptions.columnApi.setColumnVisible($e.target.id, !!this.location_field)
-        this.gridOptions.api.sizeColumnsToFit()
-        break  
-      case  'check_calls':
-        this.gridOptions.columnApi.setColumnVisible($e.target.id, !!this.check_calls_field)
-        this.gridOptions.api.sizeColumnsToFit()
-        break
-      case  's_actions':
-        this.gridOptions.columnApi.setColumnVisible($e.target.id, !!this.actions_field)
-        this.gridOptions.api.sizeColumnsToFit()
-        break
-        
-      default:
-        console.log('No matched')
-
-
-      }
-      
-      
-    },
-    resetColFilters () {
-      // Reset Grid Filter
-      this.gridApi.setFilterModel(null)
-      this.gridApi.onFilterChanged()
-
-      // Reset Filter Options
-      this.roleFilter = this.statusFilter = this.isVerifiedFilter = this.departmentFilter = { label: 'All', value: 'all' }
-
-      this.$refs.filterCard.removeRefreshAnimation()
-    },
     updateSearchQuery (val) {
       this.gridApi.setQuickFilter(val)
     }
-  },
-  mounted () {
-    this.gridApi = this.gridOptions.api
-    // this.gridOptions.api.sizeColumnsToFit()
-    /* =================================================================
-      NOTE:
-      Header is not aligned properly in RTL version of agGrid table.
-      However, we given fix to this issue. If you want more robust solution please contact them at gitHub
-    ================================================================= */
-    if (this.$vs.rtl) {
-      const header = this.$refs.agGridTable.$el.querySelector('.ag-header-container')
-      header.style.left = `-${  String(Number(header.style.transform.slice(11, -3)) + 9)  }px`
-    }
-  },
-  created () {
-    if (!moduleUserManagement.isRegistered) {
-      this.$store.registerModule('userManagement', moduleUserManagement)
-      moduleUserManagement.isRegistered = true
-    }
-    this.$store.dispatch('userManagement/fetchUsers').catch(err => { console.error(err) })
   }
 }
 

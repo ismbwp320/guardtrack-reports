@@ -58,6 +58,7 @@
 export default {
   data () {
     return {
+      addressType: '',
       activePrompt: false,
       clientLocal: {
         name: '',
