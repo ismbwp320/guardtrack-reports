@@ -7,7 +7,7 @@ import mutations from './mutations'
 import actions from './actions'
 
 Vue.use(Vuex)
-
+import moduleChat from './chat/moduleChat.js'
 import moduleAuth from './auth/moduleAuth.js'
 import shift from './shiftModule.js'
 
@@ -18,6 +18,7 @@ export default new Vuex.Store({
   state,
   actions,
   modules: {
+    chat: moduleChat,
     shift,
     auth: moduleAuth
   },

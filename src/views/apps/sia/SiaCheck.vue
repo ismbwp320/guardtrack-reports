@@ -1,16 +1,7 @@
-<!-- =========================================================================================
-  File Name: UserList.vue
-  Description: User List page
-  ----------------------------------------------------------------------------------------
-  Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
-  Author: Pixinvent
-  Author URL: http://www.themeforest.net/user/pixinvent
-========================================================================================== -->
-
 <template>
-
     <div id="page-user-list">
-        <div class="vx-card p-6">
+      <vx-card ref="filterCard" title="Find By Licence Number" class="pb-1 user-list-filters mb-8">
+        <div class="vx-card p-6 my-5">
             <div>
                 <h3>Licence Number</h3>
                 <p>This is a 16 digit number.Please enter the number with no spaces</p>
@@ -18,9 +9,8 @@
                <vs-button class="mt-3">Search</vs-button>
             </div>
         </div>
+      </vx-card>
     </div>
-  
-
 </template>
 
 <script>
@@ -33,6 +23,8 @@ export default {
       searchQuery: ''
     
     }
+  },
+  methods: {
   }
   
 }

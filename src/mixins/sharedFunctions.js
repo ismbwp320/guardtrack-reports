@@ -95,6 +95,7 @@ export const sharedFunctions = {
     },
     checkBoxHandler (instanceName, child) {
       const instance = this.gridOptions.api.getFilterInstance(instanceName)
+      console.log(instance)
       if (instance.getValueModel().availableValues.size > 0) {
         const item = instance.getValueModel().availableValues
         return item.has(child)

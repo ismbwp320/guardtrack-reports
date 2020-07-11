@@ -17,31 +17,37 @@
 
           <li
             class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white"
-            @click="$router.push('/pages/profile').catch(() => {})">
+            @click="$router.push({name: 'COMPANIES'})">
             <feather-icon icon="UserIcon" svgClasses="w-4 h-4" />
-            <span class="ml-2">Profile</span>
+            <span class="ml-2">Companies</span>
           </li>
 
           <li
             class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white"
-            @click="$router.push('/apps/email').catch(() => {})">
+            @click="$router.push({name: 'USERS'})">
+            <feather-icon icon="UserIcon" svgClasses="w-4 h-4" />
+            <span class="ml-2">Users</span>
+          </li>
+
+          <li
+            class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white"
+            @click="$router.push({name: 'CHAT_BOX'})">
             <feather-icon icon="MailIcon" svgClasses="w-4 h-4" />
-            <span class="ml-2">Inbox</span>
+            <span class="ml-2">Messages</span>
           </li>
 
           <li
             class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white"
-            @click="$router.push('/apps/todo').catch(() => {})">
+            @click="$router.push({name: 'SETTINGS'})">
+            <feather-icon icon="SettingsIcon" svgClasses="w-4 h-4" />
+            <span class="ml-2">Settings</span>
+          </li>
+
+          <li
+            class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white"
+            @click="$router.push({name: 'TASKS'})">
             <feather-icon icon="CheckSquareIcon" svgClasses="w-4 h-4" />
             <span class="ml-2">Tasks</span>
-          </li>
-         
-
-          <li
-            class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white"
-            @click="$router.push('/apps/eCommerce/wish-list').catch(() => {})">
-            <feather-icon icon="HeartIcon" svgClasses="w-4 h-4" />
-            <span class="ml-2">Wish List</span>
           </li>
 
           <vs-divider class="m-1" />

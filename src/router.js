@@ -31,6 +31,71 @@ const router = new Router({
             rule: 'editor'
           }
         },
+        {
+          path: '/chat-box',
+          component: () => import('@/views/chat/ChatBox.vue'),
+          name: 'CHAT_BOX',
+          meta: {
+            breadcrumb: [
+              { title: 'Home', url: '/' },
+              { title: 'CHATBOX' },
+              { title: 'List' }
+            ],
+            rule: 'editor'
+          }
+        },
+        {
+          path: '/companies',
+          component: () => import('@/views/companies/Companies.vue'),
+          name: 'COMPANIES',
+          meta: {
+            breadcrumb: [
+              { title: 'Companies', url: '/' },
+              { title: 'COMPANIES' },
+              { title: 'List' }
+            ],
+            rule: 'editor'
+          }
+        },
+        {
+          path: '/users',
+          component: () => import('@/views/users/Users.vue'),
+          name: 'USERS',
+          meta: {
+            breadcrumb: [
+              { title: 'Users', url: '/' },
+              { title: 'USERS' },
+              { title: 'List' }
+            ],
+            rule: 'editor'
+          }
+        },
+        {
+          path: '/settings',
+          component: () => import('@/views/settings/Settings.vue'),
+          name: 'SETTINGS',
+          meta: {
+            breadcrumb: [
+              { title: 'Settings', url: '/' },
+              { title: 'SETTINGS' },
+              { title: 'List' }
+            ],
+            rule: 'editor'
+          }
+        },
+        {
+          path: '/tasks',
+          component: () => import('@/views/tasks/Tasks.vue'),
+          name: 'TASKS',
+          meta: {
+            breadcrumb: [
+              { title: 'Tasks', url: '/' },
+              { title: 'TASKS' },
+              { title: 'List' }
+            ],
+            rule: 'editor'
+          }
+        },
         // =============================================================================
         // Main App Routes
         // =============================================================================
