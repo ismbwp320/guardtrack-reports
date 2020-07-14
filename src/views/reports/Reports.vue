@@ -250,7 +250,7 @@ import {agGridMixins} from '@/mixins/agGridMixins'
 import {sharedFunctions} from '@/mixins/sharedFunctions'
 //
 import usersJson from './users.json'
-
+import reportStatusBarComponent from './reportStatusBarComponent.js'
 export default {
   mixins: [agGridMixins, sharedFunctions],
   components: {
@@ -383,8 +383,16 @@ export default {
     }
   },
   beforeMount () {
+    this.frameworkComponents = {
+      
+      clickableStatusBarComponent: reportStatusBarComponent
+    }
     this.statusBar = {
       statusPanels: [
+        { statusPanel: 'clickableStatusBarComponent', 
+          key: 'statusBarCompKey',
+          align: 'right'
+        },
         {
           statusPanel: 'agAggregationComponent',
           statusPanelParams: {
