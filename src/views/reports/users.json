@@ -1,0 +1,26 @@
+[
+  {
+    "id": "1",
+    "Invoice": "INVOICE EXPORT",
+    "Profit": 482.64,
+    "Client": "Muhammad Naqash Asif",
+    "Charge Hours": 160.00,
+    "Pay Hours": 164.00,
+    "Hours Difference": 0.00,
+    "Charge Amount": 1875.20,
+    "Pay Amount": 130.58,
+    "callRecords": []
+  },
+  {
+    "id": "1",
+    "Invoice": "INVOICE EXPORT",
+    "Profit": 482.64,
+    "Client": "Muhammad Naqash Asif",
+    "Charge Hours": 160.00,
+    "Pay Hours": 160.00,
+    "Hours Difference": 0.00,
+    "Charge Amount": 1875.20,
+    "Pay Amount": 130.58,
+    "callRecords": []
+  }
+]

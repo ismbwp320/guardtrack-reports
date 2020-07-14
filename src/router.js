@@ -96,6 +96,45 @@ const router = new Router({
             rule: 'editor'
           }
         },
+        {
+          path: '/history',
+          component: () => import('@/views/history/History.vue'),
+          name: 'HISTORY',
+          meta: {
+            breadcrumb: [
+              { title: 'History', url: '/' },
+              { title: 'HISTORY' },
+              { title: 'List' }
+            ],
+            rule: 'editor'
+          }
+        },
+        {
+          path: '/payment',
+          component: () => import('@/views/payment/Payment.vue'),
+          name: 'PAYMENT',
+          meta: {
+            breadcrumb: [
+              { title: 'Payment', url: '/' },
+              { title: 'PAYMENT' },
+              { title: 'List' }
+            ],
+            rule: 'editor'
+          }
+        },
+        {
+          path: '/reports',
+          component: () => import('@/views/reports/Reports.vue'),
+          name: 'REPORTS',
+          meta: {
+            breadcrumb: [
+              { title: 'Reports', url: '/' },
+              { title: 'REPORTS' },
+              { title: 'List' }
+            ],
+            rule: 'editor'
+          }
+        },
         // =============================================================================
         // Main App Routes
         // =============================================================================

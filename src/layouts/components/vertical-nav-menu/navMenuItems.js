@@ -111,7 +111,7 @@ export default [
     i18n: 'Reports',
     items: [
       {
-        url: '/apps/reports/all',
+        url: '/reports',
         name: 'REPORTS',
         icon: 'MenuIcon',
         i18n: 'Reports'

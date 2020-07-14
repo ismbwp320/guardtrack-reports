@@ -51,6 +51,7 @@
         </ul>
         <search-bar />
         <notification-drop-down />
+        <feather-icon icon="OctagonIcon" class="cursor-pointer mt-1 sm:mr-6 mr-2" @click="$router.push({name: 'HISTORY'})" />
         <I18n />
         <profile-drop-down />
       </vs-navbar>
